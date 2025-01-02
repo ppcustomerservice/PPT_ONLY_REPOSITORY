@@ -1,0 +1,398 @@
+/* Main Container */
+.mainContainer {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* Advanced Search Bar */
+.filterContainer {
+  width: 20%;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+  font-size: 14px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.filterContainer h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #104b97;
+}
+
+.filterContainer label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+  color: #555;
+}
+
+.filterContainer select {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.filterContainer input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.filterContainer div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+/* Properties Container */
+.propertiesContainer {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Individual Property Card */
+.propertyBox {
+  display: flex;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #fff;
+  transition: box-shadow 0.3s ease;
+}
+
+.propertyBox:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Property Image Carousel */
+.propertyImageCarousel {
+  width: 150px;
+  height: 100px;
+  border-radius: 5px;
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* RERA Badge */
+.reraBadge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #104b97;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* Property Info */
+.propertyInfo {
+  flex: 1;
+  padding-left: 20px;
+}
+
+.propertyTitle {
+  font-size: 18px;
+  font-weight: bold;
+  color: #104b97;
+  margin: 0;
+}
+
+/* Property Details Grid */
+.propertyDetails {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin: 10px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+/* Property Price */
+.propertyPrice {
+  color: #104b97;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* Buttons Container */
+.buttonContainer {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* View Details and Contact Owner Buttons */
+.viewDetailsBtn,
+.contactOwnerBtn {
+  background-color: #104b97;
+  color: #fff;
+  padding: 8px 12px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+.viewDetailsBtn:hover,
+.contactOwnerBtn:hover {
+  background-color: #083769;
+}
+
+/* Show More Button */
+.showMoreBtn {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.showMoreBtn button {
+  background-color: #104b97;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.showMoreBtn button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .mainContainer {
+    flex-direction: column;
+  }
+
+  .filterContainer {
+    width: 100%;
+    position: static;
+    margin-bottom: 20px;
+  }
+
+  .propertiesContainer {
+    width: 100%;
+  }
+}
+/* Main Container */
+.mainContainer {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* Advanced Search Bar */
+.filterContainer {
+  width: 20%;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+  font-size: 14px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Properties Container */
+.propertiesContainer {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-height: 90vh;    /* Limit height to 90% of the viewport */
+  overflow-y: auto;    /* Enable vertical scrolling */
+  padding-right: 10px; /* Add padding to avoid scrollbar overlap */
+}
+
+/* Individual Property Card */
+.propertyBox {
+  display: flex;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #fff;
+  transition: box-shadow 0.3s ease;
+}
+
+.propertyBox:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Property Image Carousel */
+.propertyImageCarousel {
+  width: 150px;
+  height: 100px;
+  border-radius: 5px;
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* RERA Badge */
+.reraBadge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #104b97;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* Property Info */
+.propertyInfo {
+  flex: 1;
+  padding-left: 20px;
+}
+
+.propertyTitle {
+  font-size: 18px;
+  font-weight: bold;
+  color: #104b97;
+  margin: 0;
+}
+
+/* Property Details Grid */
+.propertyDetails {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin: 10px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+/* Property Price */
+.propertyPrice {
+  color: #104b97;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* Buttons Container */
+.buttonContainer {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* View Details and Contact Owner Buttons */
+.viewDetailsBtn,
+.contactOwnerBtn {
+  background-color: #104b97;
+  color: #fff;
+  padding: 8px 12px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+.viewDetailsBtn:hover,
+.contactOwnerBtn:hover {
+  background-color: #083769;
+}
+
+/* Show More Button */
+.showMoreBtn {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.showMoreBtn button {
+  background-color: #104b97;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.showMoreBtn button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .mainContainer {
+    flex-direction: column;
+  }
+
+  .filterContainer {
+    width: 100%;
+    position: static;
+    margin-bottom: 20px;
+  }
+
+  .propertiesContainer {
+    width: 100%;
+    max-height: none;
+  }
+}
+/* Advanced Search Checkbox Group */
+.filterGroup {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+/* Checkbox Styling */
+.filterGroup input[type="checkbox"] {
+  margin-right: 10px;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* Label Styling */
+.filterGroup label {
+  cursor: pointer;
+  display: inline-block;
+}

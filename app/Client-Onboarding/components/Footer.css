@@ -1,0 +1,39 @@
+/* Ensure full width for body, html, and footer */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+  
+  footer {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .footer-row, 
+  .footer-links-row, 
+  .footer-copyright-row {
+    max-width: 100%; /* Ensures no max-width restriction */
+    padding: 0 20px; /* Adds left/right spacing */
+    box-sizing: border-box;
+  }
+  
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  .footer-column a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .footer-links-row ul {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  

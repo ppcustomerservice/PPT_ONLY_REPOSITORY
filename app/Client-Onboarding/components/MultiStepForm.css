@@ -1,0 +1,384 @@
+/* Multi-step form container */
+.multi-step-form-container {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Progress bar */
+  .progress-bar {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-size: 1rem;
+  }
+  
+  /* Form steps */
+  .form-step h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .form-step input,
+  .form-step select,
+  .form-step textarea {
+    width: 100%;
+    padding: 0.8rem;
+    margin: 0.5rem 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .form-step textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  
+  /* Buttons */
+  .navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+  }
+  
+  .button {
+    background-color: #104b97;
+    color: #fff;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: #0056b3;
+  }
+  
+  .button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+  }
+  
+  .button.submit {
+    background-color: #28a745;
+  }
+  
+  .button.submit:hover {
+    background-color: #218838;
+  }
+  
+  /* Error message */
+  .error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    text-align: center;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 600px) {
+    .multi-step-form-container {
+      padding: 1.5rem;
+    }
+  
+    .form-step h2 {
+      font-size: 1.3rem;
+    }
+  }
+  
+
+  .property-type-container {
+    margin: 1rem 0;
+  }
+  
+  .property-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .property-option {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .property-option:hover {
+    background-color: #e6f7ff;
+    border-color: #104b97;
+  }
+  
+  .property-option.selected {
+    background-color: #104b97;
+    border-color: #104b97;
+    color: #fff;
+  }
+  
+  .clickable-options-container {
+    margin-bottom: 20px;
+  }
+  
+  .clickable-options {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .clickable-option {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    color: #333;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .clickable-option:hover {
+    background-color: #e6f7ff;
+    border-color: #104b97;
+  }
+  
+  .clickable-option.selected {
+    background-color: #104b97;
+    border-color: #104b97;
+    color: #fff;
+  }
+
+  
+ 
+  .text-form-section {
+    display: flex;
+    flex-wrap: nowrap; /* Ensures the text and form are in one row */
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 2rem; /* Spacing between text and form */
+    padding: 2rem;
+  }
+  
+ 
+  
+  .section-heading {
+    font-size: 2rem;
+    color: #104b97;
+    margin-bottom: 1rem;
+  }
+  
+  .section-heading span {
+    color: #104b97; /* Highlight color for 'online faster' */
+  }
+  
+  .section-points {
+    list-style: none;
+    padding: 0;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #555;
+  }
+  
+  .section-points li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .form-container {
+    flex: 1;
+    max-width: 50%; /* Form takes 50% of the width */
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .text-container {
+    flex: 1; /* Text takes equal space */
+    max-width: 40%;
+  }
+  
+  .form-container {
+    flex: 1; /* Form takes equal space */
+    max-width: 50%;
+  }
+  
+  @media (max-width: 768px) {
+    .text-form-section {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  
+    .text-container,
+    .form-container {
+      max-width: 100%;
+    }
+  }
+
+  
+  .text-form-section {
+    max-width: 1200px; /* Optional, controls total section width */
+    margin: 0 auto; /* Center the section on the page */
+  }
+
+
+  .text-form-section {
+    display: flex;
+    flex-direction: row; /* Ensures text and form are side by side */
+    align-items: flex-start; /* Align items at the top */
+    justify-content: space-between; /* Space between text and form */
+    gap: 2rem; /* Adds spacing between text and form */
+}
+.text-container {
+    flex: 1; /* Allows it to grow */
+    max-width: 40%; /* Text container width */
+}
+
+.form-container {
+    flex: 1; /* Allows it to grow */
+    max-width: 50%; /* Form container width */
+}
+.text-form-section {
+    max-width: 1200px;
+    margin: 0 auto; /* Center on the page */
+}
+@media (max-width: 768px) {
+    .text-form-section {
+        flex-direction: column; /* Stack vertically */
+    }
+
+    .text-container,
+    .form-container {
+        max-width: 100%;
+    }
+}
+
+
+/* Container for overall layout */
+.container123 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px;
+    gap: 30px;
+  }
+  
+  /* Left Section Styling */
+  .text-section {
+    flex: 1;
+    max-width: 45%;
+  }
+  
+  .text-section .heading {
+    font-size: 2.5rem;
+    line-height: 1.3;
+    color: #333;
+  }
+  
+  .text-section .highlight {
+    color: #104b97;
+  }
+  
+  .text-section .benefits {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+  }
+  
+  .text-section .benefits li {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #555;
+  }
+  
+  /* Right Section Styling */
+  .form-section {
+    flex: 1;
+    max-width: 45%;
+    background: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .input-group {
+    margin-bottom: 20px;
+  }
+  
+  .input-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .option-button {
+    border: 1px solid #ddd;
+    background-color: #fff;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .option-button.active,
+  .option-button:hover {
+    background-color: #104b97;
+    color: #fff;
+    border-color: #104b97;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .submit-button {
+    width: 100%;
+    background-color: #104b97;
+    color: white;
+    padding: 12px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .submit-button:hover {
+    background-color: #104b97;
+  }
+  
+  .login-text {
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  .login-text a {
+    color: #104b97;
+    text-decoration: none;
+  }
+  

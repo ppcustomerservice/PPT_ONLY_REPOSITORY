@@ -1,0 +1,417 @@
+.story-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.phone-frame {
+    position: relative;
+    width: 340px;
+    height: 600px;
+    border-radius: 30px;
+    overflow: hidden;
+    border: 2px solid #000;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5);
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.progress-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    z-index: 2; /* Ensure it's above the image */
+}
+
+.progress-bar {
+    background-color: rgba(255, 255, 255, 0.8);
+    height: 3px;
+    flex: 1;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: width 5s linear; /* Ensure transition for progress */
+}
+
+.background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1; /* Make sure it's behind the text */
+}
+
+.story-content {
+    position: absolute;
+    bottom: 10%;
+    left: 5%;
+    right: 5%;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    z-index: 3; /* Text should be above the image */
+}
+
+.story-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.story-description {
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+.left-arrow,
+.right-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+    z-index: 4; /* Ensure arrows are always clickable */
+}
+
+.left-arrow {
+    left: -40px;
+}
+
+.right-arrow {
+    right: -40px;
+}
+
+.left-arrow:hover,
+.right-arrow:hover {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.story-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+}
+
+.phone-frame {
+    position: relative;
+    width: 360px; /* Adjust as per design */
+    height: 640px; /* Adjust as per design */
+    border-radius: 20px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    z-index: 1;
+}
+
+.progress-container {
+    position: absolute;
+    top: 10px;
+    width: 90%;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 3px;
+    margin: 0 auto;
+    z-index: 3;
+}
+
+.progress-bar {
+    height: 100%;
+    background: #fff;
+    width: 0%;
+    transition: width 0.1s linear;
+}
+
+.story-content {
+    position: absolute;
+    bottom: 20px;
+    width: 90%;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.story-title-box {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.story-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.story-description-box {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #000;
+    padding: 10px 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.story-description {
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+.left-arrow, .right-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 4;
+}
+
+.left-arrow {
+    left: 10px;
+}
+
+.right-arrow {
+    right: 10px;
+}
+
+/* Ensure smooth transitions for content */
+.story-content {
+    position: absolute;
+    bottom: 20px;
+    width: 90%;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .progress-container {
+    position: absolute;
+    top: 10px;
+    width: 90%;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 3px;
+    margin: 0 auto;
+    z-index: 3;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    background: #fff;
+    width: 0%;
+    transition: width 0.1s linear;
+  }
+  
+  .phone-frame {
+    position: relative;
+    width: 360px;
+    height: 640px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #fff;
+  }
+  
+  .background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    z-index: 1;
+  }
+  
+  .left-arrow,
+  .right-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 4;
+  }
+  
+  .left-arrow {
+    left: 10px;
+  }
+  
+  .right-arrow {
+    right: 10px;
+  }
+  .story-content {
+    position: absolute;
+    bottom: 10%;
+    left: 5%;
+    right: 5%;
+    background: rgba(0, 0, 0, 0.5); /* Adjusted transparency */
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    z-index: 3;
+    animation: fadeIn 0.5s ease-in-out;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Add shadow for better visibility */
+}
+
+/* Title Box */
+.story-title-box {
+    position: absolute;
+    top: 10%;
+    left: 5%;
+    right: 5%;
+    background: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
+    color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    z-index: 4; /* Ensures it's above the navigation arrows */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Shadow for emphasis */
+}
+.story-title {
+    font-size: 1.5rem; /* Larger font size */
+    font-weight: bold;
+    margin: 0; /* Remove default margin */
+    line-height: 1.2; /* Adjust line height */
+}
+/* Description Box */
+.story-description-box {
+    position: absolute;
+    bottom: 10%; /* Positioned at the bottom */
+    left: 5%;
+    right: 5%;
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+    color: #000;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    z-index: 3; /* Keeps it above the background but below the title */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.story-description {
+    font-size: 1rem;
+    line-height: 1.5; /* Improve readability */
+    margin: 0; /* Remove default margin */
+}
+
+/* Progress Bar Adjustments */
+.progress-container {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    right: 5%;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5); /* Transparent background */
+    border-radius: 3px;
+    z-index: 5; /* Above everything */
+}
+
+.progress-bar {
+    height: 100%;
+    background: #fff;
+    width: 0%;
+    transition: width 0.1s linear;
+}
+
+.form-container {
+    background-color: red; /* Red background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.form-wrapper {
+    position: relative;
+    top: 100px;
+    width: 360px;
+    transform: translateY(180%); 
+    animation: slideIn 0.5s forwards; /* Slide-in animation */
+}
+
+
+.phone-frame {
+    position: relative;
+    width: 360px;
+    height: 640px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-slide {
+    position: absolute;
+    bottom: -100%; /* Start position outside the phone frame */
+    width: 100%;
+    animation: slideIn 0.5s forwards; /* Slide-in animation */
+}
+
+@keyframes slideIn {
+    from {
+        bottom: -100%;
+    }
+    to {
+        bottom: 0;
+    }
+}

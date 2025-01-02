@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #000;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #fff;
+    --foreground: #000;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+body {
+  max-width: 100%;
+  overflow-x: hidden !important;
+  overflow-y: hidden !important;
+}
+h1,h2,h3,h4,h5,h6 {
+  font-family: 'Merriweather', serif; /* Apply Merriweather font */
+  font-weight: 400; /* Adjust weight as needed: 400 for normal, 700 for bold */
+}
+
+p {
+  color: #42526E; /* Text color */
+  background-color: rgba(0, 0, 0, 0); /* Transparent background */
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif; /* Font stack */
+
+}
+
+
+
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+
+/* slick carousel */
+.slick-next, .slick-prev {
+  font-size: 20px;
+  color: #fff;
+  z-index: 2;
+}
+
+.slick-prev:before, .slick-next:before {
+  font-family: 'slick';
+  font-size: 30px;
+  color: black; /* Adjust arrow color */
+}
+
+.slick-prev {
+  left: 10px;
+}
+
+.slick-next {
+  right: 10px;
+}

@@ -1,0 +1,187 @@
+.galleryContainer {
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+  margin-left: 50px; /* Shifts the gallery to the right */
+  height: 400px;
+}
+
+.featuredImage {
+  flex: 2;
+  position: relative;
+  height: 100%;
+}
+
+.featuredImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.rightImages {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  height: 100%;
+}
+
+.squareImage {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  height: calc((100% - 16px) / 3);
+  cursor: pointer;
+}
+
+.squareImage img {
+  width: 70%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.modalImage {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 8px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.arrowButton {
+  background: none;
+  color: white;
+  font-size: 40px;
+  border: none;
+  cursor: pointer;
+}
+
+.arrowButton:focus {
+  outline: none;
+}
+.galleryContainer {
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+  margin-left: 50px;
+  height: 400px;
+}
+
+.featuredImage {
+  flex: 2;
+  position: relative;
+  height: 100%;
+}
+
+.featuredImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.rightImages {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  height: 100%;
+}
+
+.squareImage {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  height: calc((100% - 16px) / 3);
+  cursor: pointer;
+}
+
+.squareImage img {
+  width: 70%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Modal styling with fixed image sizes */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.modalImage {
+  width: 800px;   /* Fixed width */
+  height: 600px;  /* Fixed height */
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.arrowButton {
+  background: none;
+  color: white;
+  font-size: 40px;
+  border: none;
+  cursor: pointer;
+  padding: 20px;
+}
+
+.arrowButton:focus {
+  outline: none;
+}

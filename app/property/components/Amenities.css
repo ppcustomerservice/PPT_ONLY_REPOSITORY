@@ -1,0 +1,229 @@
+.amenities-section {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin: 20px auto; 
+  width: 80%;
+  max-width: 1200px;
+  box-sizing: border-box; 
+}
+
+.amenities-section h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center; 
+  margin-left: 20px;
+}
+
+.amenities-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); 
+  gap: 20px; 
+  justify-content: start; 
+  margin-bottom: 20px; 
+}
+
+.amenity-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.amenity-icon {
+  width: 65px;
+  height: 65px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+.show-more-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.show-more-btn {
+  padding: 10px 20px;
+  background-color: #104b97;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.show-more-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.show-more-btn:hover:not(:disabled) {
+  background-color: #104b97;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 1200px;
+  max-height: 80%; 
+  overflow-y: auto;
+  position: relative;
+}
+
+.modal-content h3 {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.modal-amenities-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); 
+  gap: 20px;
+  justify-content: start;
+  align-items: start;
+  max-height: 60vh; 
+  overflow-y: auto; 
+  padding: 10px; 
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .amenities-section {
+    width: 90%; 
+    padding: 15px;
+  }
+
+  .amenities-container {
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 15px;
+  }
+
+  .modal-content {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .modal-amenities-container {
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 10px;
+  }
+
+  .amenity-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .show-more-btn {
+    font-size: 12px;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .amenities-container {
+    grid-template-columns: repeat(1, 1fr); 
+    gap: 10px;
+  }
+
+  .modal-amenities-container {
+    grid-template-columns: repeat(1, 1fr); 
+  }
+
+  .amenity-icon {
+    width: 45px;
+    height: 45px;
+  }
+}
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 1200px;
+  max-height: 80%;
+  overflow-y: auto;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #333;
+}
+
+.close-btn:hover {
+  color: #ff4d4d;
+}
+.amenities-section h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: left; 
+  margin-left: 0;
+}
+.amenities-section {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin: 20px auto;
+  width: 100%;
+  max-width: 1300px;
+  box-sizing: border-box;
+  position: relative; 
+  left: -10px; 
+}
+
+/* Modal (Popup) Styling */
+.modal-overlay {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.amenities-title {
+  margin-bottom: 10px; 
+}
+
+.amenities-title h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+  text-align: left;
+  margin-left: 10%; 
+}

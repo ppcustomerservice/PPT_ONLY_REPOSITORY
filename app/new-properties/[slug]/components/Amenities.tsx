@@ -1,0 +1,591 @@
+"use client";
+
+// import React from "react";
+import React, { useEffect, useState } from "react";
+import './Amenities.css';
+
+
+// Placeholder image for missing amenities
+const placeholderImage = "https://via.placeholder.com/50";
+
+
+
+// Known amenities icon and text mappings
+const amenitiesIconMap = {
+  "Clubhouse": "https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/10/10025607/Clubhouse.png",
+  // "Badminton": "https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/10/10025556/Badminton-Court.png",
+  // "Elevator": "https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/10/10025615/Elevator.png",
+  "Gym": "https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/10/10025625/gym.png",
+  "24*7 Security": "https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/10/10030533/CCTV-1.png",
+  "CCTV Surveillance": "https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/10/10030533/CCTV-1.png",
+  "24*7 Water Supply":'https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041016/24x7-water.png',
+  "Acupressure Pathway":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041023/Accupressure-Patchway-2.png",
+  "Acupressure Park":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041027/Acupressure-Park-2.png",
+  "Aerobics Centre":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041033/Aerobics-Center-2.png",
+  "Air Hockey":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041042/Air-Hockey-2.png",
+  "Amphitheater":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041045/Amphitheater-2.png",
+  "ATM":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041048/ATM-2.png",
+  "Automated Gates":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041051/Automatic-Gate-2.png",
+  "Back yard":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041054/BackYard-2.png",
+  "Badminton":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041057/Badminton-2.png",
+  "Balcony":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041100/Balcony-2.png",
+  "Banquet Hall":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041103/Banquet-Hall-2.png",
+  "Bar/Chill-Out Lounge":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041106/Bar-2.png",
+  "Basketball court":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041109/Basketball-2.png",
+  "Barbecue":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041111/BBQ-2.png",
+  "Beach volleyball zone":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041114/Beachvolleyball-2.png",
+  "Cafeteria":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041117/Cafe-2.png",
+  "Camp Fire":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041120/Campfire-2.png",
+  "Car Charging Point":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041122/Car-Charger-2.png",
+  "Car Parking":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041125/Car-Parking-2.png",
+  "CCTV surveillance":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041127/CCTV-2.png",
+  "Central AC":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041130/Central-AC-2.png",
+  "Chit Chat Plaza":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041133/Chat-Plaza-2.png",
+  "Creche":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041139/Creche-2.png",
+  "Cricket Pitch":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041142/Cricket-2.png",
+  "Curtains":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041145/Curtains-2.png",
+  "Customised Furniture":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041148/Customized-Furniture-2.png",
+  "Cycling Track":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041151/Cycle-Track-2.png",
+  "Dance Room":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041154/Dance-Room-2.png",
+  "Dedicated Pantries":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041157/Dedicated-Pantries-2.png",
+  "Designer Entrance Lobby":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041200/Designer-Entreance-lobby-2.png",
+  "Digital Zone":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041203/Digital-Zone-2.png",
+  "Double Height Lobbies":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041206/Double-Height-Lobby-2.png",
+  "Earthquake Resistant":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041209/Earthquake-Resistannt-2.png",
+  "Electricity":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041212/Electricity-2.png",
+  "Elevator":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041215/Elevator-2.png",
+  "Energy and water solution":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041218/Energy-and-water-solution-2.png",
+  "Entertainment Deck":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041221/Entertainment-deck-2.png",
+  "Equipped Kitchen":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041227/Equipped-Kitchen-2.png",
+  "External Amenities":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041230/External-Amenities-2.png",
+  "False Ceiling":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041233/False-Kitchen-2.png",
+  "Field View":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041236/Field-View-3.png",
+  "Fireplace":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041239/fire-Pit-1.png",
+  "Fitness Center":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041242/Fitness-Center-2.png",
+  "Flag Hosting Zone":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041245/Flag-Hosting-zone-2.png",
+  "Flower Garden":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041248/Flower-Garden-2.png",
+  "Food Court":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041251/Food-Court-2.png",
+  "Fountain":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041300/Fountain-2.png",
+  "Forest Walk":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041257/Forest-Walk-2.png",
+  "Football Court":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041254/Football-Court-2.png",
+  // "Food Court":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041251/Food-Court-2.png",
+  "Front Yard":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041304/Front-Yard-2.png",
+  "Full Furnished":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041306/Full-Furnished-2.png",
+  "Futsal Court":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041309/Futsal-Court-2.png",
+  "Game Area":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041312/Game-Area-2.png",
+  "Garage Attached":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041315/Garage-Attached-2.png",
+  "Garbage Disposal":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041317/Garbage-Disposal-2.png",
+  "Gated Complex":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041319/Gated-Complex-2.png",
+  "Gazebo":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041322/Gazebo-2.png",
+  "Generator Backup":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041325/Generator-Backup-2.png",
+  "Geyser":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041328/Geyser-2.png",
+  "Golf Course":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041331/Golf-Course-2.png",
+  "Green Area":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041334/Green-Area-2.png",
+  "Guest Bedroom":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041337/Guest-Bedroom-2.png",
+  "Helipad":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041340/Helipad-2.png",
+  "High-End Interior Design":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041346/High-End-Interior-2.png",
+  "Hot Bath":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041349/Hot-Bath-2.png",
+  "Housekeeping":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041352/Housekeeping-2.png",
+  "Indoor Games":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041355/Indoor-Games-2.png",
+  "Infinity Pool":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041358/Infinity-Pool-2.png",
+  "Intercom Facility":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041402/Intercom-2.png",
+  "Internal Amenities":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041405/Internal-Amenities-2.png",
+  "Italian Furniture":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041408/Italian-Furniture-2.png",
+  "Jacuzzi":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041411/Jacuzzi-2.png",
+  "Kids Play Area":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041414/Kids-play-2.png",
+  "Kids Pool":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041417/Kids-Pool-2.png",
+  "Laundry":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041420/laundry-2.png",
+  "Lawn Terraces":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041423/Lawn-Tennis-2.png",
+  "LED lighting":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041426/LED-Lights-2.png",
+  "Library":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041429/Library-2.png",
+  "Lounge Area":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041432/Lounge-Area-2.png",
+  "Media Room":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041435/Media-Room-2.png",
+  "Outdoor Gym":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041438/Outdoor-Gym-2.png",
+  "Party Deck":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041441/Party-Deck-2.png",
+  "Party Hall":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041444/Party-Hall-2.png",
+  "Party Lawn":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041447/Party-Lawn-2.png",
+  "Pathway":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041450/Pathway-2.png",
+  "Pergola":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041453/Pergola-2.png",
+  "Pet Park":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041456/Pet-Park-2.png",
+  "Pipe Gas":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041459/Pipe-Gas-2.png",
+  "Private Terrace":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041504/Private-Terrace-2.png",
+  "Property Management":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041507/Property-Management-2.png",
+  "Proximity to beach":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041510/Proximity-to-beach-2.png",
+  "Rain Water Harvesting":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041513/Rain-Water-Harvesting-2.png",
+  "School":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041516/School-2.png",
+  "Seating Area":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041519/Seating-Area-2.png",
+  "Seminar Hall":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041522/Seminar-Hall-2.png",
+  "Senior Citizen Area":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041525/Senior-Citizen-Area-2.png",
+  "Sewage Treatment Plant":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041528/Sewage-Treatment-Plant-2.png",
+  "Shopping Plaza":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041531/Shopping-Plaza-2.png",
+  "smoke detection":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041546/smoke-detection-2.png",
+  "Society Office":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041549/Society-Office-2.png",
+  "High Speed Elevators":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/10/10025615/Elevator.png",
+  "High Speed Elevators & Escalators":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/10/10025615/Elevator.png",
+  "Entrance Lobby":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/26043851/Double-Height-Lobby.png",
+  "Zip Line":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041650/Zip-Line-2.png",
+  "Zen Garden":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041647/zen-garden-2.png",
+  "Yoga Room":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041644/Yoga-Room-2.png",
+  "Video Door Security":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/10/10030533/CCTV-1.png",
+  "Vastu Compliance":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041629/vastu-compliance-2.png",
+  "VASTU COMPLIANT":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041629/vastu-compliance-2.png",
+  "Ventilation":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041632/Ventilation-2.png",
+  "Work From Home Space":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041641/Work-From-Home-2.png",
+  "Children's Play Area":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041414/Kids-play-2.png",
+  "Jogging Track":"https://www.propertyplateau.com/wp-content/uploads/2023/11/ICONS-PP-jogging-track-1.svg",
+  "Swimming Pool":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/10/10025652/Swimming-Pool.png",
+  "Landscape Garden":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041647/zen-garden-2.png",
+  "Sun Deck":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041602/sun-deck-2.png",
+  "Tennis Court":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041423/Lawn-Tennis-2.png",
+  "Table Tennis":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041611/table-tennis-2.png",
+  "Skating RInk":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041537/skating-ring-2.png",
+  "Pets Park":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041456/Pet-Park-2.png",
+  "Garden":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/26073347/Flower-Garden-1.png",
+  "Power Backup":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/10/10025646/Power-Backup.png",
+  "Business Lounge":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/26073536/Lounge-Area-1.png",
+  "Lounge Areas":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/26073536/Lounge-Area-1.png",
+  "Mini Theatre":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041435/Media-Room-2.png",
+  "6-meter wide cement road":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/12/09042348/Wide-Road_50z50.png",
+  "Gatered Community":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/12/12052018/Gated-Community.png",
+  "community-hall":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041103/Banquet-Hall-2.png",
+  "spa":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/12/12052029/Spa.png",
+  "amphitheater":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041045/Amphitheater-2.png",
+  "Toddlers Play Area":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041414/Kids-play-2.png",
+  "fire-fighting-systems":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/12/12052011/Fire-Protection-System.png",
+  "waste-management":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/12/12063513/Waste-Mgt.png",
+  "internal-street-lights":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/12/12052021/internal-street-lights.png",
+  "multipurpose-hall":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/10/10025638/Multipurposehall.png",
+  "squash-court":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/12/12052032/Squash-Court.png",
+  "sauna":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/12/12052026/Sauna.png",
+  "resturant":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/12/12052023/Restaurant.png",
+  "open-space":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/12/12063525/Open-Space.png",
+  "visitors-parking":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041125/Car-Parking-2.png",
+  "EV Charging Points":"https://www.propertyplateau.com/wp-content/uploads/2023/11/Car-Charging-Points.svg",
+  "salon":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/12/12052029/Spa.png",
+  "meditation-zone":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/26044327/Yoga-Room.png",
+  "Sky Deck":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041540/sky-deck-2.png",
+  "open-parking":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041555/stilt-parking-2.png",
+  "paved-compound":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2025/01/01123723/paved-cpmpound.png",
+  "Sit Out Area":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2025/01/01123720/open-space.png",
+  "wifi":"https://www.propertyplateau.com/wp-content/uploads/2023/11/Wifi.svg",
+  "Multi Purpose Court":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041309/Futsal-Court-2.png",
+  "reflexology-park":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041027/Acupressure-Park-2.png",
+  "Box Cricket":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041142/Cricket-2.png",
+  "Rooftop Solar Panels":"https://www.propertyplateau.com/wp-content/uploads/2023/09/solar-homes-e1695648897569.jpg",
+  "Security":"https://www.propertyplateau.com/wp-content/uploads/2023/11/24hrs-Security.svg",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+
+
+};
+
+
+
+const amenitiesTextMap = {
+
+  9: "24*7 Water Supply",
+  8: "Acupressure Park",
+  4: "Acupressure Pathway",
+  5: "Aerobics Centre",
+  10: "Air Conditioning",
+  16: "Amphitheater",
+  3: "Automated Gates",
+  33: "Badminton",
+  22: "Banquet Hall",
+  17: "Barbecue",
+  80: "CCTV Surveillance",
+  24: "Cricket Pitch",
+  223: "Elevator",
+  158: "Amphitheatre",
+  147: "Basketball court",
+  340: "Car Parking",
+  229: "Clubhouse",
+  375: "Kids Play Area",
+  300: "Pool",
+  347: "24*7 Security",
+  638: "24*7 Water Supply",
+  647: "3. 4. Convenience Stores (Like Nature Basket)",
+  446: "Acupressure Park",
+  668: "Acupressure Pathway",
+  623: "Aerobics Centre",
+  494: "Air Conditioning",
+  692: "Air Hockey",
+  102: "Amphitheatre",
+  557: "ATM",
+  490: "Automated Gates",
+  288: "Back yard",
+  443: "Badminton",
+  289: "Balcony",
+  507: "Banquet Hall",
+  624: "Bar/Chill-Out Lounge",
+  403: "Barbecue",
+  103: "Basketball court",
+  540: "Beach volleyball zone",
+  533: "Cafeteria",
+  666: "Camp Fire",
+  348: "Car Charging Point",
+  108: "Car Parking",
+  499: "CCTV surveillance",
+  381: "Central AC",
+  290: "Central Air",
+  640: "Children's Play Area",
+  665: "Chit Chat Plaza",
+  444: "Creche",
+  506: "Cricket Pitch",
+  467: "Curtains",
+  452: "Customised Furniture",
+  626: "Cycling Track",
+  579: "Dance Room",
+  606: "Dedicated Pantries",
+  559: "Designer Entrance Lobby",
+  599: "Digital Zone",
+  657: "Double Height Lobbies",
+  637: "Earthquake Resistant",
+  291: "Electricity",
+  309: "Elevator",
+  497: "Energy and Water Solutions",
+  634: "Entertainment Deck",
+  650: "Entertainment Zones",
+  551: "Entrance Lobby",
+  106: "Equipped Kitchen",
+  730: "EV Charging Points",
+  70: "External Amenities",
+489: "False Ceiling", 
+674: "Field View",
+ 310: "Fireplace", 
+516: "Fitness Centre", 
+670: "Flag Hosting Zone", 
+592: "Flower",
+ 593: "Flower Garden",
+ 617: "Food Court", 
+607: "Football Court", 
+486: "Forest Walk",
+713: "Fountain", 
+292: "Front Yard", 
+451: "Fully Furnished", 
+584: "Futsal Court", 
+397: "Game Area",
+ 622: "Gaming Room", 
+293: "Garage Attached", 
+612: "Garbage Disposal", 
+109: "Garden",
+ 463: "Gated Complex",
+349: "Gatered Community",
+ 611: "Gazebo", 
+367: "Generator Backup", 
+465: "Geyser",
+ 528: "Golf Course", 
+514: "Green Area", 
+474: "Guest Bedroom", 
+110: "Gym", 
+294: "Heating",
+ 529: "Helipad",
+504: "Helpers Quarte",
+ 572: "High Speed Elevators", 
+654: "High Speed Elevators & Escalators", 
+496: "High-End Interior Design",
+ 295: "Hot Bath", 
+502: "Housekeeping services", 
+126: "Indoor Games", 
+633: "Infinity Pool", 
+677: "Intercom Facility", 
+55: "Internal Amenities", 
+413: "Italian Furniture",
+ 562: "Italian Tiles",
+ 545: "Jacuzzi", 
+112: "Jogging Track", 
+509: "Kid's Pool", 
+122: "Kids Play Area",
+ 663: "Kids Pool", 
+491: "Kohler CP Fittings",
+ 609: "Laguna Pool",
+639: "Landscape Garden", 
+394: "Landscaping", 
+596: "Latest AC Technology", 
+239: "Laundry", 
+561: "Lawn Terraces", 
+493: "LED lighting", 
+58: "Library", 
+498: "Lounge Areas",
+ 595: "Luxury Flooring",
+ 248: "Media Room",
+234: "Interior Details", 
+653: "One of the Highest Open Space Projects", 
+263: "Outdoor Details",
+ 621: "Outdoor Gym", 
+523: "Party Deck", 
+61: "Party Hall", 
+468: "Party Hall", 
+630: "Party Lawn", 
+658: "Pathway", 
+445: "Pergola",
+ 591: "Pets Park",
+345: "Piped Gas System", 
+655: "Podium Garden of 1.5 acres", 
+72: "Pool", 
+377: "Pool deck",
+ 603: "Power Backup", 
+644: "Private Terrace",
+ 656: "Project will be managed by JLL or similar MNC company",
+ 532: "Property Management",
+ 469: "Proximity to the beach",
+ 460: "Rain Water Harvesting",
+629: "School",
+ 570: "Seating Area", 
+395: "Security",
+ 590: "Seminar Hall",
+ 645: "Senior Citizen Area", 
+107: "Senior Citizen Corner", 
+675: "Settlement",
+ 385: "Sewage Treatment Plant",
+ 517: "SHOPPING PLAZA",
+ 485: "Sit Out Area",
+542: "Skating Ring",
+ 571: "Skating RInk", 
+728: "Sky Deck",
+ 573: "Smart Home Automation", 
+524: "Smart Switches", 
+89: "Smoke detector", 
+319: "Smoke detectors",
+ 560: "Social Infrastructure",
+ 594: "Society",
+ 396: "Society Office",
+632: "Stilt Parking",
+ 616: "Sun Deck", 
+568: "Supermarket",
+ 567: "Sewage Treatment Plant", 
+487: "Swimming Pool", 
+618: "Table Tennis",
+ 683: "Temple",
+ 121: "Tennis Court", 
+586: "Terrace", 
+635: "Theatre",
+660: "Theme Wall", 
+661: "Toddlers Play Area",
+ 368: "TRANSFORMER",
+ 508: "Tree House", 
+283: "Utilities", 
+563: "Vastu Compliance",
+ 518: "VASTU COMPLIANT", 
+284: "Ventilation", 
+636: "Video Door Security",
+ 170: "Virtual Reality Games",
+614: "Work From Home Space", 
+350: "Yoga Room",
+ 576: "Zen Garden", 
+729: "Zip Line",
+566:"Business Lounge",
+125:"Mini Theatre",
+758:"6-meter wide cement road",
+750:"Fire Protection System",
+124:"Clubhouse",
+515:"squash-court",
+631:"community-hall",
+457:"spa",
+667:"amphitheater",
+771:"fire-fighting-systems",
+772:"waste-management",
+770:"internal-street-lights",
+536:"sauna",
+351:"resturant",
+127:"multipurpose-hall",
+550:"visitors-parking",
+455:"salon",
+569:"meditation-zone",
+773:"open-parking",
+782:"paved-compound",
+101:"wifi",
+672:"Multi Purpose Court",
+721:"reflexology-park",
+565:"Box Cricket",
+483:"Rooftop Solar Panels",
+
+
+
+
+
+
+
+
+};
+
+ 
+ 
+  
+const Amenities = ({ amenities }: { amenities: any[] }) => {
+  const [showAll, setShowAll] = useState(false);
+  const [allAmenities, setAllAmenities] = useState<any[]>([]);
+
+  const fetchAllAmenities = async () => {
+    try {
+      // Simulating a fetch call for demonstration; replace with actual API call if needed
+      const fetchedAmenities = amenities.map((amenity) => {
+        const featureId = typeof amenity === "object" ? amenity.id : amenity;
+        const featureName = amenitiesTextMap[featureId] || `Unknown Amenity (ID: ${featureId})`;
+        const featureImage = amenitiesIconMap[featureName] || placeholderImage;
+        return { featureId, featureName, featureImage };
+      });
+
+      setAllAmenities(fetchedAmenities);
+    } catch (error) {
+      console.error("Failed to fetch amenities:", error);
+    }
+  };
+
+  if (!amenities || amenities.length === 0) {
+    return null; // Do not render if no amenities are provided
+  }
+
+  // Map amenities to names and icons for initial display
+  const mappedAmenities = amenities.map((amenity) => {
+    // console.log(amenity)
+    const featureId = typeof amenity === "object" ? amenity.id : amenity;
+    const featureName = amenitiesTextMap[featureId] || `Unknown Amenity (ID: ${featureId})`;
+    const featureImage = amenitiesIconMap[featureName] || placeholderImage;
+    return { featureId, featureName, featureImage };
+  });
+
+  // Slice for initial display
+  const firstTenAmenities = mappedAmenities.slice(0, 10);
+
+  return (
+    <div className="amenities-section">
+      <h3>Top Facilities      </h3>
+      {/* Display first 10 amenities */}
+      <div className="amenities-container">
+        {firstTenAmenities.map((amenity, index) => (
+          <div key={index} className="amenity-item">
+            <img src={amenity.featureImage} alt={amenity.featureName} className="amenity-icon" />
+            <p>{amenity.featureName}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Show More button */}
+      <div className="show-more-container">
+        <button
+          className="show-more-btn"
+          onClick={() => {
+            fetchAllAmenities(); // Fetch all amenities before showing the modal
+            setShowAll(true);
+          }}
+        >
+          Show More Amenities
+        </button>
+      </div>
+
+      {/* Modal for all amenities */}
+      {showAll && (
+        <div className="modal-overlay" onClick={() => setShowAll(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="close-btn" onClick={() => setShowAll(false)}>
+              &times;
+            </button>
+            <h3>All Amenities</h3>
+            <div className="modal-amenities-container">
+              {/* Display all amenities fetched */}
+              {allAmenities.map((amenity, index) => (
+                <div key={index} className="amenity-item">
+                  <img src={amenity.featureImage} alt={amenity.featureName} className="amenity-icon" />
+                  <p>{amenity.featureName}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Amenities;

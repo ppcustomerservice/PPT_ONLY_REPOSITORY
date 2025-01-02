@@ -1,0 +1,11 @@
+{
+  "extends": "next",
+  "rules": {
+    "@next/next/no-img-element": "off",                // Disable the img warning
+    "jsx-a11y/alt-text": "off",                        // Disable the alt text warning
+    "react/no-unescaped-entities": "off",              // Disable unescaped characters warning
+    "react/display-name": "off",                       // Disable missing display name warning
+    "@typescript-eslint/no-unused-vars": "off",        // Disable unused variables warning
+    "@typescript-eslint/no-this-alias": "off"          // Disable 'this' aliasing warning
+  }
+}

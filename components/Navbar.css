@@ -1,0 +1,439 @@
+
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif, sans-serif;
+  box-sizing: border-box; 
+  overflow-x: hidden;
+} 
+
+
+
+
+/* Navbar Styles */
+.navbar {
+  background-color: #104b97;
+  padding: 20px;
+  width: 100%;
+  position: relative;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Hamburger at the top-left corner */
+.left-section {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.hamburger {
+  cursor: pointer;
+  font-size: 24px;
+  color: white;
+}
+
+.hamburger-icon, .cross {
+  font-size: 30px;
+  color: white;
+}
+
+/* Logo Centering */
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo img {
+  height: 60px;
+  margin-bottom: 10px;
+  max-width: 100%; 
+}
+
+.nav-items {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+}
+
+.nav-items a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.nav-items a:hover {
+  text-decoration: underline;
+}
+
+
+
+.subscribe {
+  background-color: white;
+  color: #104b97;
+  border: none;
+  padding: 5px 15px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.subscribe:hover {
+  background-color: #e6e6e6;
+}
+
+
+
+
+.menu-drawer.open {
+  left: 0; 
+}
+
+.menu-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+  color: #333;
+}
+
+.menu-links {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.menu-links li {
+  padding: 15px 0;
+}
+
+.menu-links a {
+  text-decoration: none;
+  color: #333;
+  font-size: 18px;
+}
+.title{
+  font-weight: bold;
+}
+
+.menu-links a:hover {
+  color: #104b97;
+}
+
+/* Sticky Navbar */
+.navbar.sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 20px;
+  background-color: #104b97;
+  z-index: 1000;
+  justify-content: flex-start;
+}
+
+.navbar.sticky .logo img {
+  height: 35px;
+}
+
+.navbar.sticky .nav-items,
+.navbar.sticky .right-section {
+  display: none; 
+}
+
+
+/* Sidebar Menu Drawer */
+.menu-drawer {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 15%;
+  height: 100%;
+  background-color: white;
+  transition: left 0.8s ease-in-out; 
+  z-index: 9999;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+  opacity: 0; 
+  transition: left 0.8s ease-in-out, opacity 0.8s ease-in-out; 
+}
+
+.menu-drawer.open {
+  left: 0;
+  opacity: 1; /* Make visible when open */
+}
+
+
+/* Right Section with Buttons */
+.right-section {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 15px; /* Add some space between the two buttons */
+}
+
+/* Subscribe Button */
+.subscribe {
+  background-color: white;
+  color: #104b97;
+  border: none;
+  padding: 5px 15px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.subscribe:hover {
+  background-color: #e6e6e6;
+}
+
+/* Language Dropdown Button (styled like subscribe button) */
+.language-dropdown-button {
+  background-color: white;
+  color: #104b97;
+  border: none;
+  padding: 5px 15px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+  position: relative;
+  font-family: "Montserrat", sans-serif;
+}
+
+.language-dropdown-button:hover {
+  background-color: #e6e6e6;
+}
+
+/* Dropdown Content */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  padding: 10px 0;
+  border-radius: 4px;
+  top: 35px; /* Position it below the button */
+}
+
+.language-dropdown-button:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content p {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.dropdown-content p:hover {
+  background-color: #e6e6e6;
+}
+
+
+
+.language-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.language-dropdown-button {
+  background-color: white;
+  color: #104b97;
+  border: none;
+  padding: 5px 15px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.language-dropdown-button:hover {
+  background-color: #e6e6e6;
+}
+
+/* Dropdown Content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  padding: 10px 0;
+  border-radius: 4px;
+  top: 35px; /* Position it below the button */
+}
+
+/* Show the dropdown when hovering over the dropdown container */
+.language-dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content p {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.dropdown-content p:hover {
+  background-color: #e6e6e6;
+}
+
+.language-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.language-dropdown-button {
+  background-color: white;
+  color: #104b97;
+  border: none;
+  padding: 5px 15px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.language-dropdown-button:hover,
+.language-dropdown-button:focus {
+  background-color: #e6e6e6;
+}
+
+/* Dropdown Content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  padding: 10px 0;
+  border-radius: 4px;
+  top: 35px;
+}
+
+/* Show the dropdown content when the dropdown or its children are focused */
+.language-dropdown:focus-within .dropdown-content,
+.language-dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content p {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.dropdown-content p:hover {
+  background-color: #e6e6e6;
+}
+
+
+/* Menu Header Close Button */
+.menu-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+/* Menu Links */
+.menu-links {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.menu-links li {
+  padding: 10px 0; /* Adjust spacing between links */
+}
+
+.menu-links a {
+  text-decoration: none;
+  color: #333;
+  font-size: 16px; /* Adjust font size */
+}
+
+.menu-links a:hover {
+  color: #104b97;
+}
+
+/* Our Brands Section */
+.brand-section-title {
+  font-weight: bold;
+  font-size: 18px; /* Add heading style for "Our Brands" */
+  margin-top: 20px;
+}
+/* Responsive for mobile */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
+  .nav-items {
+    display: none; 
+  }
+
+  .right-section {
+    display: none; 
+  }
+
+  .menu-drawer {
+    width: 55%; 
+  }
+
+  .navbar, .marquee-container {
+    width: 100vw; 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+  }
+ 
+  .logo img{
+    height: 35px;
+    margin-top: 18px;
+  }
+  .menu-drawer {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 45% !important;
+    height: 100%;
+    background-color: white;
+    transition: left 0.8s ease-in-out;
+    z-index: 9999;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: left 0.8s ease-in-out, opacity 0.8s ease-in-out; 
+  }
+  
+}

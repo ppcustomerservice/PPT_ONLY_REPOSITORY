@@ -1,0 +1,68 @@
+/* Container for all FAQs */
+.faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 10px;
+  }
+  
+  /* Title Styling */
+  .faq-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    padding: 20px 0;
+    text-align: left;
+  }
+  
+  /* Individual FAQ Items */
+  .faq-item {
+    padding: 15px 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Label Container */
+  .faq-label-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  /* Labels for Ques and Ans */
+  .faq-label {
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+  
+  .faq-ques {
+    background-color: #fff3cd;
+    color: #856404;
+  }
+  
+  .faq-ans {
+    background-color: #e6f4ea;
+    color: #2c7a4b;
+  }
+  
+  /* Text for Questions and Answers */
+  .faq-question,
+  .faq-answer {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  /* Divider for FAQs */
+  .faq-divider {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 10px 0;
+  }
+  

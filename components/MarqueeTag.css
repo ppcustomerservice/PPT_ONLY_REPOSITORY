@@ -1,0 +1,59 @@
+.scrolling-container {
+  width: 100%;
+  background-color: #1d2b3a;
+  color: white;
+  overflow: hidden;
+  position: relative;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.scrolling-text {
+  display: flex;
+  white-space: nowrap;
+  animation: scroll 40s linear infinite; /* Slow the speed here */
+}
+
+.scrolling-text span {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.scrolling-text .highlight {
+  background-color: #e74c3c;
+  padding: 0 10px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.scrolling-text .text-item {
+  margin-right: 40px;
+}
+
+.scrolling-text a {
+  color: white;
+  text-decoration: none;
+  margin-right: 40px;
+}
+
+.scrolling-text a:hover {
+  color: red; /* Changes the text color to red on hover */
+  text-decoration: none; /* Removes the underline */}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Stops animation on hover */
+.scrolling-container:hover .scrolling-text {
+  animation-play-state: paused;
+}

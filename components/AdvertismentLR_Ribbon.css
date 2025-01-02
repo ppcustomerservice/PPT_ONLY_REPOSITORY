@@ -1,0 +1,72 @@
+.left-ribbon, .right-ribbon {
+    position: fixed;
+    width: 100px;
+    height: 400px;
+    background-color: #ff0000;
+    color: #ffffff;
+    text-align: center;
+    line-height: 300px;
+    z-index: 1000;
+}
+
+.left-ribbon {
+    top: 52%;
+    left: 2px;
+    transform: translateY(-50%);
+}
+
+.right-ribbon {
+    top: 52%;
+    right: 0;
+    transform: translateY(-50%);
+}
+
+/* Hide ribbons when footer is visible */
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Hide ribbons on tablet and mobile devices */
+@media screen and (max-width: 768px) {
+    .left-ribbon, .right-ribbon {
+        display: none;
+    }
+}
+
+.left-ribbon, .right-ribbon {
+    position: fixed;
+    width: 100px;
+    height: 400px;
+    background-color: #ff0000;
+    color: #ffffff;
+    text-align: center;
+    line-height: 300px;
+    z-index: 1000;
+    transition: opacity 0.5s ease-in-out; /* Smooth transition */
+}
+
+.left-ribbon.hidden, .right-ribbon.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.left-ribbon {
+    top: 52%;
+    left: 2px;
+    transform: translateY(-50%);
+}
+
+.right-ribbon {
+    top: 52%;
+    right: 0;
+    transform: translateY(-50%);
+}
+
+/* Hide ribbons on tablet and mobile devices */
+@media screen and (max-width: 768px) {
+    .left-ribbon, .right-ribbon {
+        display: none;
+    }
+}
