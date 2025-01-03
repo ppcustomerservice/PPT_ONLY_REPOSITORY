@@ -18,7 +18,7 @@ const useFetchProperties = (regionId) => {
       setLoading(true);
       try {
         const response = await fetch(
-          `https://www.propertyplateau.com/wp-json/wp/v2/estate_property?property_county_state=${regionId}`
+          `https://www.propertyplateau.com/wp-json/wp/v2/estate_property?property_county_state=${regionId}&per_page=100`
         );
 
         if (!response.ok) {

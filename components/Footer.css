@@ -44,8 +44,9 @@
 }
 
 .footer-logo, .footer-contact-logo {
-  width: 200px;
+  width: 250px;
   margin-bottom: 15px;
+  margin-left: -18px;
 }
 
 .footer-second-row {

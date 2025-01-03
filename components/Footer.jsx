@@ -10,11 +10,11 @@ const Footer = () => {
       <div className="footer-row">
         {/* Column 1 - Latest News */}
         <div className="footer-column">
-          <img
+          {/* <img
             src="https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/09/03030642/PPTimes_bold.png"
             alt="Company Logo"
             className="footer-logo"
-          />
+          /> */}
           <ul>
             <li><a href={`${baseUrl}newsshorts/latestnews`}>Latest News</a></li>
             <li><a href={`${baseUrl}newsshorts/infrastructure`}>Infrastructure</a></li>
@@ -57,7 +57,7 @@ const Footer = () => {
         <div className="footer-column">
           <h4>Contact Us</h4>
           <img
-            src="https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/09/03030642/PPTimes_bold.png"
+            src="https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2025/01/03015741/PPtimes-461x103-1.png"
             alt="Footer Logo"
             className="footer-contact-logo"
           />
