@@ -159,20 +159,21 @@ const amenitiesIconMap = {
   "sauna":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/12/12052026/Sauna.png",
   "resturant":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/12/12052023/Restaurant.png",
   "open-space":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/12/12063525/Open-Space.png",
-  "visitors-parking":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041125/Car-Parking-2.png",
-  "EV Charging Points":"https://www.propertyplateau.com/wp-content/uploads/2023/11/Car-Charging-Points.svg",
-  "salon":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/12/12052029/Spa.png",
-  "meditation-zone":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/26044327/Yoga-Room.png",
-  "Sky Deck":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041540/sky-deck-2.png",
-  "open-parking":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041555/stilt-parking-2.png",
-  "paved-compound":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2025/01/01123723/paved-cpmpound.png",
-  "Sit Out Area":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2025/01/01123720/open-space.png",
-  "wifi":"https://www.propertyplateau.com/wp-content/uploads/2023/11/Wifi.svg",
-  "Multi Purpose Court":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041309/Futsal-Court-2.png",
-  "reflexology-park":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041027/Acupressure-Park-2.png",
-  "Box Cricket":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041142/Cricket-2.png",
-  "Rooftop Solar Panels":"https://www.propertyplateau.com/wp-content/uploads/2023/09/solar-homes-e1695648897569.jpg",
-  "Security":"https://www.propertyplateau.com/wp-content/uploads/2023/11/24hrs-Security.svg",
+  "business-center-conference-rooms":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2025/01/06022412/Co-working-Space.png",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
+  "":"",
   "":"",
   "":"",
   "":"",
@@ -468,7 +469,7 @@ const amenitiesTextMap = {
 125:"Mini Theatre",
 758:"6-meter wide cement road",
 750:"Fire Protection System",
-124:"Clubhouse",
+124:"ClubhouseOther",
 515:"squash-court",
 631:"community-hall",
 457:"spa",
@@ -478,26 +479,15 @@ const amenitiesTextMap = {
 770:"internal-street-lights",
 536:"sauna",
 351:"resturant",
-127:"multipurpose-hall",
-550:"visitors-parking",
-455:"salon",
-569:"meditation-zone",
-773:"open-parking",
-782:"paved-compound",
-101:"wifi",
-672:"Multi Purpose Court",
-721:"reflexology-park",
-565:"Box Cricket",
-483:"Rooftop Solar Panels",
-
-
-
+651:"business-center-conference-rooms",
+648:"convenience-stores-like-nature-basket"
 
 
 
 
 
 };
+
 
  
  

@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import styles from "./NewPropertiesDetails.module.css";
-import Navbar from "../../components/Navbar"
+import Navbar from "../../components/Navbar";
+import propData from "../new-properties/[slug]/prop.json"; // Adjust the path to your prop.json
 
 const NewProperties = () => {
   const [properties, setProperties] = useState([]);
@@ -18,7 +19,7 @@ const NewProperties = () => {
     location: [],
   });
 
-  // Fetch properties from the REST API
+  // Fetch properties from the REST API and map with prop.json
   const fetchProperties = async (currentPage) => {
     try {
       if (currentPage === 1) setLoading(true);
@@ -30,7 +31,28 @@ const NewProperties = () => {
       const data = await response.json();
 
       if (data.length > 0) {
-        setProperties((prevProperties) => [...prevProperties, ...data]);
+        const mappedData = data.map((property) => {
+          const propJsonMatch = propData.find((p) => p.ID === property.id);
+
+          // Correctly fetch and map price, label, and location from prop.json
+          const price = propJsonMatch?.property_price || "Price on Request";
+          const label = propJsonMatch?.property_label || "N/A";
+          const formattedPrice =
+            label === "CR" || label === "Cr"
+              ? `${price} Cr`
+              : `${price} Lacs`;
+
+          const location = propJsonMatch?.property_address?.replace(/\s+/g, " ") || "N/A";
+
+          return {
+            ...property,
+            price: formattedPrice,
+            label: label,
+            location: location,
+          };
+        });
+
+        setProperties((prevProperties) => [...prevProperties, ...mappedData]);
       } else {
         setHasMore(false);
       }
@@ -70,149 +92,169 @@ const NewProperties = () => {
 
   return (
     <>
-    <Navbar/>
-    <div className={styles.mainContainer}>
-      {/* Advanced Search Sidebar */}
-      <div className={styles.filterContainer}>
-        <h3 className={styles.filterTitle}>Advanced Search</h3>
+      <Navbar />
+      <div className={styles.mainContainer}>
+        {/* Advanced Search Sidebar */}
+        <div className={styles.filterContainer}>
+          <h3 className={styles.filterTitle}>Advanced Search</h3>
 
-        <label>Min Budget:</label>
-        <select name="minBudget" onChange={handleFilterChange}>
-          <option value="0">0</option>
-          <option value="500000">5 Lacs</option>
-          <option value="1000000">10 Lacs</option>
-          <option value="2000000">20 Lacs</option>
-          <option value="5000000">50 Lacs</option>
-        </select>
+          <label>Min Budget:</label>
+          <select name="minBudget" onChange={handleFilterChange}>
+            <option value="0">0</option>
+            <option value="500000">5 Lacs</option>
+            <option value="1000000">10 Lacs</option>
+            <option value="2000000">20 Lacs</option>
+            <option value="5000000">50 Lacs</option>
+          </select>
 
-        <label>Max Budget:</label>
-        <select name="maxBudget" onChange={handleFilterChange}>
-          <option value="30000000">3 Cr</option>
-          <option value="20000000">2 Cr</option>
-          <option value="10000000">1 Cr</option>
-          <option value="5000000">50 Lacs</option>
-          <option value="2000000">20 Lacs</option>
-        </select>
+          <label>Max Budget:</label>
+          <select name="maxBudget" onChange={handleFilterChange}>
+            <option value="30000000">3 Cr</option>
+            <option value="20000000">2 Cr</option>
+            <option value="10000000">1 Cr</option>
+            <option value="5000000">50 Lacs</option>
+            <option value="2000000">20 Lacs</option>
+          </select>
 
-        <h4>Possession In:</h4>
-        <div className={styles.filterGroup}>
-  <input type="checkbox" id="2024" />
-  <label htmlFor="2024">2024</label>
-</div>
-
-<div className={styles.filterGroup}>
-  <input type="checkbox" id="2025" />
-  <label htmlFor="2025">2025</label>
-</div>
-
-<div className={styles.filterGroup}>
-  <input type="checkbox" id="2026" />
-  <label htmlFor="2026">2026</label>
-</div>
-
-<div className={styles.filterGroup}>
-  <input type="checkbox" id="2027" />
-  <label htmlFor="2027">2027</label>
-</div>
-
-<div className={styles.filterGroup}>
-  <input type="checkbox" id="2028" />
-  <label htmlFor="2028">2028</label>
-</div>
-
-        <h4>Configuration:</h4>
-        {["1 BHK", "2 BHK", "3 BHK", "4 BHK", "5 BHK", "6 BHK"].map((config) => (
-          <div key={config}>
-            <input
-              type="checkbox"
-              name="configuration"
-              value={config}
-              onChange={handleFilterChange}
-            />
-            <label>{config}</label>
+          <h4>Possession In:</h4>
+          <div className={styles.filterGroup}>
+            <input type="checkbox" id="2024" />
+            <label htmlFor="2024">2024</label>
           </div>
-        ))}
 
-        <h4>Location:</h4>
-        {["Panvel", "Navi Mumbai", "Chembur", "Andheri West", "Santacruz West", "Mira Road", "Kalyan West"].map((location) => (
-          <div key={location}>
-            <input
-              type="checkbox"
-              name="location"
-              value={location}
-              onChange={handleFilterChange}
-            />
-            <label>{location}</label>
+          <div className={styles.filterGroup}>
+            <input type="checkbox" id="2025" />
+            <label htmlFor="2025">2025</label>
           </div>
-        ))}
-      </div>
 
-      {/* Properties List */}
-      <div className={styles.propertiesContainer}>
-        {properties.map((property) => (
-          <div key={property.id} className={styles.propertyBox}>
-            <div className={styles.propertyImageCarousel}>
-              <div className={styles.reraBadge}>RERA Registered</div>
-              <img
-                src={
-                  property._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
-                  "/placeholder.jpg"
-                }
-                alt={property.title.rendered}
-                className={styles.image}
+          <div className={styles.filterGroup}>
+            <input type="checkbox" id="2026" />
+            <label htmlFor="2026">2026</label>
+          </div>
+
+          <div className={styles.filterGroup}>
+            <input type="checkbox" id="2027" />
+            <label htmlFor="2027">2027</label>
+          </div>
+
+          <div className={styles.filterGroup}>
+            <input type="checkbox" id="2028" />
+            <label htmlFor="2028">2028</label>
+          </div>
+
+          <h4>Configuration:</h4>
+          {[
+            "1 BHK",
+            "2 BHK",
+            "3 BHK",
+            "4 BHK",
+            "5 BHK",
+            "6 BHK",
+          ].map((config) => (
+            <div key={config}>
+              <input
+                type="checkbox"
+                name="configuration"
+                value={config}
+                onChange={handleFilterChange}
               />
+              <label>{config}</label>
             </div>
-            <div className={styles.propertyInfo}>
-              <h2
-                className={styles.propertyTitle}
-                dangerouslySetInnerHTML={{ __html: property.title.rendered }}
+          ))}
+
+          <h4>Location:</h4>
+          {[
+            "Panvel",
+            "Navi Mumbai",
+            "Chembur",
+            "Andheri West",
+            "Santacruz West",
+            "Mira Road",
+            "Kalyan West",
+          ].map((location) => (
+            <div key={location}>
+              <input
+                type="checkbox"
+                name="location"
+                value={location}
+                onChange={handleFilterChange}
               />
-              <div className={styles.propertyDetails}>
-                <div>
-                  <strong>Carpet Area:</strong> {property.carpet_area || "N/A"} sqft
+              <label>{location}</label>
+            </div>
+          ))}
+        </div>
+
+        {/* Properties List */}
+        <div className={styles.propertiesContainer}>
+          {properties.map((property) => (
+            <div key={property.id} className={styles.propertyBox}>
+              <div className={styles.propertyImageCarousel}>
+                <div className={styles.reraBadge}>RERA Registered</div>
+                <img
+                  src={
+                    property._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
+                    "/placeholder.jpg"
+                  }
+                  alt={property.title.rendered}
+                  className={styles.image}
+                />
+              </div>
+              <div className={styles.propertyInfo}>
+                <h2
+                  className={styles.propertyTitle}
+                  dangerouslySetInnerHTML={{ __html: property.title.rendered }}
+                />
+                <div className={styles.propertyDetails}>
+                  <div>
+                    <strong>Carpet Area:</strong> {property.carpet_area || "N/A"} sqft
+                  </div>
+                  <div>
+                    <strong>Possession:</strong> {property.possession || "N/A"}
+                  </div>
+                  <div>
+                    <strong>Floor:</strong> {property.floor || "N/A"}
+                  </div>
+                  <div>
+                    <strong>Transaction:</strong> New Property
+                  </div>
+                  <div>
+                    <strong>Furnishing:</strong> {property.furnishing || "Unfurnished"}
+                  </div>
+                  <div>
+                    <strong>Location:</strong> {property.location}
+                  </div>
                 </div>
-                <div>
-                  <strong>Possession:</strong> {property.possession || "N/A"}
-                </div>
-                <div>
-                  <strong>Floor:</strong> {property.floor || "N/A"}
-                </div>
-                <div>
-                  <strong>Transaction:</strong> New Property
-                </div>
-                <div>
-                  <strong>Furnishing:</strong> {property.furnishing || "Unfurnished"}
-                </div>
-                <div>
-                  <strong>Location:</strong> {property.location || "N/A"}
+                <p className={styles.propertyPrice}>
+                  ₹ {property.price}
+                </p>
+                <div className={styles.buttonContainer}>
+                  <a
+                    href={`/new-properties/${property.slug}`}
+                    className={styles.viewDetailsBtn}
+                  >
+                    View Details
+                  </a>
+                  <a
+                    href={`/contact-owner/${property.slug}`}
+                    className={styles.contactOwnerBtn}
+                  >
+                    Contact Owner
+                  </a>
                 </div>
               </div>
-              <p className={styles.propertyPrice}>
-                ₹{property.price || "Price on Request"}
-              </p>
-              <div className={styles.buttonContainer}>
-                <a href={`/new-properties/${property.slug}`} className={styles.viewDetailsBtn}>
-                  View Details
-                </a>
-                <a href={`/contact-owner/${property.slug}`} className={styles.contactOwnerBtn}>
-                  Contact Owner
-                </a>
-              </div>
             </div>
-          </div>
-        ))}
-        {hasMore && (
-          <div className={styles.showMoreBtn}>
-            <button onClick={loadMore} disabled={loadingMore}>
-              {loadingMore ? "Loading..." : "Show More Properties ↓"}
-            </button>
-          </div>
-        )}
+          ))}
+          {hasMore && (
+            <div className={styles.showMoreBtn}>
+              <button onClick={loadMore} disabled={loadingMore}>
+                {loadingMore ? "Loading..." : "Show More Properties ↓"}
+              </button>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
     </>
   );
- 
 };
 
 export default NewProperties;

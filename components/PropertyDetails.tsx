@@ -18,6 +18,7 @@ import Marquee from '../../propertyplateautimes/components/MarqueeTag'; // Corre
 
 
 // Known amenities icon mapping
+// Known amenities icon and text mappings
 const amenitiesIconMap = {
   "Clubhouse": "https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/10/10025607/Clubhouse.png",
   // "Badminton": "https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/10/10025556/Badminton-Court.png",
@@ -166,22 +167,22 @@ const amenitiesIconMap = {
   "sauna":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/12/12052026/Sauna.png",
   "resturant":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/12/12052023/Restaurant.png",
   "open-space":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/12/12063525/Open-Space.png",
-  "":"",
-  "":"",
-  "":"",
-  "":"",
-  "":"",
-  "":"",
-  "":"",
-  "":"",
-  "":"",
-  "":"",
-  "":"",
-  "":"",
-  "":"",
-  "":"",
-  "":"",
-  "":"",
+  "business-center-conference-rooms":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2025/01/06022412/Co-working-Space.png",
+  "modular-kitchen":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041227/Equipped-Kitchen-2.png",
+  "grand-entrance-gate":"",
+  "paved-compound":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2025/01/06024158/paved-cpmpound-1.png",
+  "EV Charging Points":"https://www.propertyplateau.com/wp-content/uploads/2023/11/Car-Charging-Points.svg",
+  "meditation-zone":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/26044327/Yoga-Room.png",
+  "wifi":"https://www.propertyplateau.com/wp-content/uploads/2023/11/Wifi.svg",
+  "reflexology-park":"",
+  "multi-purpose-court":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041309/Futsal-Court-2.png",
+  "Amphitheatre":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2025/01/06015401/amphitheater.png",
+  "Box Cricket":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041142/Cricket-2.png",
+  "cabana-seating":"",
+  "Security":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/10/10030533/CCTV-1.png",
+  "mini-golf":"",
+  "Theatre":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2025/01/06031139/theater-1.png",
+  "Pool Table":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2025/01/06031416/pool-table-1.png",
   "":"",
   "":"",
   "":"",
@@ -476,7 +477,7 @@ const amenitiesTextMap = {
 125:"Mini Theatre",
 758:"6-meter wide cement road",
 750:"Fire Protection System",
-124:"ClubhouseOther",
+124:"Clubhouse",
 515:"squash-court",
 631:"community-hall",
 457:"spa",
@@ -486,9 +487,23 @@ const amenitiesTextMap = {
 770:"internal-street-lights",
 536:"sauna",
 351:"resturant",
-
-
-
+651:"business-center-conference-rooms",
+648:"convenience-stores-like-nature-basket",
+488:"modular-kitchen",
+753:"grand-entrance-gate",
+782:"paved-compound",
+753:"grand-entrance-gate",
+569:"meditation-zone",
+678:"rooftop-sky-lounge",
+101:"wifi",
+721:"reflexology-park",
+672:"multi-purpose-court",
+555:"Box Cricket",
+676:"cabana-seating",
+581:"mini-golf",
+127:"multipurpose-hall",
+784:"Pool Table",
+739:"Foosball"
 
 
 };
