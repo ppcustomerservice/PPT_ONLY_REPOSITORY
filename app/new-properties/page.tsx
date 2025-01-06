@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import styles from "./NewPropertiesDetails.module.css";
 import Navbar from "../../components/Navbar";
-import propData from "../new-properties/[slug]/prop.json"; // Adjust the path to your prop.json
+import propData from "../new-properties/[slug]/prop.json"; 
 
 const NewProperties = () => {
   const [properties, setProperties] = useState([]);
@@ -19,7 +19,6 @@ const NewProperties = () => {
     location: [],
   });
 
-  // Fetch properties from the REST API and map with prop.json
   const fetchProperties = async (currentPage) => {
     try {
       if (currentPage === 1) setLoading(true);
@@ -32,9 +31,10 @@ const NewProperties = () => {
 
       if (data.length > 0) {
         const mappedData = data.map((property) => {
-          const propJsonMatch = propData.find((p) => p.ID === property.id);
+          const propJsonMatch = propData.find(
+            (p) => String(p.ID).toLowerCase() === String(property.id).toLowerCase()
+          );
 
-          // Correctly fetch and map price, label, and location from prop.json
           const price = propJsonMatch?.property_price || "Price on Request";
           const label = propJsonMatch?.property_label || "N/A";
           const formattedPrice =
@@ -44,11 +44,25 @@ const NewProperties = () => {
 
           const location = propJsonMatch?.property_address?.replace(/\s+/g, " ") || "N/A";
 
+          const carpetArea = propJsonMatch?.Property_size
+            ? `${propJsonMatch.Property_size} sqft`
+            : "N/A";
+
+        
+          const possessionDate = propJsonMatch?.property_date
+            ? new Date(propJsonMatch.property_date).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+              })
+            : "N/A";
+
           return {
             ...property,
             price: formattedPrice,
             label: label,
             location: location,
+            carpet_area: carpetArea,
+            possession_date: possessionDate,
           };
         });
 
@@ -94,7 +108,6 @@ const NewProperties = () => {
     <>
       <Navbar />
       <div className={styles.mainContainer}>
-        {/* Advanced Search Sidebar */}
         <div className={styles.filterContainer}>
           <h3 className={styles.filterTitle}>Advanced Search</h3>
 
@@ -184,7 +197,6 @@ const NewProperties = () => {
           ))}
         </div>
 
-        {/* Properties List */}
         <div className={styles.propertiesContainer}>
           {properties.map((property) => (
             <div key={property.id} className={styles.propertyBox}>
@@ -206,13 +218,10 @@ const NewProperties = () => {
                 />
                 <div className={styles.propertyDetails}>
                   <div>
-                    <strong>Carpet Area:</strong> {property.carpet_area || "N/A"} sqft
+                    <strong>Carpet Area:</strong> {property.carpet_area}
                   </div>
                   <div>
-                    <strong>Possession:</strong> {property.possession || "N/A"}
-                  </div>
-                  <div>
-                    <strong>Floor:</strong> {property.floor || "N/A"}
+                    <strong>Possession:</strong> {property.possession_date}
                   </div>
                   <div>
                     <strong>Transaction:</strong> New Property
