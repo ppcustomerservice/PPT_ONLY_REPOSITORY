@@ -45,6 +45,7 @@ const NavBar = () => {
         </div>
 
         <div className="nav-items">
+        <a href={`${baseUrl}new-properties`}>New Properties</a>
         <a href={`${baseUrl}newsshorts/latestnews`}>Latest News</a>
         <a href={`${baseUrl}newsshorts/infrastructure`}>Infrastructure</a>
         <a href={`${baseUrl}newsshorts/proptech`}>Proptech</a>

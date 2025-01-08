@@ -1,13 +1,14 @@
-"use client"; 
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import Slider from 'react-slick';
+import React, { useState, useEffect } from "react";
+import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import './PropertySlider.css';
-import Link from 'next/link';
+import "./PropertySlider.css";
+import Link from "next/link";
+import propDetails from "../app/new-properties/[slug]/prop.json"; // Import prop.json directly
 
-
+// Fetch properties from REST API
 const useFetchProperties = (regionId) => {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,17 +18,48 @@ const useFetchProperties = (regionId) => {
     const fetchProperties = async () => {
       setLoading(true);
       try {
-        const response = await fetch(
-          `https://www.propertyplateau.com/wp-json/wp/v2/estate_property?property_county_state=${regionId}&per_page=100`
+        // Fetch properties from REST API
+        const apiResponse = await fetch(
+          `https://www.propertyplateau.com/wp-json/wp/v2/estate_property?property_county_state=${regionId}&per_page=10`
         );
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch properties');
+        if (!apiResponse.ok) {
+          throw new Error("Failed to fetch properties from API");
         }
+        const apiProperties = await apiResponse.json();
 
-        const data = await response.json();
-        setProperties(data);
+        // Merge REST API properties with prop.json details
+        const mergedProperties = apiProperties.map((property) => {
+          const matchedProp = propDetails.find(
+            (prop) => parseInt(prop.ID, 10) === parseInt(property.id, 10)
+          );
+
+          const price = matchedProp?.property_price || "Price not available";
+          const label = matchedProp?.property_label
+            ? matchedProp.property_label.trim().toUpperCase() === "CR*"
+              ? "Crore"
+              : matchedProp.property_label.trim().toUpperCase() === "LAKHS"
+              ? "Lakh"
+              : "Crore"
+            : "Label not available";
+
+          return {
+            ...property,
+            property_price: price,
+            property_label: label,
+            property_date: matchedProp?.property_date
+              ? new Date(matchedProp.property_date).toLocaleString("default", {
+                  month: "long",
+                  year: "numeric",
+                })
+              : "Date not available",
+            Property_size: matchedProp?.Property_size || "Size not available",
+          };
+        });
+
+        setProperties(mergedProperties);
       } catch (err) {
+        console.error("Error fetching properties:", err);
         setError(err.message);
       } finally {
         setLoading(false);
@@ -43,9 +75,9 @@ const useFetchProperties = (regionId) => {
 };
 
 const truncateTitle = (title, wordLimit = 4) => {
-  const words = title.split(' ');
+  const words = title.split(" ");
   if (words.length > wordLimit) {
-    return words.slice(0, wordLimit).join(' ') + '...';
+    return words.slice(0, wordLimit).join(" ") + "...";
   }
   return title;
 };
@@ -54,10 +86,9 @@ const PropertySlider = ({ regionId }) => {
   const { properties, loading, error } = useFetchProperties(regionId);
 
   const settings = {
-    // dots: true,
     infinite: false,
     speed: 500,
-    slidesToShow: 3, 
+    slidesToShow: 3,
     slidesToScroll: 1,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
@@ -101,34 +132,42 @@ const PropertySlider = ({ regionId }) => {
           <div key={property.id} className="property-card-wrapper">
             <div className="property-card">
               <a
-                href={`/property/${property.slug}`} 
+                href={`/property/${property.slug}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <img
-                  src={property.yoast_head_json?.og_image?.[0]?.url || 'https://via.placeholder.com/400'}
+                  src={
+                    property.yoast_head_json?.og_image?.[0]?.url ||
+                    "https://via.placeholder.com/400"
+                  }
                   alt={property.title.rendered}
                   className="property-image"
                 />
 
-                {/* Title and Meta Info */}
                 <div className="property-details">
                   <h3 className="property-title">
                     {truncateTitle(decodeHtmlEntities(property.title.rendered))}
                   </h3>
                   <div className="property-meta">
                     <p className="property-size">
-                      {property.property_area?.[0] || 'Area details not available'}
+                      {property.Property_size !== "Size not available"
+                        ? `${property.Property_size} sq. ft.`
+                        : "Size not available"}
                     </p>
                     <p className="property-possession">
-                      {property.possession || 'Possession details not available'}
+                      {property.property_date !== "Date not available"
+                        ? `Possession: ${property.property_date}`
+                        : "Possession details not available"}
                     </p>
                   </div>
                 </div>
 
                 <div className="property-footer">
                   <p className="property-price">
-                    {property.price ? `₹ ${property.price}` : 'Price on request'}
+                    {property.property_price !== "Price not available"
+                      ? `₹ ${property.property_price} ${property.property_label}`
+                      : "Price on request"}
                   </p>
                   <button className="contact-now-button">Contact Now</button>
                 </div>
@@ -139,9 +178,9 @@ const PropertySlider = ({ regionId }) => {
 
         <div className="property-card-wrapper">
           <div className="property-card view-more-card">
-          <Link href="/new-properties">
+            <Link href="/new-properties">
               <button className="view-more-button">View More</button>
-           </Link>
+            </Link>
           </div>
         </div>
       </Slider>
@@ -162,10 +201,10 @@ const SampleNextArrow = (props) => {
       className={`${className} custom-next-arrow`}
       style={{
         ...style,
-        display: 'block',
-        backgroundColor: '#104b97',
-        borderRadius: '50%',
-        padding: '10px',
+        display: "block",
+        backgroundColor: "#104b97",
+        borderRadius: "50%",
+        padding: "10px",
       }}
       onClick={onClick}
     />
@@ -179,10 +218,10 @@ const SamplePrevArrow = (props) => {
       className={`${className} custom-prev-arrow`}
       style={{
         ...style,
-        display: 'block',
-        backgroundColor: '#104b97',
-        borderRadius: '50%',
-        padding: '10px',
+        display: "block",
+        backgroundColor: "#104b97",
+        borderRadius: "50%",
+        padding: "10px",
       }}
       onClick={onClick}
     />
