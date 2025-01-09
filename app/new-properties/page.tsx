@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import styles from "./NewPropertiesDetails.module.css";
 import Navbar from "../../components/Navbar";
@@ -8,13 +7,13 @@ import propData from "../new-properties/[slug]/prop.json";
 const NewProperties = () => {
   const [properties, setProperties] = useState([]);
   const [filteredProperties, setFilteredProperties] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loadingProperties, setLoadingProperties] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const [loadingMore, setLoadingMore] = useState(false);
   const [filters, setFilters] = useState({
-    minBudget: 1000000, // Default: 10 Lacs
-    maxBudget: 1000000000, // Default: 100 Cr
+    minBudget: 10000000, // Default: 1 Cr
+    maxBudget: 100000000, // Default: 10 Cr
     possession: [],
     configuration: [],
     location: [],
@@ -32,60 +31,56 @@ const NewProperties = () => {
     { label: "100 Cr", value: 1000000000 },
   ];
 
-  const fetchProperties = async (currentPage) => {
+  const fetchProperties = async (currentPage, append = false) => {
     try {
-      if (currentPage === 1) setLoading(true);
+      if (!append) setLoadingProperties(true);
       else setLoadingMore(true);
-
-      const response = await fetch(
-        `https://www.propertyplateau.com/wp-json/wp/v2/estate_property?per_page=5&page=${currentPage}&_embed`
-      );
-      const data = await response.json();
-
-      if (data.length > 0) {
-        const mappedData = data.map((property) => {
-          const propJsonMatch = propData.find(
-            (p) => String(p.ID).toLowerCase() === String(property.id).toLowerCase()
-          );
-
-          const price = propJsonMatch?.property_price || "Price on Request";
-          const label = propJsonMatch?.property_label || "N/A";
-
-          // Format price
-          const formattedPrice =
-            label === "CR" || label === "Cr"
-              ? `${price} Cr`
-              : `${price} Lacs`;
-
-          const numericPrice = label.toLowerCase().includes("cr")
-            ? parseFloat(price) * 1e7 // Convert crores to rupees
-            : parseFloat(price) * 1e5; // Convert lakhs to rupees
-
-          const location = propJsonMatch?.property_address?.replace(/\s+/g, " ") || "N/A";
-
-          const carpetArea = propJsonMatch?.Property_size
-            ? `${propJsonMatch.Property_size} sqft`
-            : "N/A";
-
-          const possessionDate = propJsonMatch?.property_date
-            ? new Date(propJsonMatch.property_date).toLocaleDateString("en-US", {
+  
+      // Use prop.json data
+      const data = propData;
+  
+      const mappedData = data.map((property) => {
+        const price = property.property_price || "Price on Request";
+        const label = property.property_label || "N/A";
+      
+        const formattedPrice =
+          label.toLowerCase().includes("cr")
+            ? `${price} Cr`
+            : `${price} Lacs`;
+      
+        const numericPrice = label.toLowerCase().includes("cr")
+          ? parseFloat(price) * 1e7
+          : parseFloat(price) * 1e5;
+      
+        return {
+          id: property.ID,
+          title: property.post_title,
+          price: formattedPrice,
+          numericPrice,
+          label,
+          location: property.property_address?.replace(/\s+/g, " ") || "N/A",
+          carpet_area: property.Property_size
+            ? `${property.Property_size} sqft`
+            : "N/A",
+          possession_date: property.property_date
+            ? new Date(property.property_date).toLocaleDateString("en-US", {
                 year: "numeric",
                 month: "long",
               })
-            : "N/A";
-
-          return {
-            ...property,
-            price: formattedPrice,
-            numericPrice,
-            label: label,
-            location: location,
-            carpet_area: carpetArea,
-            possession_date: possessionDate,
-          };
-        });
-
-        setProperties((prevProperties) => [...prevProperties, ...mappedData]);
+            : "N/A",
+          slug: property.slug,
+          image: property.images?.[0] || "default-image-url.jpg", // First image or default fallback
+          images: property.images || [], // All images array
+        };
+      });
+      
+  
+      if (mappedData.length > 0) {
+        setProperties((prevProperties) =>
+          append ? [...prevProperties, ...mappedData] : mappedData
+        );
+  
+        if (mappedData.length < 10) setHasMore(false);
       } else {
         setHasMore(false);
       }
@@ -93,36 +88,69 @@ const NewProperties = () => {
       console.error("Error fetching properties:", error);
       setHasMore(false);
     } finally {
-      setLoading(false);
+      setLoadingProperties(false);
       setLoadingMore(false);
     }
   };
+  
 
-  // Filter and sort properties dynamically
   useEffect(() => {
+    fetchProperties(1, false);
+    setPage(1);
+  }, [filters.minBudget, filters.maxBudget]);
+
+  const filterPropertiesLocally = () => {
     const filtered = properties
       .filter((property) => {
-        const isWithinBudget =
-          property.numericPrice >= filters.minBudget &&
-          property.numericPrice <= filters.maxBudget;
         return (
-          isWithinBudget &&
-          (filters.possession.length === 0 || filters.possession.includes(property.possession_date)) &&
-          (filters.configuration.length === 0 || filters.configuration.includes(property.label)) &&
-          (filters.location.length === 0 || filters.location.includes(property.location))
+          property.numericPrice >= filters.minBudget &&
+          property.numericPrice <= filters.maxBudget &&
+          (filters.possession.length === 0 ||
+            filters.possession.includes(property.possession_date)) &&
+          (filters.configuration.length === 0 ||
+            filters.configuration.includes(property.label)) &&
+          (filters.location.length === 0 ||
+            filters.location.includes(property.location))
         );
       })
-      .sort((a, b) => a.numericPrice - b.numericPrice); // Sort in ascending order
+      .sort((a, b) => a.numericPrice - b.numericPrice);
 
     setFilteredProperties(filtered);
-  }, [filters, properties]);
+  };
 
   useEffect(() => {
-    fetchProperties(page);
-  }, [page]);
+    filterPropertiesLocally();
+  }, [properties, filters]);
 
-  const loadMore = () => {
-    setPage((prevPage) => prevPage + 1);
+  const loadMore = async () => {
+    if (loadingMore || !hasMore) return;
+
+    const nextPage = page + 1;
+
+    try {
+      await fetchProperties(nextPage, true);
+      setPage(nextPage);
+    } catch (error) {
+      console.error("Error loading more properties:", error);
+    }
+  };
+
+  const handleMinBudgetChange = (e) => {
+    const value = parseInt(e.target.value);
+    setFilters((prev) => ({
+      ...prev,
+      minBudget: value,
+      maxBudget: Math.max(value + 1, prev.maxBudget),
+    }));
+  };
+
+  const handleMaxBudgetChange = (e) => {
+    const value = parseInt(e.target.value);
+    setFilters((prev) => ({
+      ...prev,
+      maxBudget: value,
+      minBudget: Math.min(value - 1, prev.minBudget),
+    }));
   };
 
   const handleFilterChange = (e) => {
@@ -140,8 +168,6 @@ const NewProperties = () => {
     });
   };
 
-  if (loading) return <p>Loading properties...</p>;
-
   return (
     <>
       <Navbar />
@@ -154,26 +180,30 @@ const NewProperties = () => {
           <select
             name="minBudget"
             value={filters.minBudget}
-            onChange={handleFilterChange}
+            onChange={handleMinBudgetChange}
           >
-            {priceOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
+            {priceOptions
+              .filter((option) => option.value < filters.maxBudget)
+              .map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
           </select>
 
           <label>Max Budget:</label>
           <select
             name="maxBudget"
             value={filters.maxBudget}
-            onChange={handleFilterChange}
+            onChange={handleMaxBudgetChange}
           >
-            {priceOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
+            {priceOptions
+              .filter((option) => option.value > filters.minBudget)
+              .map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
           </select>
 
           {/* Other Filters */}
@@ -191,17 +221,19 @@ const NewProperties = () => {
           ))}
 
           <h4>Configuration:</h4>
-          {["1 BHK", "2 BHK", "3 BHK", "4 BHK", "5 BHK", "6 BHK"].map((config) => (
-            <div className={styles.filterGroup} key={config}>
-              <input
-                type="checkbox"
-                name="configuration"
-                value={config}
-                onChange={handleFilterChange}
-              />
-              <label>{config}</label>
-            </div>
-          ))}
+          {["1 BHK", "2 BHK", "3 BHK", "4 BHK", "5 BHK", "6 BHK"].map(
+            (config) => (
+              <div className={styles.filterGroup} key={config}>
+                <input
+                  type="checkbox"
+                  name="configuration"
+                  value={config}
+                  onChange={handleFilterChange}
+                />
+                <label>{config}</label>
+              </div>
+            )
+          )}
 
           <h4>Location:</h4>
           {[
@@ -226,62 +258,60 @@ const NewProperties = () => {
         </div>
 
         <div className={styles.propertiesContainer}>
-          {filteredProperties.map((property) => (
-            <div key={property.id} className={styles.propertyBox}>
-              <div className={styles.propertyImageCarousel}>
-                <div className={styles.reraBadge}>RERA Registered</div>
-                <img
-                  src={
-                    property._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
-                    "/placeholder.jpg"
-                  }
-                  alt={property.title.rendered}
-                  className={styles.image}
-                />
-              </div>
-              <div className={styles.propertyInfo}>
-                <h2
-                  className={styles.propertyTitle}
-                  dangerouslySetInnerHTML={{ __html: property.title.rendered }}
-                />
-                <div className={styles.propertyDetails}>
-                  <div>
-                    <strong>Carpet Area:</strong> {property.carpet_area}
+          {loadingProperties ? (
+            <p>Loading properties...</p>
+          ) : filteredProperties.length > 0 ? (
+            filteredProperties.map((property) => (
+              <div key={property.id} className={styles.propertyBox}>
+                <div className={styles.propertyImageCarousel}>
+                  <div className={styles.reraBadge}>RERA Registered</div>
+                  <img
+                    src={property.image}
+                    alt={property.title}
+                    className={styles.image}
+                  />
+                </div>
+                <div className={styles.propertyInfo}>
+                  <h2 className={styles.propertyTitle}>{property.title}</h2>
+                  <div className={styles.propertyDetails}>
+                    <div>
+                      <strong>Carpet Area:</strong> {property.carpet_area}
+                    </div>
+                    <div>
+                      <strong>Possession:</strong> {property.possession_date}
+                    </div>
+                    <div>
+                      <strong>Transaction:</strong> New Property
+                    </div>
+                    <div>
+                      <strong>Furnishing:</strong> Unfurnished
+                    </div>
+                    <div>
+                      <strong>Location:</strong> {property.location}
+                    </div>
                   </div>
-                  <div>
-                    <strong>Possession:</strong> {property.possession_date}
-                  </div>
-                  <div>
-                    <strong>Transaction:</strong> New Property
-                  </div>
-                  <div>
-                    <strong>Furnishing:</strong> {property.furnishing || "Unfurnished"}
-                  </div>
-                  <div>
-                    <strong>Location:</strong> {property.location}
+                  <p className={styles.propertyPrice}>₹ {property.price}</p>
+                  <div className={styles.buttonContainer}>
+                    <a
+                      href={`/new-properties/${property.slug}`}
+                      className={styles.viewDetailsBtn}
+                    >
+                      View Details
+                    </a>
+                    <a
+                      href={`/contact-owner/${property.slug}`}
+                      className={styles.contactOwnerBtn}
+                    >
+                      Contact Owner
+                    </a>
                   </div>
                 </div>
-                <p className={styles.propertyPrice}>
-                  ₹ {property.price}
-                </p>
-                <div className={styles.buttonContainer}>
-                  <a
-                    href={`/new-properties/${property.slug}`}
-                    className={styles.viewDetailsBtn}
-                  >
-                    View Details
-                  </a>
-                  <a
-                    href={`/contact-owner/${property.slug}`}
-                    className={styles.contactOwnerBtn}
-                  >
-                    Contact Owner
-                  </a>
-                </div>
               </div>
-            </div>
-          ))}
-          {hasMore && (
+            ))
+          ) : (
+            <p>No properties found within the selected filters.</p>
+          )}
+          {hasMore && !loadingProperties && (
             <div className={styles.showMoreBtn}>
               <button onClick={loadMore} disabled={loadingMore}>
                 {loadingMore ? "Loading..." : "Show More Properties ↓"}
