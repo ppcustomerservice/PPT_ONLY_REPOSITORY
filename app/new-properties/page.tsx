@@ -102,18 +102,20 @@ const NewProperties = () => {
   const filterPropertiesLocally = () => {
     const filtered = properties
       .filter((property) => {
+        const possessionYear = new Date(property.possession_date).getFullYear();
+
         return (
           property.numericPrice >= filters.minBudget &&
           property.numericPrice <= filters.maxBudget &&
           (filters.possession.length === 0 ||
-            filters.possession.includes(property.possession_date)) &&
+            filters.possession.includes(possessionYear.toString())) &&
           (filters.configuration.length === 0 ||
             filters.configuration.includes(property.label)) &&
           (filters.location.length === 0 ||
             filters.location.includes(property.location))
         );
       })
-      .sort((a, b) => a.numericPrice - b.numericPrice);
+      .sort((a, b) => a.numericPrice - b.numericPrice);  /// to sort the property war needs to work here
 
     setFilteredProperties(filtered);
   };
@@ -208,7 +210,7 @@ const NewProperties = () => {
 
           {/* Other Filters */}
           <h4>Possession In:</h4>
-          {["2024", "2025", "2026", "2027", "2028"].map((year) => (
+          {["2021","2022","2023","2024", "2025", "2026", "2027", "2028","2029","2030","2031"].map((year) => (
             <div className={styles.filterGroup} key={year}>
               <input
                 type="checkbox"
@@ -264,7 +266,7 @@ const NewProperties = () => {
             filteredProperties.map((property) => (
               <div key={property.id} className={styles.propertyBox}>
                 <div className={styles.propertyImageCarousel}>
-                  <div className={styles.reraBadge}>RERA Registered</div>
+                  {/* <div className={styles.reraBadge}>RERA Registered</div> */}
                   <img
                     src={property.image}
                     alt={property.title}

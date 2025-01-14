@@ -9,6 +9,8 @@ import Description from "../components/Description";
 import Amenities from "../components/Amenities";
 import YouTubeVideo from "../components/YouTubeVideo";
 import Location from "../components/Location";
+import FloorPlan from "../components/FloorPlan";
+
 
 async function fetchAllAmenities(postId: number) {
   let allAmenities: any[] = [];
@@ -68,6 +70,8 @@ export default async function PropertyPage({ params }: { params: { slug: string 
       const propertyLabel = additionalDetails?.property_label || "";
       const combinedPrice = `${propertyPrice} ${propertyLabel}`;
       const propertyDate = additionalDetails?.property_date || "Possession date not available";
+      const floorPlans = additionalDetails?.plans || [];
+
 
 
       const propertyID = property.id;
@@ -108,6 +112,10 @@ export default async function PropertyPage({ params }: { params: { slug: string 
             <YouTubeVideo propertyId={property.id} />
 
             <Location propertyId={propertyID} />
+
+            <div style={{ padding: "20px 40px" }}>
+                 <FloorPlan plans={floorPlans} />
+              </div>
 
 
           {/* Contact Form */}

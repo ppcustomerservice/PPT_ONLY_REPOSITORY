@@ -9,6 +9,7 @@ import Description from "./components/Description";
 import Amenities from "./components/Amenities";
 import YouTubeVideo from "@/app/property/components/YouTubeVideo";
 import Location from "./components/Location";
+import FloorPlan from "./components/FloorPlan";
 
 
 async function fetchAllAmenities(postId: number) {
@@ -46,6 +47,7 @@ export default async function PropertyPage({ params }: { params: { slug: string 
     );
     const propertyData = await response.json();
 
+    
     if (propertyData.length > 0) {
       const property = propertyData[0];
 
@@ -68,6 +70,9 @@ export default async function PropertyPage({ params }: { params: { slug: string 
       const propertyPrice = additionalDetails?.property_price || "0.0";
       const propertyLabel = additionalDetails?.property_label || "";
       const combinedPrice = `${propertyPrice} ${propertyLabel}`;
+      const floorPlans = additionalDetails?.plans || [];
+
+
 
       const propertyID = property.id;
       const description = property.content.rendered || "Description not available.";
@@ -107,6 +112,10 @@ export default async function PropertyPage({ params }: { params: { slug: string 
                <YouTubeVideo propertyId={property.id} />
 
                <Location propertyId={propertyID} />
+
+               <div style={{ padding: "20px 40px" }}>
+                 <FloorPlan plans={floorPlans} />
+              </div>
 
 
           {/* Contact Form */}
