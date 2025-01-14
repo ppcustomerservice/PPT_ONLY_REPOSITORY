@@ -65,7 +65,7 @@
 }
 
 /* Hide ribbons on tablet and mobile devices */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1357px) {
     .left-ribbon, .right-ribbon {
         display: none;
     }

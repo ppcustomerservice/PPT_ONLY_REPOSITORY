@@ -100,26 +100,38 @@ const ImageGallery = ({ propertyID }) => {
 
   return (
     <div className={styles.galleryContainer}>
-      <div className={styles.featuredImage}>
-        <img
-          src={featuredImage}
-          alt="Featured Property"
-          onClick={() => openModal(0)}
-        />
-      </div>
-
-      <div className={styles.rightImages}>
-        {rightImages.map((image, index) => (
-          <div
-            key={index}
-            className={styles.squareImage}
-            onClick={() => openModal(index + 1)}
-          >
-            <img src={image} alt={`Property Image ${index + 2}`} />
+      {images.length === 1 ? (
+        <div className={styles.singleImageContainer}>
+          <img
+            src={images[0]}
+            alt="Featured Property"
+            onClick={() => openModal(0)}
+          />
+        </div>
+      ) : (
+        <>
+          <div className={styles.featuredImage}>
+            <img
+              src={featuredImage}
+              alt="Featured Property"
+              onClick={() => openModal(0)}
+            />
           </div>
-        ))}
-      </div>
-
+  
+          <div className={styles.rightImages}>
+            {rightImages.map((image, index) => (
+              <div
+                key={index}
+                className={styles.squareImage}
+                onClick={() => openModal(index + 1)}
+              >
+                <img src={image} alt={`Property Image ${index + 2}`} />
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+  
       {isModalOpen && (
         <div
           className={styles.modal}
@@ -130,10 +142,7 @@ const ImageGallery = ({ propertyID }) => {
             &times;
           </span>
           <div className={styles.modalContent}>
-            <button
-              className={styles.arrowButton}
-              onClick={showPreviousImage}
-            >
+            <button className={styles.arrowButton} onClick={showPreviousImage}>
               &#8592;
             </button>
             <img
@@ -149,6 +158,7 @@ const ImageGallery = ({ propertyID }) => {
       )}
     </div>
   );
+  
 };
 
 export default ImageGallery;

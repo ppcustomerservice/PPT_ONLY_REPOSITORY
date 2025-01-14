@@ -71,9 +71,9 @@ const Footer = () => {
       {/* Footer Bottom Row */}
       <div className="footer-second-row">
         <ul>
-          <li><a href="#">Terms of Use</a></li>
+          <li><a href={`${baseUrl}Terms-of-use`}>Terms of Use</a></li>
           <li><a href="#">Contact Us</a></li>
-          <li><a href="#">Disclaimer</a></li>
+          <li><a href={`${baseUrl}Disclaimer`}>Disclaimer</a></li>
           <li><a href="#">Site Maps</a></li>
           <li><a href="#">RSS Feeds</a></li>
         </ul>
