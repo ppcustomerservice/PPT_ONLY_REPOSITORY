@@ -67,6 +67,9 @@ export default async function PropertyPage({ params }: { params: { slug: string 
         additionalDetails?.city ||
         "Location not available";
 
+      const possessionDate = additionalDetails?.property_date || "N/A";
+
+
       const propertyPrice = additionalDetails?.property_price || "0.0";
       const propertyLabel = additionalDetails?.property_label || "";
       const combinedPrice = `${propertyPrice} ${propertyLabel}`;
@@ -92,6 +95,8 @@ export default async function PropertyPage({ params }: { params: { slug: string 
             subtitle={subtitle}
             location={location}
             price={combinedPrice}
+            possessionDate={possessionDate}
+
           />
 
           {/* Image Gallery */}

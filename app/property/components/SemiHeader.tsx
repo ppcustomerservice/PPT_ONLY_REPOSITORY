@@ -9,7 +9,6 @@ interface SemiHeaderProps {
   price: string;
   possessionDate: string; // New prop for possession date
 }
-
 const SemiHeader: React.FC<SemiHeaderProps> = ({ title, location, price, possessionDate }) => {
   const [showForm, setShowForm] = useState(false);
 
@@ -27,98 +26,81 @@ const SemiHeader: React.FC<SemiHeaderProps> = ({ title, location, price, possess
     <>
       <div
         style={{
-          width: "80%", // Set width to 80%
-          margin: "30px 8%", // Shift the box slightly to the left
-          padding: "30px 40px", // Adjusted padding for a less overwhelming design
-          border: "1px solid #e0e0e0",
+          width: "80%",
+          margin: "0 auto",
+          padding: "20px 0",
           fontFamily: "'Arial', sans-serif",
           color: "#333",
           backgroundColor: "#fff",
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", // Reduced shadow intensity
-          borderRadius: "12px", // Slightly reduced border radius for subtler effect
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
         }}
       >
-        {/* Title */}
-        <h1
-          style={{
-            fontSize: "24px", // Updated font size
-            fontWeight: 600, // Updated font weight
-            lineHeight: "36px", // Updated line height
-            marginBottom: "8px", // Updated margin
-            color: "#222",
-          }}
-        >
-          {title}
-        </h1>
+        {/* Left Section: Title, Location, Possession Date */}
+        <div style={{ flex: 1, paddingRight: "20px" }}>
+          <h1
+            style={{
+              fontSize: "32px",
+              fontWeight: "700",
+              marginBottom: "10px",
+              color: "#222",
+            }}
+          >
+            {title}
+          </h1>
 
-        {/* Location */}
-        <p
-          style={{
-            fontSize: "14px", // Updated font size for location
-            fontWeight: 400, // Updated font weight for location
-            lineHeight: "21px", // Updated line height for location
-            color: "#212529", // Updated color for location
-            marginBottom: "8px", // Updated margin for location
-          }}
-        >
-          {location}
-        </p>
+          <p
+            style={{
+              fontSize: "16px",
+              color: "#000",
+              marginBottom: "10px",
+            }}
+          >
+            {location}
+          </p>
 
-        {/* Possession Date */}
-        <div
-          style={{
-            display: "inline-block",
-            padding: "6px 12px",
-            backgroundColor: "#f8f9fa",
-            border: "1px solid #e0e0e0",
-            borderRadius: "6px",
-            fontSize: "14px",
-            fontWeight: 400,
-            lineHeight: "21px",
-            color: "#212529",
-            marginBottom: "16px",
-          }}
-        >
-          Possession: {possessionDate}
+          <p
+            style={{
+              fontSize: "14px",
+              color: "#000",
+              marginBottom: "0",
+            }}
+          >
+            Possession Date: {possessionDate}
+          </p>
         </div>
 
+        {/* Right Section: Price and Button */}
         <div
           style={{
             display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
+            flexDirection: "column",
+            alignItems: "flex-end",
           }}
         >
-          <div>
-            <p
-              style={{
-                fontSize: "24px", // Reduced font size for price
-                fontWeight: 700,
-                color: "#104b97",
-                margin: "0",
-              }}
-            >
-              Starting at INR {price}
-            </p>
-          </div>
-
-          {/* Contact Seller Button */}
+          <p
+            style={{
+              fontSize: "28px",
+              fontWeight: "700",
+              color: "#104b97",
+              margin: "0 0 15px 0",
+            }}
+          >
+            INR {price}
+          </p>
           <button
             onClick={handleShowForm}
             style={{
               backgroundColor: "#104b97",
               color: "#fff",
-              padding: "12px 20px", // Reduced padding for button
-              fontSize: "16px", // Slightly smaller font size for button
-              fontWeight: 600,
-              borderRadius: "8px", // Slightly smaller radius for button
+              padding: "12px 25px",
+              fontSize: "16px",
+              fontWeight: "600",
+              borderRadius: "5px",
               border: "none",
               cursor: "pointer",
-              boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.15)", // Reduced shadow intensity
-              transition: "background-color 0.3s ease",
             }}
-            onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#083f7d")}
-            onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#104b97")}
           >
             Contact Seller
           </button>

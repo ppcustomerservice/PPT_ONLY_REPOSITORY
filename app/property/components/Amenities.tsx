@@ -161,7 +161,7 @@ const amenitiesIconMap = {
   "open-space":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/12/12063525/Open-Space.png",
   "business-center-conference-rooms":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2025/01/06022412/Co-working-Space.png",
   "modular-kitchen":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041227/Equipped-Kitchen-2.png",
-  "grand-entrance-gate":"",
+  "grand-entrance-gate":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2025/01/08031034/grand-entrance-gate.png",
   "paved-compound":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2025/01/06024158/paved-cpmpound-1.png",
   "EV Charging Points":"https://www.propertyplateau.com/wp-content/uploads/2023/11/Car-Charging-Points.svg",
   "meditation-zone":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/26044327/Yoga-Room.png",
@@ -175,7 +175,7 @@ const amenitiesIconMap = {
   "mini-golf":"",
   "Theatre":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2025/01/06031139/theater-1.png",
   "Pool Table":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2025/01/06031416/pool-table-1.png",
-  "":"",
+  "sports-arena":"",
   "":"",
   "":"",
   "":"",
@@ -495,7 +495,8 @@ const amenitiesTextMap = {
 581:"mini-golf",
 127:"multipurpose-hall",
 784:"Pool Table",
-739:"Foosball"
+739:"Foosball",
+755:"sports-arena"
 
 
 };

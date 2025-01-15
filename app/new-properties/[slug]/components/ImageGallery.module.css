@@ -185,37 +185,3 @@
 .arrowButton:focus {
   outline: none;
 }
-
-.galleryContainer {
-  display: flex;
-  justify-content: center; /* Center the content horizontally */
-  align-items: center; /* Center the content vertically */
-  padding: 10px;
-  height: 400px;
-  margin: 0 auto; /* Center the container on the page */
-}
-
-.singleImageContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%; /* Full height of the gallery container */
-  width: 100%; /* Full width of the gallery container */
-}
-
-.singleImageContainer img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.featuredImage img,
-.rightImages img,
-.modalImage {
-  /* Ensure consistent image styling across all views */
-  border-radius: 8px;
-  cursor: pointer;
-  object-fit: cover;
-}

@@ -7,9 +7,10 @@ interface SemiHeaderProps {
   title: string;
   location: string;
   price: string;
+  possessionDate: string;
 }
 
-const SemiHeader: React.FC<SemiHeaderProps> = ({ title, location, price }) => {
+const SemiHeader: React.FC<SemiHeaderProps> = ({ title, location, price, possessionDate }) => {
   const [showForm, setShowForm] = useState(false);
 
   // Function to show the form
@@ -26,63 +27,69 @@ const SemiHeader: React.FC<SemiHeaderProps> = ({ title, location, price }) => {
     <>
       <div
         style={{
-          width: "84%",
-          margin: "0 7%",
-          padding: "30px 40px",
-          borderBottom: "1px solid #e0e0e0",
+          width: "80%",
+          margin: "0 auto",
+          padding: "20px 0",
           fontFamily: "'Arial', sans-serif",
           color: "#333",
           backgroundColor: "#fff",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
         }}
       >
-        <h1
-          style={{
-            fontSize: "32px",
-            fontWeight: "700",
-            marginBottom: "10px",
-            color: "#222",
-          }}
-        >
-          {title}
-        </h1>
+        {/* Left Section: Title, Location, Possession Date */}
+        <div style={{ flex: 1, paddingRight: "20px" }}>
+          <h1
+            style={{
+              fontSize: "32px",
+              fontWeight: "700",
+              marginBottom: "10px",
+              color: "#222",
+            }}
+          >
+            {title}
+          </h1>
 
-        <p
-          style={{
-            fontSize: "16px",
-            color: "#555",
-            marginBottom: "20px",
-          }}
-        >
-          {location}
-        </p>
+          <p
+            style={{
+              fontSize: "16px",
+              color: "#000",
+              marginBottom: "10px",
+            }}
+          >
+            {location}
+          </p>
 
+          <p
+            style={{
+              fontSize: "14px",
+              color: "#000",
+              marginBottom: "0",
+            }}
+          >
+            Possession Date: {possessionDate}
+          </p>
+        </div>
+
+        {/* Right Section: Price and Button */}
         <div
           style={{
             display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
+            flexDirection: "column",
+            alignItems: "flex-end",
           }}
         >
-          <div>
-            <p
-              style={{
-                fontSize: "14px",
-                color: "#777",
-                marginBottom: "5px",
-              }}
-            ></p>
-            <p
-              style={{
-                fontSize: "28px",
-                fontWeight: "700",
-                color: "#104b97",
-                margin: "0",
-              }}
-            >
-              Starting at INR {price}
-            </p>
-          </div>
-
+          <p
+            style={{
+              fontSize: "28px",
+              fontWeight: "700",
+              color: "#104b97",
+              margin: "0 0 15px 0",
+            }}
+          >
+            INR {price}
+          </p>
           <button
             onClick={handleShowForm}
             style={{
