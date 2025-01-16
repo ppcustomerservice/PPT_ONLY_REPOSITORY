@@ -9,6 +9,15 @@ const ImageGallery = ({ propertyID }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(null);
 
+  const adjustImageSize = () => {
+    const modalImage = document.querySelector('.modalImage');
+    if (modalImage) {
+      modalImage.style.maxWidth = '800px';
+      modalImage.style.maxHeight = '600px';
+    }
+  };
+  
+
   useEffect(() => {
     const fetchImages = async () => {
       try {

@@ -183,11 +183,12 @@ const amenitiesIconMap = {
   "mini-golf":"",
   "Theatre":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2025/01/06031139/theater-1.png",
   "Pool Table":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2025/01/06031416/pool-table-1.png",
-  "":"",
-  "":"",
-  "":"",
-  "":"",
-  "":"",
+  "sports-arena":"",
+  "Tree House":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041623/tree-house-2.png",
+  "co-working-space":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2025/01/06022412/Co-working-Space.png",
+  "maintenance-services":"",
+  "Open Space":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2025/01/01123720/open-space.png",
+  "Pool":"https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/11/27041358/Infinity-Pool-2.png",
   "":"",
   "":"",
   "":"",
@@ -502,7 +503,14 @@ const amenitiesTextMap = {
 581:"mini-golf",
 127:"multipurpose-hall",
 784:"Pool Table",
-739:"Foosball"
+739:"Foosball",
+755:"sports-arena",
+782:"paved-compound",
+589:"co-working-space",
+732:"maintenance-services",
+785:"Open Space",
+672:"multi-purpose-court"
+
 
 
 };
