@@ -185,3 +185,9 @@
 .arrowButton:focus {
   outline: none;
 }
+
+.galleryContainer img {
+  max-height: 400px;
+  /* object-fit: contain; */
+  
+}
