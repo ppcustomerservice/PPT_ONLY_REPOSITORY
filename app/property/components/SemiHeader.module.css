@@ -1,0 +1,120 @@
+
+/* SemiHeader.module.css */
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px 0;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    background-color: #fff;
+  }
+  
+  .mobileLayout {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .priceAndButtonContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .desktopLayout {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  .leftSection {
+    flex: 1;
+    padding-right: 20px;
+  }
+  
+  .title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #222;
+  }
+  
+  .location {
+    font-size: 16px;
+    color: #000;
+    margin-bottom: 10px;
+  }
+  
+  .possessionDate {
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0;
+  }
+  
+  .rightSection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  
+  .price {
+    font-size: 28px;
+    font-weight: 700;
+    color: #104b97;
+    margin: 0;
+  }
+  
+  .contactButton {
+    background-color: #104b97;
+    color: #fff;
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .contactButton:hover {
+    background-color: #0d3a7a;
+  }
+  
+  @media (max-width: 768px) {
+    .mobileLayout {
+      display: flex;
+    }
+  
+    .desktopLayout {
+      display: none;
+    }
+  
+    .container {
+      width: 90%;
+    }
+  
+    .title {
+      font-size: 24px;
+    }
+  
+    .price {
+      font-size: 20px;
+    }
+  
+    .location {
+      display: none;
+    }
+  
+    .contactButton {
+      padding: 10px 20px;
+      font-size: 14px;
+    }
+  
+    .priceAndButtonContainer {
+      gap: 10px;
+      align-items: center;
+    }
+  }
+  

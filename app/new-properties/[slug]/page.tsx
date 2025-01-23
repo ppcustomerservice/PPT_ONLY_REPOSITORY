@@ -100,7 +100,7 @@ export default async function PropertyPage({ params }: { params: { slug: string 
           />
 
           {/* Image Gallery */}
-          <div style={{ padding: "20px 40px" }}>
+          <div style={{  }}>
             <ImageGallery propertyID={propertyID} />
           </div>
 

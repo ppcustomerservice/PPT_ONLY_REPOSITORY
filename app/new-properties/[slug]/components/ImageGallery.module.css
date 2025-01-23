@@ -2,7 +2,7 @@
   display: flex;
   gap: 8px;
   padding: 10px;
-  margin-left: 50px; /* Shifts the gallery to the right */
+  margin-left: 50px; 
   height: 400px;
 }
 
@@ -136,7 +136,6 @@
   border-radius: 8px;
 }
 
-/* Modal styling with fixed image sizes */
 .modal {
   position: fixed;
   top: 0;
@@ -192,3 +191,202 @@
   
 }
 
+
+/* Responsive Adjustments for Larger Screens */
+@media (min-width: 850px) {
+  .galleryContainer {
+    flex-direction: row; /* Row layout for larger screens */
+    /* margin-left: 50px; Add spacing for larger screens */
+    height: 400px;
+  }
+
+  .rightImages {
+    grid-template-columns: none; /* Reset grid for larger screens */
+    flex-direction: column; /* Stack vertically */
+  }
+
+  .modalContent {
+    flex-direction: row; /* Align arrows and image horizontally */
+  }
+
+  .arrowButton {
+    font-size: 40px; /* Larger arrows for larger screens */
+  }
+
+  .closeButton {
+    font-size: 30px; /* Larger close button for larger screens */
+  }
+  .ImageGallery_galleryContainer__39vAz img{
+    width: 100vw !important;
+    /* margin-left: -50px; */
+  }
+  
+  
+}
+
+/* For smaller devices */
+.carouselContainer {
+  width: 100%;
+  overflow: hidden;
+}
+
+.carouselImage {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Gallery layout for larger screens */
+@media (min-width: 850px) {
+  .galleryContainer {
+    display: flex;
+    gap: 8px;
+    padding: 10px;
+    /* margin-left: 50px; */
+    height: 400px;
+  }
+
+  .featuredImage {
+    flex: 2;
+    position: relative;
+    height: 100%;
+  }
+
+  .featuredImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .rightImages {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    height: 100%;
+  }
+
+  .squareImage {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    height: calc((100% - 16px) / 3);
+    cursor: pointer;
+  }
+  .ImageGallery_galleryContainer__39vAz {
+    margin-left: -50vw !important;
+    /* padding: 0px 0px !important; */
+  }
+
+  .modalImages {
+    display: none; /* Hides the gallery when the modal is open */
+  }
+  
+}
+/* Disable clicking for images on mobile */
+@media (max-width: 768px) {
+  .galleryContainer img {
+    pointer-events: none; /* Disable click events */
+    cursor: default; /* Remove pointer cursor */
+  }
+}
+/* Mobile Carousel Container */
+.carouselContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+}
+
+.carouselImage {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.arrowButton {
+  background: none;
+  color: black;
+  font-size: 40px;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.arrowButton:focus {
+  outline: none;
+}
+
+.arrowButton:first-of-type {
+  left: 10px;
+}
+
+.arrowButton:last-of-type {
+  right: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .galleryContainer {
+    display: none; /* Hide desktop gallery on mobile */
+  }
+
+  .carouselContainer {
+    display: flex; /* Enable carousel on mobile */
+  }
+  .arrowButton:first-of-type {
+    left: 10px !important; /* Position for the left arrow */
+  }
+  .arrowButton {
+    background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent black background */
+    color: white; /* White arrow color */
+    font-size: 30px; /* Adjust the size for better visibility */
+    border: none; /* Remove default border */
+    cursor: pointer; /* Show pointer cursor */
+    position: absolute;
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust for centering */
+    z-index: 10;
+    padding: 10px; /* Add some padding for click area */
+    border-radius: 50%; /* Make it circular */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+  }
+}
+
+.arrowButton {
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  color: white; /* White arrow color */
+  font-size: 30px; /* Adjust the size for better visibility */
+  border: none; /* Remove default border */
+  cursor: pointer; /* Show pointer cursor */
+  position: absolute;
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Adjust for centering */
+  z-index: 10;
+  padding: 10px; /* Add some padding for click area */
+  border-radius: 50%; /* Make it circular */
+  transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.arrowButton:first-of-type {
+  left: -55px; /* Position for the left arrow */
+}
+
+.arrowButton:last-of-type {
+  right: 10px; /* Position for the right arrow */
+}
+
+.arrowButton:hover {
+  background-color: rgba(255, 255, 255, 0.8); 
+  color: black; /* Black arrow color on hover */
+}
