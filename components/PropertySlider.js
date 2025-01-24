@@ -9,6 +9,7 @@ import Link from "next/link";
 import propDetails from "../app/new-properties/[slug]/prop.json"; // Import prop.json directly
 
 // Fetch properties from REST API
+
 const useFetchProperties = (regionId) => {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);

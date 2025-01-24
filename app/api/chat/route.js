@@ -26,7 +26,7 @@ export async function POST(request) {
     }
 
     // Step 1: Scrape content from your website
-    const websiteContent = await scrapeWebsite("https://yourwebsite.com");
+    const websiteContent = await scrapeWebsite("http://propertyplateautimes.com/");
 
     // Step 2: Create a prompt for OpenAI
     const prompt = `Use the following website content to answer the question:
