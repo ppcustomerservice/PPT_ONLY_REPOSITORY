@@ -5,6 +5,11 @@ import Navbar from "../../components/Navbar";
 import propData from "../new-properties/[slug]/prop.json";
 
 const NewProperties = () => {
+
+
+  const [isFilterVisible, setIsFilterVisible] = useState(false); // Track filter visibility
+
+
   const [properties, setProperties] = useState([]);
   const [filteredProperties, setFilteredProperties] = useState([]);
   const [loadingProperties, setLoadingProperties] = useState(false);
@@ -18,6 +23,10 @@ const NewProperties = () => {
     configuration: [],
     location: [],
   });
+
+  const toggleFilterVisibility = () => {
+    setIsFilterVisible((prev) => !prev);
+  };
 
   const priceOptions = [
     { label: "10 Lacs", value: 1000000 },
@@ -174,8 +183,12 @@ const NewProperties = () => {
     <>
       <Navbar />
       <div className={styles.mainContainer}>
-        <div className={styles.filterContainer}>
-          <h3 className={styles.filterTitle}>Advanced Search</h3>
+      <div
+          className={`${styles.filterContainer} ${
+            isFilterVisible ? styles.open : ""
+          }`}
+        >         
+         <h3 className={styles.filterTitle}>Advanced Search</h3>
 
           {/* Min and Max Budget */}
           <label>Min Budget:</label>
@@ -321,6 +334,10 @@ const NewProperties = () => {
             </div>
           )}
         </div>
+        <button className={styles.filterButton} onClick={toggleFilterVisibility}>
+          {isFilterVisible ? "Hide Filters" : "Show Filters"}
+        </button>
+
       </div>
     </>
   );
