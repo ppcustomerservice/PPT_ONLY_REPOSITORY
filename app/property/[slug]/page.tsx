@@ -101,7 +101,7 @@ export default async function PropertyPage({ params }: { params: { slug: string 
           </div>
 
           {/* Description */}
-          <Description content={description} />
+          {/* <Description content={description} /> */}
 
           {/* Amenities Component */}
           <div style={{ padding: "20px 40px" }}>
