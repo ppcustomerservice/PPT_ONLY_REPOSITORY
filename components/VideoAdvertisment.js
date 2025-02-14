@@ -8,7 +8,7 @@ const VideoAdvertisment = () => {
       <div className="videoWrapperxyz">
         <iframe
           className="videoFramexyz"
-          src="https://www.youtube.com/embed/wLsnlQVRX2Y?autoplay=1&mute=1"
+          src="https://www.youtube.com/embed/R80RY1FSEX8?start=2155&autoplay=1&mute=1"
           title="YouTube video player"
           frameBorder="0"
           allow="autoplay; encrypted-media"
