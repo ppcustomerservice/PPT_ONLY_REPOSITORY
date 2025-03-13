@@ -19,7 +19,7 @@ const RealEstateCards = () => {
       title: "Linktree",
       description: "One-stop destination for all your real estate needs and services.",
       imgSrc: "https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/10/23170326/Link-1.png",
-      link: "#",
+      link: "https://www.propertyplateau.com/",
     },
     {
       title: "Real Estate Podcast",
