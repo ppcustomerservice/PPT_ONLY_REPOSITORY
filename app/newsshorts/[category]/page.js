@@ -15,7 +15,7 @@ export default function CategoryPage({ params }) {
   useEffect(() => {
     const fetchCategoryArticles = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/public/posts`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/public/posts `, {
           next: { revalidate: 10 },
         });
 
@@ -24,7 +24,8 @@ export default function CategoryPage({ params }) {
         }
 
         const data = await res.json();
-
+console.log("fjdfjdkfdkf")
+console.log(data)
         const filteredArticles = data.filter((article) =>
           article.categories.some((cat) => cat.toLowerCase() === category)
         );
@@ -42,7 +43,10 @@ export default function CategoryPage({ params }) {
   }, [category]);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <div style={{width:"100vw",height:"100vh",display:"flex",justifyContent:"center",alignItems:"center"}}>
+
+      <img src="/loading.gif" alt="loading" style={{height:"12vh"}} />
+    </div>;
   }
 
   if (error) {
@@ -86,6 +90,7 @@ export default function CategoryPage({ params }) {
   return (
     <>
       <Navbar />
+      
       <div className={styles.pageLayout}>
         <h1 className={styles.categoryTitle}>{category.toUpperCase()}</h1>
 

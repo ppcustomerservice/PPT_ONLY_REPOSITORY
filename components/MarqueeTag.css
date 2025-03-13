@@ -1,59 +1,88 @@
 .scrolling-container {
   width: 100%;
-  background-color: #1d2b3a;
+  background: linear-gradient(90deg, #1d2b3a, #3a0e12);
   color: white;
   overflow: hidden;
   position: relative;
-  height: 40px;
+  height: 50px;
   display: flex;
   align-items: center;
-  padding: 0 20px;
+  white-space: nowrap;
 }
 
+/* Wrapper for infinite scrolling */
+.scrolling-text-wrapper {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Duplicated text for seamless animation */
 .scrolling-text {
   display: flex;
-  white-space: nowrap;
-  animation: scroll 40s linear infinite; /* Slow the speed here */
+  width: max-content;
+  animation: scroll 50s linear infinite;
+  gap: 20px; /* ⬅ Increased Space */
 }
 
-.scrolling-text span {
-  display: flex;
-  align-items: center;
-  margin-right: 20px;
+/* 🚀 LIGHT RED BOX & SILVER SHINE TEXT */
+.highlight {
+  font-weight: bold;
+  font-size: 16px;
+  color: silver; /* ⬅ Silver Text */
+  background: rgba(255, 77, 77, 0.8); /* ⬅ Light Red Box */
+  padding: 6px 12px;
+  border-radius: 6px;
+  box-shadow: 0 0 15px rgba(255, 77, 77, 0.8); /* ⬅ Soft Glow */
+  animation: bounceText 1s infinite alternate, glowEffect 1s infinite alternate;
+  margin-right: 8px; /* Space between text */
+  text-shadow: 0 0 8px rgba(192, 192, 192, 0.8); /* ⬅ Silver Shine */
 }
 
-.scrolling-text .highlight {
-  background-color: #e74c3c;
-  padding: 0 10px;
-  height: 100%;
-  display: flex;
-  align-items: center;
-}
-
-.scrolling-text .text-item {
-  margin-right: 40px;
-}
-
-.scrolling-text a {
-  color: white;
+/* Normal Text */
+.text-item {
+  font-size: 16px;
   text-decoration: none;
-  margin-right: 40px;
+  color: white;
+  margin-left: 5px; /* ⬅ Space between highlight & text */
+  white-space: nowrap;
+  font-weight: normal;
 }
 
-.scrolling-text a:hover {
-  color: red; /* Changes the text color to red on hover */
-  text-decoration: none; /* Removes the underline */}
+/* Hover Effect */
+.text-item:hover {
+  color: #ffcc00;
+  transform: scale(1.05);
+  text-shadow: 0 0 10px rgba(255, 204, 0, 0.8);
+}
 
+/* 🚀 TRUE INFINITE SCROLL */
 @keyframes scroll {
-  0% {
-    transform: translateX(100%);
+  from {
+    transform: translateX(0%);
   }
-  100% {
+  to {
     transform: translateX(-100%);
   }
 }
 
-/* Stops animation on hover */
-.scrolling-container:hover .scrolling-text {
-  animation-play-state: paused;
+/* 🚀 BOUNCING EFFECT (More Up/Down Movement) */
+@keyframes bounceText {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-8px); /* ⬅ Increased bounce */
+  }
+}
+
+/* 🚀 GLOW EFFECT FOR LIGHT RED BOX */
+@keyframes glowEffect {
+  from {
+    box-shadow: 0 0 10px rgba(255, 77, 77, 0.8);
+  }
+  to {
+    box-shadow: 0 0 20px rgba(255, 77, 77, 1);
+  }
 }

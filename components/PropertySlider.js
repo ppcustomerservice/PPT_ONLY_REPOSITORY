@@ -85,13 +85,14 @@ const truncateTitle = (title, wordLimit = 4) => {
 
 const PropertySlider = ({ regionId }) => {
   const { properties, loading, error } = useFetchProperties(regionId);
+  const displayedProperties = properties.slice(0, 4);
 
   const settings = {
     infinite: false,
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 1,
-    nextArrow: <SampleNextArrow />,
+    nextArrow: <SampleNextArrow />, 
     prevArrow: <SamplePrevArrow />,
     responsive: [
       {
@@ -129,7 +130,7 @@ const PropertySlider = ({ regionId }) => {
   return (
     <div className="property-slider">
       <Slider {...settings}>
-        {properties.map((property) => (
+        {displayedProperties.map((property) => (
           <div key={property.id} className="property-card-wrapper">
             <div className="property-card">
               <a
@@ -176,13 +177,10 @@ const PropertySlider = ({ regionId }) => {
             </div>
           </div>
         ))}
-
-        <div className="property-card-wrapper">
-          <div className="property-card view-more-card">
-            <Link href="/new-properties">
-              <button className="view-more-button">View More</button>
-            </Link>
-          </div>
+        <div className="property-card-wrapper view-more-card">
+          <Link href="/new-properties">
+            <button className="view-more-button">View More →</button>
+          </Link>
         </div>
       </Slider>
     </div>

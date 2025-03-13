@@ -1,103 +1,90 @@
-/* Container for the trending videos */
+/* Full-Screen Background */
 .trending-videos {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+  background-color: #e5e7eb;
   padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin-top: 1%;
+  overflow: hidden;
+  position: relative;
 }
 
-/* Trending News Title */
+/* Title */
 .trending-title {
   text-align: center;
-  font-size: 28px;
-  font-weight: 700;
-  color: #104b97;
-  margin-bottom: 30px;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color : #104b97;
 }
 
-/* Flexbox container for the video cards */
+/* Videos Container */
 .videos-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
   display: flex;
-  gap: 20px;
-  flex-wrap: nowrap; /* Prevent wrapping */
-  overflow-x: auto; /* Horizontal scrolling */
-  padding-bottom: 10px; /* Padding to avoid cut-off issues */
-  scroll-snap-type: x mandatory; /* Snap on scrolling */
+  justify-content: center;
 }
 
-/* Individual video card */
+/* Scrolling Slider */
+.video-slider {
+  display: flex;
+  gap: 15px;
+  animation: scroll 10s linear infinite;
+  white-space: nowrap;
+}
+/* Hover Effect */
 .video-card {
+  flex: 0 0 220px;
+  min-width: 220px;
+  max-width: 220px;
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  flex: 0 0 100%; /* Take full width of container */
-  position: relative;
-  transition: transform 0.2s ease-in-out;
-  scroll-snap-align: center; /* Snap card to center */
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  height: auto; /* ✅ Auto height to avoid text cutting */
 }
 
-.video-card:hover {
-  transform: scale(1.03);
-}
-
-/* Video image */
 .video-image {
   width: 100%;
-  height: 200px;
+  height: 180px;
   object-fit: cover;
 }
+.video-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
 
-/* Video info container */
+/* Video Card */
+
+
+
 .video-info {
-  padding: 15px;
-}
-
-/* Title of each video/news card */
-.video-title {
-  font-size: 16px;
-  font-weight: 500;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: bold;
   color: #333;
+  background-color: white;
+  text-align: center;
   line-height: 1.4;
-  margin: 0;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  word-wrap: break-word; /* ✅ Ensures text wraps properly */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal; /* ✅ Allows multiple lines */
 }
-
-/* Play button (optional, placeholder) */
-.play-button {
-  width: 40px;
-  height: 40px;
-  background: url('/play-icon.svg') no-repeat center center;
-  background-size: cover;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: none; /* You can make it visible if you plan to add a video feature */
-}
-
-/* Hide scroll bar in webkit browsers */
-.videos-container::-webkit-scrollbar {
-  display: none;
-}
-
-.videos-container {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
-
-/* Media Queries for larger screens */
-@media (min-width: 768px) {
-  .video-card {
-    flex: 0 0 calc(50% - 10px); /* 2 cards per row on medium screens */
+/* Scrolling Animation */
+@keyframes scroll {
+  from {
+    transform: translateX(0);
   }
-}
-
-@media (min-width: 1024px) {
-  .video-card {
-    flex: 0 0 calc(25% - 20px); /* 4 cards per row on large screens */
+  to {
+    transform: translateX(-50%);
   }
 }

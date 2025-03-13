@@ -2,7 +2,8 @@
 
 import React, { useState } from "react";
 import { useSwipeable } from "react-swipeable";
-import "./RealEstateCards.css"; // Import the CSS file
+import { motion } from "framer-motion";
+import "./RealEstateCards.css";
 
 const RealEstateCards = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -12,19 +13,19 @@ const RealEstateCards = () => {
       title: "WhatsApp Channel",
       description: "Tune in to know the latest updates on the real estate industry.",
       imgSrc: "https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/10/23170117/Whatsapp.png",
-      link: "https://whatsapp.com/channel/0029ValQ5IkCcW4wYhAV0k13/", 
+      link: "https://whatsapp.com/channel/0029ValQ5IkCcW4wYhAV0k13/",
     },
     {
       title: "Linktree",
       description: "One-stop destination for all your real estate needs and services.",
       imgSrc: "https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/10/23170326/Link-1.png",
-      link: "#", 
+      link: "#",
     },
     {
       title: "Real Estate Podcast",
       description: "Gain insights and skills to make smart real estate decisions.",
       imgSrc: "https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/10/23165610/podcast-1.png",
-      link: "https://latitudeandlongitudegroup.com/", 
+      link: "https://latitudeandlongitudegroup.com/",
     },
   ];
 
@@ -44,73 +45,52 @@ const RealEstateCards = () => {
   });
 
   return (
-    <div style={{ backgroundColor: "#f9f9f9", padding: "20px" }}>
+    <div className="real-estate-container">
       {/* Desktop Layout */}
       <div className="desktop-layout">
-        <div style={{ display: "flex", justifyContent: "space-between", gap: "10px", maxWidth: "1000px", margin: "0 auto" }}>
-          {cards.map((card, index) => (
-            <a
-              key={index}
-              href={card.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                textDecoration: "none",
-                width: "320px",
-                backgroundColor: "#fff",
-                padding: "15px",
-                borderRadius: "16px",
-                boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <div style={{ marginRight: "10px", flexShrink: 0 }}>
-                <img src={card.imgSrc} alt={`${card.title} Icon`} style={{ width: "80px", borderRadius: "8px" }} />
-              </div>
-              <div style={{ flex: 1 }}>
-                <h3 style={{ marginBottom: "10px", color: "#333", fontSize: "16px", fontWeight: "bold" }}>
-                  {card.title}
-                </h3>
-                <p style={{ color: "#666", fontSize: "14px", lineHeight: "1.5" }}>
-                  {card.description}
-                </p>
-              </div>
-            </a>
-          ))}
-        </div>
-      </div>
-
-      {/* Mobile Swipeable Layout */}
-      <div className="mobile-layout" {...handlers} style={{ overflow: "hidden", maxWidth: "100%", margin: "0 auto" }}>
-        <div
-          style={{
-            display: "flex",
-            transform: `translateX(-${currentIndex * 100}%)`,
-            transition: "transform 0.3s ease",
-            width: `${cards.length * 100}%`,
-          }}
+        <motion.div 
+          className="card-container"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
           {cards.map((card, index) => (
-            <a
+            <motion.a
               key={index}
               href={card.link}
               target="_blank"
               rel="noopener noreferrer"
               className="card"
-              style={{ textDecoration: "none", color: "inherit" }}
+              whileHover={{ scale: 1.05, boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)" }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.3 }}
             >
-              <img src={card.imgSrc} alt={`${card.title} Icon`} />
+              <motion.img 
+                src={card.imgSrc} 
+                alt={card.title} 
+                className="card-img"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                whileHover={{ scale: 1.1 }}
+              />
               <div className="card-content">
-                <h3>{card.title}</h3>
+                <motion.h3 
+                  whileHover={{ color: "#ff6600" }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  {card.title}
+                </motion.h3>
                 <p>{card.description}</p>
               </div>
-            </a>
+            </motion.a>
           ))}
-        </div>
+        </motion.div>
       </div>
-    </div>
+</div>
+   
   );
 };
-
 export default RealEstateCards;

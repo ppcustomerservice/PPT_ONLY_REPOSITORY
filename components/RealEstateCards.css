@@ -1,73 +1,99 @@
-/* RealEstateCards.css */
-
-/* Show desktop layout on large screens */
-@media (min-width: 768px) {
-  .desktop-layout {
-    display: flex;
-  }
-  .mobile-layout {
-    display: none;
-  }
+.real-estate-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #e5e7eb;
+  width: 100%;
 }
 
-/* Show mobile layout on small screens */
-@media (max-width: 767px) {
-  .desktop-layout {
-    display: none;
-  }
-  .mobile-layout {
-    display: flex;
-    overflow: hidden;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  margin-right: 0;
+}
+
+.card {
+  width: 100%;
+  max-width: 320px;
+  height: 180px;
+  background-color: #f5f5f5;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.card::after {
+  content: "Read More →";
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #333;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card-img {
+  width: 80px;
+  height: auto;
+  margin-bottom: 5px;
+}
+
+.card-content h3 {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.card-content p {
+  font-size: 14px;
+  text-align: center;
+  color: #555;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .card-container {
+    flex-direction: column;
+    gap: 15px;
   }
 
-  .mobile-layout > div {
-    display: flex;
-    width: 100%;
-    transform: translateX(0);
+  .card {
+    width: 90%;
+    max-width: 300px;
+    height: auto;
+    padding: 10px;
   }
 
-  /* Each card should take the full width of the viewport on mobile */
-  .mobile-layout .card {
-    width: 100%;
-    min-width: 100%;
-    height: 150px; /* Fixed height */
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 16px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 10px 0; /* Add margin for spacing between swipes */
-  }
-
-  /* Image styling */
-  .mobile-layout .card img {
-    width: 80px;
-    border-radius: 8px;
-    flex-shrink: 0;
-  }
-
-  /* Text content styling */
-  .mobile-layout .card-content {
-    flex: 1;
-    text-align: left;
-  }
-
-  .mobile-layout .card-content h3 {
-    margin: 0 0 8px;
-    color: #333;
+  .card-content h3 {
     font-size: 16px;
-    font-weight: bold;
   }
 
-  .mobile-layout .card-content p {
-    margin: 0;
-    color: #666;
-    font-size: 14px;
-    line-height: 1.5;
+  .card-content p {
+    font-size: 12px;
   }
 }

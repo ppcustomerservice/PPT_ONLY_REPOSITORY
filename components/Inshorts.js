@@ -1,8 +1,8 @@
-"use client"; // Ensure this is a Client Component
+"use client"; 
 
-import React, { useState } from 'react';
-import Link from 'next/link'; // Import Link for internal navigation
-import './Inshorts.css'; // Your custom CSS
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link'; 
+import './Inshorts.css'; 
 
 const ImageGrid = () => {
     const items = [
@@ -36,25 +36,31 @@ const ImageGrid = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const nextSlide = () => {
-        if (currentIndex < items.length - 3) {
-            setCurrentIndex(currentIndex + 1);
-        }
+        setCurrentIndex((prevIndex) =>
+            prevIndex < items.length - 3 ? prevIndex + 1 : 0
+        );
     };
 
     const prevSlide = () => {
-        if (currentIndex > 0) {
-            setCurrentIndex(currentIndex - 1);
-        }
+        setCurrentIndex((prevIndex) =>
+            prevIndex > 0 ? prevIndex - 1 : items.length - 3
+        );
     };
+
+    useEffect(() => {
+        const interval = setInterval(nextSlide, 5000); // Auto-slide every 5 seconds
+
+        return () => clearInterval(interval); // Cleanup function to clear interval on unmount
+    }, []);
 
     return (
         <div className="carousel-container">
-            <h2 className="section-title">Prop Shorts</h2>
+            <h1 className="section-title">Prop Shorts</h1>
             <div className="carousel">
                 <button className="prev" onClick={prevSlide}>&#10094;</button>
                 <div className="carousel-track">
                     {items.slice(currentIndex, currentIndex + 3).map((item, index) => (
-                        <div className="card" key={index}>
+                        <div className="card1" key={index}>
                             <Link href={`/propshorts/${item.slug}`}>
                                 <div className="image-container">
                                     <img src={item.url} alt={item.caption} className="main-image" />
@@ -68,11 +74,7 @@ const ImageGrid = () => {
                 </div>
                 <button className="next" onClick={nextSlide}>&#10095;</button>
             </div>
-            <div className="see-more">
-                <Link href="https://example.com/seemore">
-                  
-                </Link>
-            </div>
+           
         </div>
     );
 };

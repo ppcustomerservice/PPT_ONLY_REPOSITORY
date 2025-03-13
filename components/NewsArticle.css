@@ -8,6 +8,7 @@
   padding-top: 50px;
   padding-left: 5%; /* Adds padding to the left */
   padding-right: 5%; /* Adds padding to the right */
+  border-bottom: 1px solid #cccccc;
 }
 
 
@@ -123,6 +124,7 @@
   max-height: 650px; /* Maximum height */
   overflow-y: auto; /* Enable vertical scroll */
   margin-top: 10px;
+  border-bottom: 1px solid #cccccc;
   
   /* Initially hide the scrollbar */
   scrollbar-width: none; /* For Firefox */
@@ -132,7 +134,8 @@
 .latest-item {
   padding: 10px 0; /* Adjust padding to reduce space between items */
   font-size: 16px; /* Ensure text size is suitable */
-  border-bottom: 1px solid #ddd;
+
+  border-bottom: 1px solid #cccccc;
 }
 
 .latest-news::-webkit-scrollbar {
