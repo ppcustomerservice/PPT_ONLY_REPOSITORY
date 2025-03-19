@@ -11,7 +11,7 @@ import Inshorts from '../components/Inshorts';
 import PropertySlider from '../components/PropertySlider';
 import Footer from '../components/Footer'
 import RealEstateFeaturedCards from '../components/RealEstateFeaturedCards'
-import Form from '../components/Form'
+//import Form from '../components/Form'
 
 const HomePage: React.FC = () => {
   // Example regionId for North Goa
@@ -30,7 +30,7 @@ const HomePage: React.FC = () => {
       <Alotnews />
       <AdvertismentLRRibbon />
       <Inshorts/>
-      <Form/>
+     {/* // <Form/> */}
       <Footer/>
     
     </div>

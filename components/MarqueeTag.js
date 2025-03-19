@@ -10,10 +10,11 @@ const ScrollingText = () => {
           {[...Array(3)].map((_, index) => (
             <React.Fragment key={index}>
               <span className="highlight">EXPLAINED</span>
-              <a href="#explained1" className="text-item">What Is Right To Be Forgotten? Supreme Court To Settle Law</a>
+              <a href="#explained1" className="text-item">Runwal Realty Acquires Prime Land in Malabar Hill for Luxury Residential Development</a>
 
               <span className="highlight">BREAKING NEWS</span>
-              <a href="#breaking1" className="text-item">Global Markets Rally Amidst Economic Uncertainty</a>
+              <a href="#breaking1" className="text-item">Kolte-Patil & Blackstone Partner to Transform Indian Real Estate
+</a>
 
               <span className="highlight">UPDATE</span>
               <a href="#update1" className="text-item">New Technology Promises to Revolutionize Industry Standards</a>
