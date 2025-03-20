@@ -47,7 +47,7 @@ body {
 /* Card styles */
 .card1 {
     min-width: 30%;
-    height: 400px;
+    height: 500px;
     position: relative;
     text-align: center;
     background-color: #c4c4c4; /* Grey background for each card */

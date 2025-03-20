@@ -45,9 +45,18 @@
 
 .footer-logo, .footer-contact-logo {
   width: 250px;
-  margin-bottom: 15px;
+ margin-top: 2px;
   margin-left: -18px;
 }
+
+.footer-contact-logo {
+  transition: filter 0.3s ease-in-out; /* Smooth transition */
+}
+
+.footer-contact-logo:hover {
+  filter: brightness(0) saturate(100%) invert(30%) sepia(100%) saturate(500%) hue-rotate(200deg);
+}
+
 
 .footer-second-row {
   background-color: #000000;
@@ -67,6 +76,29 @@
 
 .footer-second-row ul li {
   list-style: none;
+}
+.social-icon {
+  width: 24px;
+  height: 24px;
+ 
+  vertical-align: middle;
+}
+.social-icons {
+  display: flex;
+  gap: 15px;
+  
+  margin-top: 10px;
+}
+
+.social-icon {
+  width: 32px;
+  height: 32px;
+  transition: transform 0.2s ease-in-out;
+  left: 0;
+}
+
+.social-icon:hover {
+  transform: scale(1.1);
 }
 
 .footer-second-row ul li a {

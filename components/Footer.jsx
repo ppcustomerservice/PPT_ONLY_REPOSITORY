@@ -54,19 +54,42 @@ const Footer = () => {
         </div>
 
         {/* Column 4 - Contact Us */}
+      
         <div className="footer-column">
-          <h4>Contact Us</h4>
-          <img
-            src="https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2025/01/03015741/PPtimes-461x103-1.png"
-            alt="Footer Logo"
-            className="footer-contact-logo"
-          />
-          <ul>
-            <li>Email: <a href="mailto:contact@propertyplateautimes.com">contact@propertyplateautimes.com</a></li>
-            <li>Phone: <a href="tel:+919156091640">+91 91560 91640</a></li>
-          </ul>
-        </div>
-      </div>
+  <h4>Contact Us</h4>
+
+
+  <ul className="contact-info">
+  <a href='https://www.propertyplateautimes.com/'>
+  <img src="https://propertyplateaumedia.s3.ap-south-1.amazonaws.com/wp-content/uploads/2025/01/03015741/PPtimes-461x103-1.png" 
+    alt="Footer Logo"
+    className="footer-contact-logo"
+  /></a>
+<li>Email: 
+  <a href="https://mail.google.com/mail/?view=cm&fs=1&to=contact@propertyplateautimes.com" target="_blank">
+    contact@propertyplateautimes.com
+  </a>
+</li>
+    <li>Phone: <a href="tel:+919156091640">+91 91560 91640</a></li>
+  </ul>
+
+  <h4>Get in Touch</h4>
+  <div className="social-icons">
+    <a href="https://www.facebook.com/share/15wssCeKVj/" target="_blank" rel="noopener noreferrer">
+      <img src="/facebook.svg" alt="Facebook" className="social-icon" />
+    </a>
+    <a href="https://www.instagram.com/propertyplateautimes?igsh=ZW9kZGJlMXMwbWgy" target="_blank" rel="noopener noreferrer">
+      <img src="/instagram.svg" alt="Instagram" className="social-icon" />
+    </a>
+    <a href="https://whatsapp.com/channel/0029ValQ5IkCcW4wYhAV0k13" target="_blank" rel="noopener noreferrer">
+      <img src="/whatsapp.svg" alt="WhatsApp" className="social-icon" />
+    </a>
+  </div>
+</div>
+
+</div>
+
+     
 
       {/* Footer Bottom Row */}
       <div className="footer-second-row">
