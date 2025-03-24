@@ -31,6 +31,7 @@
     "react-parallax-tilt": "^1.7.286",
     "react-slick": "^0.30.2",
     "react-swipeable": "^7.0.2",
+    "recharts": "^2.15.1",
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.13",
     "swiper": "^11.2.1"

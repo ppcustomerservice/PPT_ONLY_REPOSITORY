@@ -52,6 +52,8 @@ const NavBar = () => {
         <a href={`${baseUrl}newsshorts/rera`}>RERA</a>
         <a href={`${baseUrl}newsshorts/housingfinance`}>Housing Finance</a>
         <a href={`${baseUrl}newsshorts/regulatory`}>Regulatory</a>
+        {/* <a href={`${baseUrl}form`}>Form</a> */}
+        <a href={`http://localhost:3000/form`}>Form</a>
 
           {/* Language Dropdown Button */}
           {/* <div className="language-dropdown" onClick={toggleDropdown}>

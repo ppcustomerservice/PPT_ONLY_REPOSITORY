@@ -1,0 +1,174 @@
+/* Light Mode Styles */
+.calculator-container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+    background: linear-gradient(135deg, #0b2562, #fad0c4);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    color: #333;
+    height: 600px;
+    margin-top: 10px;
+    position: relative;
+    transition: background 0.3s, color 0.3s;
+  }
+  
+  h2 {
+    text-align: center;
+    font-size: 22px;
+    color: #fff;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  
+  .calculator {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    background: #fff;
+    padding: 15px;
+    border-radius: 12px;
+    transition: background 0.3s, color 0.3s;
+  }
+  
+  .input-section,
+  .result-section {
+    flex: 1;
+    padding: 15px;
+    min-width: 280px;
+  }
+  
+  .emi-display {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff5722;
+    margin: 15px 0;
+  }
+  
+  .result-section {
+    background: #e3f2fd;
+    border-radius: 12px;
+    text-align: center;
+    height: 450px;
+  }
+  
+  /* Theme Toggle Icon */
+  .theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    cursor: pointer;
+    font-size: 26px;
+    background: none;
+    border: none;
+    transition: color 0.3s ease-in-out, transform 0.2s;
+    color: #333;
+  }
+  
+  .theme-toggle:hover {
+    transform: scale(1.1);
+    color: #ffcc00;
+  }
+  
+  .dark-mode .theme-toggle {
+    color: #ffcc00;
+  }
+  
+  /* Dark Mode Styling */
+  .dark-mode {
+    background: #121212;
+    color: #ffffff;
+  }
+  
+  .dark-mode h2 {
+    color: #ffcc00;
+  }
+  
+  .dark-mode .calculator {
+    background: #1e1e1e;
+    color: #ffffff;
+  }
+  
+  .dark-mode .result-section {
+    background: #2b2b2b;
+  }
+  
+  .dark-mode .emi-display {
+    color: #ffcc00;
+  }
+  
+  /* Light Mode Input Fields */
+  .MuiOutlinedInput-root {
+    background: #ffffff;
+    color: #000;
+  }
+  
+  /* Dark Mode Input Fields */
+  .dark-mode .MuiOutlinedInput-root {
+    background: #333;
+    color: #fff;
+  }
+  
+  .dark-mode .MuiOutlinedInput-notchedOutline {
+    border-color: #ffcc00 !important;
+  }
+  
+  .dark-mode .MuiInputLabel-root {
+    color: #ffcc00 !important;
+  }
+  
+  .dark-mode .MuiSlider-root {
+    color: #ffcc00 !important;
+  }
+  
+  .dark-mode .MuiSlider-thumb {
+    background-color: #ffcc00 !important;
+  }
+  
+  .dark-mode .MuiSlider-track {
+    background-color: #ffcc00 !important;
+  }
+  
+  .dark-mode .MuiSlider-rail {
+    background-color: #444 !important;
+  }
+  
+  .dark-mode .MuiSlider-thumb:hover {
+    background-color: #ffaa00 !important;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .calculator-container {
+      padding: 20px;
+      height: auto;
+    }
+  
+    .calculator {
+      flex-direction: column;
+      gap: 20px;
+    }
+  
+    .input-section,
+    .result-section {
+      width: 100%;
+      min-width: unset;
+    }
+  
+    .theme-toggle {
+      right: 20px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    h2 {
+      font-size: 20px;
+    }
+  
+    .theme-toggle {
+      font-size: 24px;
+      top: 15px;
+      right: 15px;
+    }
+  }
+  
