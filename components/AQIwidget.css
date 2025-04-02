@@ -1,0 +1,287 @@
+.widgetContainer {
+  background: linear-gradient(180deg, #e3f2fd 0%, #bbdefb 100%);
+  color: #333;
+  width: 95%;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  background: #005bb5;
+  color: white;
+  border-radius: 12px 12px 0 0;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Locate Button */
+.locateBtn {
+  background: #ff5722;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+}
+
+.locateBtn:hover {
+  background: #e64a19;
+  transform: scale(1.05);
+}
+
+/* Air Quality Section */
+.airQuality {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin: 10px 0;
+}
+
+@keyframes aqiFadeScale {
+  0% { opacity: 0; transform: scale(0.8); }
+  50% { opacity: 0.5; transform: scale(1.1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.airQuality span {
+  display: inline-block;
+  font-weight: bold;
+  padding: 4px 10px;
+  border-radius: 6px;
+  animation: aqiFadeScale 0.8s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+/* AQI Color Indicators */
+.good { color: #2ecc71; background: rgba(46, 204, 113, 0.2); }
+.moderate { color: #f1c40f; background: rgba(241, 196, 15, 0.2); }
+.poor { color: #e67e22; background: rgba(230, 126, 34, 0.2); }
+.unhealthy { color: #e74c3c; background: rgba(231, 76, 60, 0.2); }
+.severe { color: #c0392b; background: rgba(192, 57, 43, 0.2); }
+.hazardous {background: #c2d1dc }
+
+/* AQI Display */
+.aqiDisplay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.aqiRight img {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  border-radius: 10px;
+  animation: float 3s infinite ease-in-out alternate;
+}
+
+@keyframes float {
+  from { transform: translateY(0px); }
+  to { transform: translateY(10px); }
+}
+
+.aqiValue {
+  font-size: 70px;
+  font-weight: bold;
+  color: #ff9800;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Weather Cards */
+.weatherCard {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  border-radius: 15px;
+  text-align: left;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #005bb5;
+  width: 95%;
+  min-height: 150px;
+  position: relative;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.weatherCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Temperature & Condition */
+.temp {
+  font-size: 36px;
+  font-weight: bold;
+  color: #0073e6;
+}
+
+.condition {
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Weather Details */
+.weatherDetails {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.windSpeed {
+  flex: 1;
+  text-align: left;
+}
+
+.pmLevels {
+  flex: 1;
+  text-align: right;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* PM Scale */
+.pmScale {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.pmScaleContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.15);
+  width: 30%;
+  min-height: 150px;
+  margin-left: 10px;
+}
+
+.pmContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.pmContainer p {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Cloud Animation */
+.cloudImage {
+  width: 100px;
+  height: auto;
+  display: block;
+  margin: 10px auto;
+}
+
+.cloudContainer {
+  position: absolute;
+  top: 10%;
+  width: 100%;
+  height: 100px;
+  
+  overflow: hidden;
+}
+
+.cloud {
+  position: absolute;
+  width: 100px;
+  height: auto;
+  animation: moveClouds 10s linear infinite;
+  opacity: 0.7;
+  z-index: 0;
+}
+
+.cloud:nth-child(1) {
+  left: -100px;
+  animation-duration: 12s;
+}
+
+.cloud:nth-child(2) {
+  left: 20%;
+  animation-duration: 15s;
+}
+
+.cloud:nth-child(3) {
+  left: 40%;
+  animation-duration: 18s;
+}
+
+@keyframes moveClouds {
+  0% { transform: translateX(-100px); opacity: 0.8; }
+  50% { opacity: 1; }
+  100% { transform: translateX(110vw); opacity: 0.8; }
+}
+
+/* 🌟 Mobile Responsiveness */
+@media (max-width: 768px) {
+  .widgetContainer {
+    padding: 15px;
+  }
+
+  .header {
+    font-size: 18px;
+    padding: 10px;
+  }
+
+  .aqiDisplay {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .aqiRight img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .aqiValue {
+    font-size: 50px;
+  }
+
+  .weatherCard {
+    width: 100%;
+    font-size: 14px;
+  }
+}

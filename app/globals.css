@@ -24,6 +24,13 @@ body {
   overflow-x: hidden !important;
   overflow-y: hidden !important;
 }
+/* styles/global.css or your global styles file */
+
+
+*{
+  cursor : url('/Property_Plateau_logo1.png');
+}
+
 h1,h2,h3,h4,h5,h6 {
   font-family: 'Merriweather', serif; /* Apply Merriweather font */
   font-weight: 400; /* Adjust weight as needed: 400 for normal, 700 for bold */
