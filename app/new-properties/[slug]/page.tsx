@@ -1,139 +1,284 @@
-import React from "react";
-import Head from "next/head";
-import SemiHeader from "./components/SemiHeader";
-import Form from "../../../components/Form";
-import propData from "./prop.json";
-import NavBar from "@/components/Navbar";
-import ImageGallery from "./components/ImageGallery";
-import Description from "./components/Description";
-import Amenities from "./components/Amenities";
-import YouTubeVideo from "@/app/property/components/YouTubeVideo";
-import Location from "./components/Location";
-import FloorPlan from "./components/FloorPlan";
+// // import WordPressPropertyPage from "./components/WordPressPropertyPage";
+// // import CustomPropertyPage from "./components/CustomPropertyPage";
+// // import { notFound } from 'next/navigation';
+
+// // interface CustomProperty {
+// //   _id: string;
+// //   title: string;
+// //   createdAt: string;
+// //   location: string;
+// //   price: string;
+// //   possessionDate: string;
+// //   propertyImages: string[];
+// //   amenities: string[];
+// //   plans: any[];
+// //   videoId?: string;
+// // }
+
+// // export default async function PropertyPage({ params }: { params: { slug: string } }) {
+// //   try {
+// //     const { slug } = params;
+// //     console.log('Fetching property for slug:', slug);
+
+// //     // 1. Try custom API first
+// //     const apiResponse = await fetch(
+// //       `http://localhost:8000/api/properties/${slug}`,
+// //       { next: { revalidate: 60 } } // Revalidate every 60 seconds
+// //     );
+
+// //     if (apiResponse.ok) {
+// //       const property: CustomProperty = await apiResponse.json();
+// //       const createdAt = new Date(property.createdAt);
+// //       const cutoffDate = new Date('2025-04-08'); // Your cutoff date
+
+// //       if (createdAt >= cutoffDate) {
+// //         console.log('Using custom API property:', property._id);
+// //         return <CustomPropertyPage property={property} />;
+// //       }
+// //     }
+
+// //     // 2. Fallback to WordPress API
+// //     const wpResponse = await fetch(
+// //       `https://www.propertyplateau.com/wp-json/wp/v2/estate_property?slug=${slug}&_embed`,
+// //       { next: { revalidate: 3600 } } // Revalidate hourly
+// //     );
+
+// //     if (wpResponse.ok) {
+// //       const wpProperties = await wpResponse.json();
+// //       if (wpProperties.length > 0) {
+// //         console.log('Using WordPress property:', wpProperties[0].id);
+// //         return <WordPressPropertyPage property={wpProperties[0]} />;
+// //       }
+// //     }
+
+// //     // 3. If neither API has the property
+// //     console.warn('Property not found in either API');
+// //     return notFound();
+
+// //   } catch (error) {
+// //     console.error('Property page error:', error);
+// //     return notFound();
+// //   }
+// // }
+// import { Suspense } from 'react';
+// import WordPressPropertyPage from "./components/WordPressPropertyPage";
+// import CustomPropertyPage from "./components/CustomPropertyPage";
+// import { notFound } from 'next/navigation';
+// import PropertyPageSkeleton from './components/PropertyPageSkeleton';
+
+// interface CustomProperty {
+//   _id: string;
+//   title: string;
+//   createdAt: string;
+//   location: string;
+//   price: string;
+//   possessionDate: string;
+//   propertyImages: string[];
+//   amenities: string[];
+//   plans: any[];
+//   videoId?: string;
+// }
+
+// async function getPropertyData(slug: string) {
+//   try {
+//     // 1. Try custom API first
+//     const apiResponse = await fetch(
+//       `http://localhost:8000/api/properties/${slug}`,
+//       { next: { revalidate: 60 } }
+//     );
+
+//     if (apiResponse.ok) {
+//       const property: CustomProperty = await apiResponse.json();
+//       const createdAt = new Date(property.createdAt);
+//       const cutoffDate = new Date('2025-04-08');
+
+//       if (createdAt >= cutoffDate) {
+//         return { type: 'custom', property };
+//       }
+//     }
+
+//     // 2. Fallback to WordPress API
+//     const wpResponse = await fetch(
+//       `https://www.propertyplateau.com/wp-json/wp/v2/estate_property?slug=${slug}&_embed`,
+//       { next: { revalidate: 3600 } }
+//     );
+
+//     if (wpResponse.ok) {
+//       const wpProperties = await wpResponse.json();
+//       if (wpProperties.length > 0) {
+//         return { type: 'wordpress', property: wpProperties[0] };
+//       }
+//     }
+
+//     return null;
+//   } catch (error) {
+//     console.error('Error fetching property:', error);
+//     return null;
+//   }
+// }
+
+// // This is the key change - we make the component synchronous
+// export default function PropertyPage({ params }: { params: { slug: string } }) {
+//   return (
+//     <Suspense fallback={<PropertyPageSkeleton />}>
+//       {/* We pass the entire params object */}
+//       <PropertyContent params={params} />
+//     </Suspense>
+//   );
+// }
 
 
-async function fetchAllAmenities(postId: number) {
-  let allAmenities: any[] = [];
-  let page = 1;
-  let totalPages = 1;
+// // The async operation happens in this nested component
+// async function PropertyContent({ params }: { params: { slug: string } }) {
+//   const propertyData = await getPropertyData(params.slug);
 
-  do {
-    const response = await fetch(
-      `https://www.propertyplateau.com/wp-json/wp/v2/property_features?post=${postId}&per_page=100&page=${page}`
+//   if (!propertyData) {
+//     return notFound();
+//   }
+
+//   return propertyData.type === 'custom' ? (
+//     <CustomPropertyPage property={propertyData.property} />
+//   ) : (
+//     <WordPressPropertyPage property={propertyData.property} />
+//   );
+// }
+
+import { Suspense } from 'react';
+import WordPressPropertyPage from "./components/WordPressPropertyPage";
+import CustomPropertyPage from "./components/CustomPropertyPage";
+import { notFound } from 'next/navigation';
+import PropertyPageSkeleton from './components/PropertyPageSkeleton';
+
+interface CustomProperty {
+  _id: string;
+  title: string;
+  createdAt: string;
+  location: string;
+  price: string;
+  description?: string;
+  possessionDate: string;
+  propertyImages: Array<{
+    url: string;
+    filename?: string;
+    originalname?: string;
+    mimetype?: string;
+    size?: number;
+  }>;
+  propertyVideo?: {
+    url: string;
+    filename?: string;
+  };
+  amenities: string[];
+  plans: string[];
+  slug: string;
+}
+
+interface WordPressProperty {
+  id: number;
+  title: {
+    rendered: string;
+  };
+  date: string;
+  content: {
+    rendered: string;
+  };
+  acf: {
+    location: string;
+    price: string;
+    possession_date: string;
+    property_images: Array<{
+      url: string;
+    }>;
+    property_video?: {
+      url: string;
+    };
+    amenities: string[];
+    plans: string[];
+  };
+  _embedded?: {
+    'wp:featuredmedia'?: Array<{
+      source_url: string;
+    }>;
+  };
+  slug: string;
+}
+
+async function getPropertyData(slug: string) {
+  try {
+    // First try to fetch from your custom API
+    const apiResponse = await fetch(
+      `http://localhost:8000/api/properties/${slug}`,
+      { next: { revalidate: 60 } }
     );
-    const data = await response.json();
 
-    // Check if the total pages header is provided
-    if (response.headers.has("X-WP-TotalPages")) {
-      totalPages = parseInt(response.headers.get("X-WP-TotalPages") || "1", 10);
+    if (apiResponse.ok) {
+      const property: CustomProperty = await apiResponse.json();
+   
+      
+      return { type: 'custom', property };
     }
 
-    // Append the current page of amenities to the result
-    allAmenities = [...allAmenities, ...data];
-    page++;
-  } while (page <= totalPages);
+    // If not found in custom API, try WordPress
+    const wpResponse = await fetch(
+      `https://www.propertyplateau.com/wp-json/wp/v2/estate_property?slug=${slug}&_embed`,
+      { next: { revalidate: 3600 } }
+    );
 
-  return allAmenities;
+    if (wpResponse.ok) {
+      const wpProperties: WordPressProperty[] = await wpResponse.json();
+      if (wpProperties.length > 0) {
+        return { type: 'wordpress', property: wpProperties[0] };
+      }
+    }
+
+    return null;
+  } catch (error) {
+    console.error('Error fetching property:', error);
+    return null;
+  }
+}
+
+// Static metadata - avoids the params.slug error
+export async function generateMetadata() {
+  return {
+    title: "Property Details | Property Plateau",
+    description: "View property details on Property Plateau",
+  };
 }
 
 export default async function PropertyPage({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+  const propertyData = await getPropertyData(params.slug);
 
-  try {
-    // Fetch property data
-    const response = await fetch(
-      `https://www.propertyplateau.com/wp-json/wp/v2/estate_property?slug=${slug}&_embed`,
-      { cache: "no-store" }
-    );
-    const propertyData = await response.json();
-
-    
-    if (propertyData.length > 0) {
-      const property = propertyData[0];
-
-      // Fetch all amenities for this property
-      const amenitiesData = await fetchAllAmenities(property.id);
-
-      // Extract Property Details
-      const title = property.title.rendered || "Property Details";
-      const subtitle = "Apartment by PROPERTY Plateau";
-      const lastModifiedDate = property.modified
-        ? new Date(property.modified).toLocaleDateString()
-        : "N/A";
-
-      const additionalDetails = propData.find((p) => p.ID === property.id);
-      const location =
-        additionalDetails?.property_address ||
-        additionalDetails?.city ||
-        "Location not available";
-
-      const possessionDate = additionalDetails?.property_date || "N/A";
-
-
-      const propertyPrice = additionalDetails?.property_price || "0.0";
-      const propertyLabel = additionalDetails?.property_label || "";
-      const combinedPrice = `${propertyPrice} ${propertyLabel}`;
-      const floorPlans = additionalDetails?.plans || [];
-
-
-
-      const propertyID = property.id;
-      const description = property.content.rendered || "Description not available.";
-
-      return (
-        <div>
-          <Head>
-            <title>{title}</title>
-          </Head>
-
-          {/* NavBar Component */}
-          <NavBar />
-
-          {/* SemiHeader Component */}
-          <SemiHeader
-            title={title}
-            subtitle={subtitle}
-            location={location}
-            price={combinedPrice}
-            possessionDate={possessionDate}
-
-          />
-
-          {/* Image Gallery */}
-          <div style={{  }}>
-            <ImageGallery propertyID={propertyID} />
-          </div>
-
-
-          {/* Description */}
-          {/* <Description content={description} /> */}
-
-          {/* Amenities Component */}
-          <div style={{ padding: "20px 40px" }}>
-            <Amenities amenities={amenitiesData} />
-          </div>
-
-               {/* YouTube Video Component */}
-               <YouTubeVideo propertyId={property.id} />
-
-               <Location propertyId={propertyID} />
-
-               <div style={{ padding: "20px 40px" }}>
-                 <FloorPlan plans={floorPlans} />
-              </div>
-
-
-          {/* Contact Form */}
-          <div style={{ padding: "20px 40px" }}>
-            <Form propertyId={property.id} />
-          </div>
-        </div>
-      );
-    } else {
-      return <div>No property found for the given slug.</div>;
-    }
-  } catch (error) {
-    console.error("Error fetching property:", error);
-    return <div>Error fetching property.</div>;
+  if (!propertyData) {
+    notFound();
   }
+
+  // Dynamic metadata set client-side
+  const pageTitle = propertyData.type === 'custom' 
+    ? `${propertyData.property.title} | Property Plateau`
+    : `${propertyData.property.title.rendered} | Property Plateau`;
+
+  const pageDescription = propertyData.type === 'custom'
+    ? propertyData.property.description || `View details for ${propertyData.property.title}`
+    : `View details for ${propertyData.property.title.rendered}`;
+
+  return (
+    <>
+      <head>
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        <link rel="canonical" href={`/new-properties/${params.slug}`} />
+      </head>
+      
+      <main className="container mx-auto px-4 py-8">
+        <Suspense fallback={<PropertyPageSkeleton />}>
+          {propertyData.type === 'custom' ? (
+            <CustomPropertyPage property={propertyData.property} />
+          ) : (
+            <WordPressPropertyPage property={propertyData.property} />
+          )}
+        </Suspense>
+      </main>
+    </>
+  );
 }

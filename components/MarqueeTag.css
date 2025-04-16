@@ -8,6 +8,8 @@
   display: flex;
   align-items: center;
   white-space: nowrap;
+  z-index: 999;
+  margin-top: 90px;
 }
 
 /* Wrapper for infinite scrolling */
@@ -84,5 +86,16 @@
   }
   to {
     box-shadow: 0 0 20px rgba(255, 77, 77, 1);
+  }
+}
+@media (max-width: 768px) {
+  .nav-items {
+    gap: 10px; /* Smaller spacing */
+    padding: 5px 10px;
+  }
+
+  .nav-items a {
+    font-size: 12px; /* Smaller text for mobile */
+    padding: 4px 8px;
   }
 }
