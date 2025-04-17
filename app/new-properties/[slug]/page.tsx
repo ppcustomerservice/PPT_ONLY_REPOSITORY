@@ -210,6 +210,7 @@ async function getPropertyData(slug: string) {
       `http://localhost:8000/api/properties/${slug}`,
       { next: { revalidate: 60 } }
     );
+    console.log('API Response:', apiResponse.ok, apiResponse.status, apiResponse.statusText);
 
     if (apiResponse.ok) {
       const property: CustomProperty = await apiResponse.json();
@@ -248,6 +249,7 @@ export async function generateMetadata() {
 
 export default async function PropertyPage({ params }: { params: { slug: string } }) {
   const propertyData = await getPropertyData(params.slug);
+  console.log(propertyData, 'Property Data');
 
   if (!propertyData) {
     notFound();

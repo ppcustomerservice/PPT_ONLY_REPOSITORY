@@ -1009,6 +1009,435 @@
 
 
 
+// "use client";
+// import { useEffect, useState } from "react";
+// import styles from "./NewPropertiesDetails.module.css";
+// import Navbar from "../../components/Navbar";
+// import propData from "../new-properties/[slug]/prop.json";
+// import axios from "axios";
+
+// const NewProperties = () => {
+//   // State management
+//   const [isFilterVisible, setIsFilterVisible] = useState(true);
+//   const [localProperties, setLocalProperties] = useState<any[]>([]);
+//   const [apiProperties, setApiProperties] = useState<any[]>([]);
+//   const [filteredProperties, setFilteredProperties] = useState<any[]>([]);
+//   const [loading, setLoading] = useState(true);
+//   const [loadingMore, setLoadingMore] = useState(false);
+//   const [page, setPage] = useState(1);
+//   const [hasMore, setHasMore] = useState(true);
+//   const [error, setError] = useState<string | null>(null);
+
+//   // Filter state
+//   const [filters, setFilters] = useState({
+//     minBudget: 1000000, // 10 Lacs
+//     maxBudget: 100000000, // 10 Cr
+//     possession: [] as string[],
+//     configuration: [] as string[],
+//     location: [] as string[],
+//   });
+
+//   // Price options for dropdown
+//   const priceOptions = [
+//     { label: "10 Lacs", value: 1000000 },
+//     { label: "20 Lacs", value: 2000000 },
+//     { label: "30 Lacs", value: 3000000 },
+//     { label: "50 Lacs", value: 5000000 },
+//     { label: "1 Cr", value: 10000000 },
+//     { label: "2 Cr", value: 20000000 },
+//     { label: "5 Cr", value: 50000000 },
+//     { label: "10 Cr", value: 100000000 },
+//   ];
+
+//   // Enhanced PropertyImage component with your image display logic
+//   const PropertyImage = ({ images, alt }: { images: any[] | undefined, alt: string }) => {
+//     if (!images || images.length === 0) {
+//       return (
+//         <div className={styles.noImages}>
+//           <div className={styles.noImagesMessage}>No images available</div>
+//         </div>
+//       );
+//     }
+
+//     // Handle both string URLs (local) and object URLs (API)
+//     const firstImage = images[0];
+//     const imageUrl = typeof firstImage === 'string' ? firstImage : firstImage.url;
+
+//     return (
+//       <div className={styles.imageWrapper}>
+//         <img
+//           src={imageUrl}
+//           alt={alt}
+//           className={styles.image}
+//           onError={(e) => {
+//             (e.target as HTMLImageElement).src = '/placeholder.jpg';
+//             (e.target as HTMLImageElement).className = `${styles.image} ${styles.placeholder}`;
+//           }}
+//           loading="lazy"
+//         />
+//       </div>
+//     );
+//   };
+
+//   // Process local JSON data with image handling
+//   const processLocalData = () => {
+//     return propData.map((property) => ({
+//       id: property.ID,
+//       title: property.post_title,
+//       price: property.property_price ? 
+//             `${property.property_price} ${property.property_label?.includes("Cr") ? "Cr" : "Lacs"}` : 
+//             "Price on Request",
+//       numericPrice: property.property_price ? 
+//                   (property.property_label?.includes("Cr") ? 
+//                    parseFloat(property.property_price) * 10000000 : 
+//                    parseFloat(property.property_price) * 100000) : 
+//                   0,
+//       label: property.property_label || "N/A",
+//       location: property.property_address?.replace(/\s+/g, " ") || "N/A",
+//       carpet_area: property.Property_size ? `${property.Property_size} sqft` : "N/A",
+//       possession_date: property.property_date ?
+//                       new Date(property.property_date).toLocaleDateString("en-US", {
+//                         year: "numeric",
+//                         month: "long",
+//                       }) : "N/A",
+//       slug: property.slug,
+//       images: property.images || [],
+//       source: 'local'
+//     }));
+//   };
+
+//   // Fetch API data with proper image handling
+//   const fetchApiProperties = async (page = 1) => {
+//     try {
+//       const response = await axios.get('http://localhost:8000/api/properties', {
+//         params: { page, limit: 100}
+//       });
+      
+//       return response.data.map((property: any) => ({
+//         id: property._id,
+//         title: property.title,
+//         price: property.price || "Price on Request",
+//         numericPrice: property.price ? 
+//                     (property.price.includes("Cr") ? 
+//                      parseFloat(property.price.replace(/[^0-9.]/g, '')) * 10000000 : 
+//                      parseFloat(property.price.replace(/[^0-9.]/g, '')) * 100000) : 
+//                     0,
+//         label: property.propertyLabel || "N/A",
+//         location: property.location || "N/A",
+//         carpet_area: "N/A",
+//         possession_date: property.possessionDate ?
+//                         new Date(property.possessionDate).toLocaleDateString("en-US", {
+//                           year: "numeric",
+//                           month: "long",
+//                         }) : "N/A",
+//         slug: property.slug,
+//         images: property.propertyImages || [],
+//         source: 'api'
+//       }));
+//     } catch (err) {
+//       console.error("API Error:", err);
+//       setError("Failed to load some properties. Showing available data.");
+//       return [];
+//     }
+//   };
+
+//   // Load all properties
+//   const loadProperties = async () => {
+//     setLoading(true);
+//     try {
+//       const [apiData,localData ] = await Promise.all([
+//         fetchApiProperties(1),
+//         Promise.resolve(processLocalData())
+      
+//       ]);
+      
+//       setLocalProperties(localData);
+//       setApiProperties(apiData);
+//       setHasMore(apiData.length > 0);
+//     } catch (err) {
+//       console.error("Loading Error:", err);
+//       setError("Failed to load properties");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   // Load more API properties
+//   const loadMore = async () => {
+//     if (loadingMore || !hasMore) return;
+//     setLoadingMore(true);
+    
+//     try {
+//       const nextPage = page + 1;
+//       const newData = await fetchApiProperties(nextPage);
+      
+//       if (newData.length > 0) {
+//         setApiProperties(prev => [...prev, ...newData]);
+//         setPage(nextPage);
+//       } else {
+//         setHasMore(false);
+//       }
+//     } catch (err) {
+//       console.error("Load More Error:", err);
+//     } finally {
+//       setLoadingMore(false);
+//     }
+//   };
+
+//   // Apply filters
+//   useEffect(() => {
+//     const allProperties = [...apiProperties,...localProperties];
+    
+//     const filtered = allProperties.filter(property => {
+//       const matchesBudget = property.numericPrice >= filters.minBudget && 
+//                           property.numericPrice <= filters.maxBudget;
+      
+//       const matchesPossession = filters.possession.length === 0 || 
+//                               filters.possession.includes(
+//                                 new Date(property.possession_date).getFullYear().toString()
+//                               );
+      
+//       const matchesConfig = filters.configuration.length === 0 || 
+//                           filters.configuration.some(config => 
+//                             property.label.includes(config)
+//                           );
+      
+//       const matchesLocation = filters.location.length === 0 || 
+//                             filters.location.some(loc => 
+//                               property.location.includes(loc)
+//                             );
+      
+//       return matchesBudget && matchesPossession && matchesConfig && matchesLocation;
+//     }).sort((a, b) => {
+//       // API properties first
+//       if (a.source !== b.source) {
+//         return a.source === 'api' ? -1 : 1;
+//       }
+//       // Then sort by price (optional)
+//       return a.numericPrice - b.numericPrice;
+//     });
+    
+//     setFilteredProperties(filtered);
+//   }, [localProperties, apiProperties, filters]);
+
+//   // Initial load
+//   useEffect(() => {
+//     loadProperties();
+//   }, []);
+
+//   // Filter handlers
+//   const handleBudgetChange = (e: React.ChangeEvent<HTMLSelectElement>, type: 'minBudget' | 'maxBudget') => {
+//     const value = parseInt(e.target.value);
+//     setFilters(prev => ({
+//       ...prev,
+//       [type]: value,
+//       ...(type === 'minBudget' && { maxBudget: Math.max(value, prev.maxBudget) }),
+//       ...(type === 'maxBudget' && { minBudget: Math.min(value, prev.minBudget) })
+//     }));
+//   };
+
+//   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     const { name, value, checked } = e.target;
+//     setFilters(prev => ({
+//       ...prev,
+//       [name]: checked 
+//         ? [...prev[name as keyof typeof prev], value] 
+//         : (prev[name as keyof typeof prev] as string[]).filter(item => item !== value)
+//     }));
+//   };
+
+//   const resetFilters = () => {
+//     setFilters({
+//       minBudget: 1000000,
+//       maxBudget: 100000000,
+//       possession: [],
+//       configuration: [],
+//       location: [],
+//     });
+//   };
+
+//   return (
+//     <>
+//       <Navbar />
+//       <div className={styles.mainContainer}>
+//         {/* Filter Sidebar */}
+//         <aside className={`${styles.filterSidebar} ${isFilterVisible ? styles.visible : ''}`}>
+//           <div className={styles.filterHeader}>
+//             <h3>Filters</h3>
+//             <button onClick={resetFilters} className={styles.resetBtn}>
+//               Reset All
+//             </button>
+//           </div>
+
+//           {/* Budget Range Filter */}
+//           <div className={styles.filterSection}>
+//             <h4>Budget Range (₹)</h4>
+//             <div className={styles.budgetInputs}>
+//               <div>
+//                 <label>Min:</label>
+//                 <select
+//                   value={filters.minBudget}
+//                   onChange={(e) => handleBudgetChange(e, 'minBudget')}
+//                 >
+//                   {priceOptions
+//                     .filter(opt => opt.value < filters.maxBudget)
+//                     .map(opt => (
+//                       <option key={`min-${opt.value}`} value={opt.value}>
+//                         {opt.label}
+//                       </option>
+//                     ))}
+//                 </select>
+//               </div>
+//               <div>
+//                 <label>Max:</label>
+//                 <select
+//                   value={filters.maxBudget}
+//                   onChange={(e) => handleBudgetChange(e, 'maxBudget')}
+//                 >
+//                   {priceOptions
+//                     .filter(opt => opt.value > filters.minBudget)
+//                     .map(opt => (
+//                       <option key={`max-${opt.value}`} value={opt.value}>
+//                         {opt.label}
+//                       </option>
+//                     ))}
+//                 </select>
+//               </div>
+//             </div>
+//           </div>
+
+//           {/* Possession Year Filter */}
+//           <div className={styles.filterSection}>
+//             <h4>Possession Year</h4>
+//             <div className={styles.checkboxGroup}>
+//               {['2023', '2024', '2025', '2026', '2027', '2028'].map(year => (
+//                 <label key={year} className={styles.checkboxLabel}>
+//                   <input
+//                     type="checkbox"
+//                     name="possession"
+//                     value={year}
+//                     checked={filters.possession.includes(year)}
+//                     onChange={handleCheckboxChange}
+//                   />
+//                   {year}
+//                 </label>
+//               ))}
+//             </div>
+//           </div>
+
+//           {/* Configuration Filter */}
+//           <div className={styles.filterSection}>
+//             <h4>Configuration</h4>
+//             <div className={styles.checkboxGroup}>
+//               {['1 BHK', '2 BHK', '3 BHK', '4 BHK', '5 BHK'].map(config => (
+//                 <label key={config} className={styles.checkboxLabel}>
+//                   <input
+//                     type="checkbox"
+//                     name="configuration"
+//                     value={config}
+//                     checked={filters.configuration.includes(config)}
+//                     onChange={handleCheckboxChange}
+//                   />
+//                   {config}
+//                 </label>
+//               ))}
+//             </div>
+//           </div>
+
+//           {/* Location Filter */}
+//           <div className={styles.filterSection}>
+//             <h4>Location</h4>
+//             <div className={styles.checkboxGroup}>
+//               {['Mumbai', 'Navi Mumbai', 'Thane', 'Panvel', 'Pune'].map(location => (
+//                 <label key={location} className={styles.checkboxLabel}>
+//                   <input
+//                     type="checkbox"
+//                     name="location"
+//                     value={location}
+//                     checked={filters.location.includes(location)}
+//                     onChange={handleCheckboxChange}
+//                   />
+//                   {location}
+//                 </label>
+//               ))}
+//             </div>
+//           </div>
+//         </aside>
+
+//         {/* Main Content */}
+//         <main className={styles.propertyListing}>
+//           {/* Toggle Filter Button */}
+//           <button 
+//             className={styles.filterToggle}
+//             onClick={() => setIsFilterVisible(!isFilterVisible)}
+//           >
+//             {isFilterVisible ? 'Hide Filters' : 'Show Filters'}
+//           </button>
+
+//           {/* Property Grid */}
+//           {loading ? (
+//             <div className={styles.loading}>Loading properties...</div>
+//           ) : error ? (
+//             <div className={styles.error}>
+//               <p>{error}</p>
+//               <button onClick={loadProperties}>Retry</button>
+//             </div>
+//           ) : filteredProperties.length > 0 ? (
+//             <>
+//               <div className={styles.propertyGrid}>
+//                 {filteredProperties.map(property => (
+//                   <div key={`${property.source}-${property.id}`} className={styles.propertyCard}>
+//                     <div className={styles.cardImage}>
+//                       <PropertyImage images={property.images} alt={property.title} />
+//                     </div>
+//                     <div className={styles.cardBody}>
+//                       <h3>{property.title}</h3>
+//                       <div className={styles.price}>₹ {property.price}</div>
+//                       <div className={styles.details}>
+//                         <span><strong>Location:</strong> {property.location}</span>
+//                         <span><strong>Size:</strong> {property.carpet_area}</span>
+//                         <span><strong>Possession:</strong> {property.possession_date}</span>
+//                       </div>
+//                       <div className={styles.cardFooter}>
+//                         <a href={`/new-properties/${property.slug}`} className={styles.detailsBtn}>
+//                           View Details
+//                         </a>
+//                         <a href={`/contact-owner/${property.slug}`} className={styles.contactBtn}>
+//                           Contact
+//                         </a>
+//                       </div>
+//                     </div>
+//                   </div>
+//                 ))}
+//               </div>
+
+//               {hasMore && (
+//                 <div className={styles.loadMore}>
+//                   <button 
+//                     onClick={loadMore} 
+//                     disabled={loadingMore}
+//                     className={styles.loadMoreBtn}
+//                   >
+//                     {loadingMore ? 'Loading...' : 'Load More Properties'}
+//                   </button>
+//                 </div>
+//               )}
+//             </>
+//           ) : (
+//             <div className={styles.noResults}>
+//               <p>No properties match your filters.</p>
+//               <button onClick={resetFilters} className={styles.resetFiltersBtn}>
+//                 Reset Filters
+//               </button>
+//             </div>
+//           )}
+//         </main>
+//       </div>
+//     </>
+//   );
+// };
+
+// export default NewProperties;
 "use client";
 import { useEffect, useState } from "react";
 import styles from "./NewPropertiesDetails.module.css";
@@ -1017,27 +1446,21 @@ import propData from "../new-properties/[slug]/prop.json";
 import axios from "axios";
 
 const NewProperties = () => {
-  // State management
   const [isFilterVisible, setIsFilterVisible] = useState(true);
   const [localProperties, setLocalProperties] = useState<any[]>([]);
   const [apiProperties, setApiProperties] = useState<any[]>([]);
   const [filteredProperties, setFilteredProperties] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [loadingMore, setLoadingMore] = useState(false);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Filter state
   const [filters, setFilters] = useState({
-    minBudget: 1000000, // 10 Lacs
-    maxBudget: 100000000, // 10 Cr
+    minBudget: 1000000,
+    maxBudget: 100000000,
     possession: [] as string[],
     configuration: [] as string[],
     location: [] as string[],
   });
 
-  // Price options for dropdown
   const priceOptions = [
     { label: "10 Lacs", value: 1000000 },
     { label: "20 Lacs", value: 2000000 },
@@ -1049,196 +1472,180 @@ const NewProperties = () => {
     { label: "10 Cr", value: 100000000 },
   ];
 
-  // Enhanced PropertyImage component with your image display logic
-  const PropertyImage = ({ images, alt }: { images: any[] | undefined, alt: string }) => {
-    if (!images || images.length === 0) {
+  const PropertyImage = ({ images, alt }: { images?: any[]; alt: string }) => {
+    if (!images?.length) {
       return (
         <div className={styles.noImages}>
           <div className={styles.noImagesMessage}>No images available</div>
         </div>
       );
     }
-
-    // Handle both string URLs (local) and object URLs (API)
-    const firstImage = images[0];
-    const imageUrl = typeof firstImage === 'string' ? firstImage : firstImage.url;
-
+    const first = images[0];
+    const url = typeof first === "string" ? first : first.url;
     return (
       <div className={styles.imageWrapper}>
         <img
-          src={imageUrl}
+          src={url}
           alt={alt}
           className={styles.image}
-          onError={(e) => {
-            (e.target as HTMLImageElement).src = '/placeholder.jpg';
-            (e.target as HTMLImageElement).className = `${styles.image} ${styles.placeholder}`;
-          }}
           loading="lazy"
+          onError={(e) => {
+            e.currentTarget.src = "/placeholder.jpg";
+            e.currentTarget.className = `${styles.image} ${styles.placeholder}`;
+          }}
         />
       </div>
     );
   };
 
-  // Process local JSON data with image handling
-  const processLocalData = () => {
-    return propData.map((property) => ({
-      id: property.ID,
-      title: property.post_title,
-      price: property.property_price ? 
-            `${property.property_price} ${property.property_label?.includes("Cr") ? "Cr" : "Lacs"}` : 
-            "Price on Request",
-      numericPrice: property.property_price ? 
-                  (property.property_label?.includes("Cr") ? 
-                   parseFloat(property.property_price) * 10000000 : 
-                   parseFloat(property.property_price) * 100000) : 
-                  0,
-      label: property.property_label || "N/A",
-      location: property.property_address?.replace(/\s+/g, " ") || "N/A",
-      carpet_area: property.Property_size ? `${property.Property_size} sqft` : "N/A",
-      possession_date: property.property_date ?
-                      new Date(property.property_date).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "long",
-                      }) : "N/A",
-      slug: property.slug,
-      images: property.images || [],
-      source: 'local'
+  const processLocalData = () =>
+    propData.map((p) => ({
+      id: p.ID,
+      title: p.post_title,
+      price: p.property_price
+        ? `${p.property_price} ${p.property_label?.includes("Cr") ? "Cr" : "Lacs"}`
+        : "Price on Request",
+      numericPrice: p.property_price
+        ? (p.property_label?.includes("Cr")
+            ? parseFloat(p.property_price) * 1e7
+            : parseFloat(p.property_price) * 1e5)
+        : 0,
+      label: p.property_label || "N/A",
+      location: p.property_address?.replace(/\s+/g, " ") || "N/A",
+      carpet_area: p.Property_size ? `${p.Property_size} sqft` : "N/A",
+      possession_date: p.property_date
+        ? new Date(p.property_date).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+          })
+        : "N/A",
+      slug: p.slug,
+      images: p.images || [],
+      source: "local" as const,
     }));
-  };
 
-  // Fetch API data with proper image handling
-  const fetchApiProperties = async (page = 1) => {
+  const fetchApiProperties = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/properties', {
-        params: { page, limit: 10 }
-      });
-      
-      return response.data.map((property: any) => ({
-        id: property._id,
-        title: property.title,
-        price: property.price || "Price on Request",
-        numericPrice: property.price ? 
-                    (property.price.includes("Cr") ? 
-                     parseFloat(property.price.replace(/[^0-9.]/g, '')) * 10000000 : 
-                     parseFloat(property.price.replace(/[^0-9.]/g, '')) * 100000) : 
-                    0,
-        label: property.propertyLabel || "N/A",
-        location: property.location || "N/A",
+      const { data } = await axios.get("http://localhost:8000/api/properties");
+      return data.map((p: any) => ({
+        id: p._id,
+        title: p.title,
+        price: p.price || "Price on Request",
+        numericPrice: p.price
+          ? p.price.toLowerCase().includes("cr")
+            ? parseFloat(p.price.replace(/[^0-9.]/g, "")) * 1e7
+            : parseFloat(p.price.replace(/[^0-9.]/g, "")) * 1e5
+          : 0,
+        label: p.propertyLabel || "N/A",
+        location: p.location || "N/A",
         carpet_area: "N/A",
-        possession_date: property.possessionDate ?
-                        new Date(property.possessionDate).toLocaleDateString("en-US", {
-                          year: "numeric",
-                          month: "long",
-                        }) : "N/A",
-        slug: property._id,
-        images: property.propertyImages || [],
-        source: 'api'
+        possession_date: p.possessionDate
+          ? new Date(p.possessionDate).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+            })
+          : "N/A",
+        slug: p.slug || "",
+        images: p.propertyImages || [],
+        plans: p.plans || [],
+        source: "api" as const,
       }));
     } catch (err) {
       console.error("API Error:", err);
-      setError("Failed to load some properties. Showing available data.");
+      setError("Failed to load backend properties");
       return [];
     }
   };
 
-  // Load all properties
   const loadProperties = async () => {
     setLoading(true);
     try {
-      const [localData, apiData] = await Promise.all([
+      const [apiData, localData] = await Promise.all([
+        fetchApiProperties(),
         Promise.resolve(processLocalData()),
-        fetchApiProperties(1)
       ]);
-      
-      setLocalProperties(localData);
       setApiProperties(apiData);
-      setHasMore(apiData.length > 0);
-    } catch (err) {
-      console.error("Loading Error:", err);
+      setLocalProperties(localData);
+    } catch {
       setError("Failed to load properties");
     } finally {
       setLoading(false);
     }
   };
 
-  // Load more API properties
-  const loadMore = async () => {
-    if (loadingMore || !hasMore) return;
-    setLoadingMore(true);
-    
-    try {
-      const nextPage = page + 1;
-      const newData = await fetchApiProperties(nextPage);
-      
-      if (newData.length > 0) {
-        setApiProperties(prev => [...prev, ...newData]);
-        setPage(nextPage);
-      } else {
-        setHasMore(false);
-      }
-    } catch (err) {
-      console.error("Load More Error:", err);
-    } finally {
-      setLoadingMore(false);
-    }
-  };
-
-  // Apply filters
-  useEffect(() => {
-    const allProperties = [...localProperties, ...apiProperties];
-    
-    const filtered = allProperties.filter(property => {
-      const matchesBudget = property.numericPrice >= filters.minBudget && 
-                          property.numericPrice <= filters.maxBudget;
-      
-      const matchesPossession = filters.possession.length === 0 || 
-                              filters.possession.includes(
-                                new Date(property.possession_date).getFullYear().toString()
-                              );
-      
-      const matchesConfig = filters.configuration.length === 0 || 
-                          filters.configuration.some(config => 
-                            property.label.includes(config)
-                          );
-      
-      const matchesLocation = filters.location.length === 0 || 
-                            filters.location.some(loc => 
-                              property.location.includes(loc)
-                            );
-      
-      return matchesBudget && matchesPossession && matchesConfig && matchesLocation;
-    }).sort((a, b) => a.numericPrice - b.numericPrice);
-    
-    setFilteredProperties(filtered);
-  }, [localProperties, apiProperties, filters]);
-
-  // Initial load
   useEffect(() => {
     loadProperties();
   }, []);
 
-  // Filter handlers
-  const handleBudgetChange = (e: React.ChangeEvent<HTMLSelectElement>, type: 'minBudget' | 'maxBudget') => {
-    const value = parseInt(e.target.value);
-    setFilters(prev => ({
-      ...prev,
-      [type]: value,
-      ...(type === 'minBudget' && { maxBudget: Math.max(value, prev.maxBudget) }),
-      ...(type === 'maxBudget' && { minBudget: Math.min(value, prev.minBudget) })
+  useEffect(() => {
+    const all = [...apiProperties, ...localProperties];
+    const filtered = all
+      .filter((p) => {
+        const mb = p.numericPrice >= filters.minBudget;
+        const mb2 = p.numericPrice <= filters.maxBudget;
+        const yearOK =
+          !filters.possession.length ||
+          filters.possession.includes(
+            new Date(p.possession_date).getFullYear().toString()
+          );
+
+        const cfgOK =
+          !filters.configuration.length ||
+          (p.source === "api"
+            ? filters.configuration.some((cfg) =>
+                p.plans?.some((plan: string) =>
+                  plan
+                    .replace(/\s+/g, "")
+                    .toLowerCase()
+                    .includes(cfg.replace(/\s+/g, "").toLowerCase())
+                )
+              )
+            : filters.configuration.some((cfg) =>
+                p.label
+                  .replace(/\s+/g, "")
+                  .toLowerCase()
+                  .includes(cfg.replace(/\s+/g, "").toLowerCase())
+              ));
+
+        const locOK =
+          !filters.location.length ||
+          filters.location.some((l) =>
+            p.location.toLowerCase().includes(l.toLowerCase())
+          );
+
+        return mb && mb2 && yearOK && cfgOK && locOK;
+      })
+      .sort((a, b) => {
+        if (a.source !== b.source) return a.source === "api" ? -1 : 1;
+        return a.numericPrice - b.numericPrice;
+      });
+    setFilteredProperties(filtered);
+  }, [apiProperties, localProperties, filters]);
+
+  const handleBudgetChange = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+    type: "minBudget" | "maxBudget"
+  ) => {
+    const val = +e.target.value;
+    setFilters((f) => ({
+      ...f,
+      [type]: val,
+      ...(type === "minBudget" && { maxBudget: Math.max(val, f.maxBudget) }),
+      ...(type === "maxBudget" && { minBudget: Math.min(val, f.minBudget) }),
     }));
   };
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, checked } = e.target;
-    setFilters(prev => ({
-      ...prev,
-      [name]: checked 
-        ? [...prev[name as keyof typeof prev], value] 
-        : (prev[name as keyof typeof prev] as string[]).filter(item => item !== value)
+    setFilters((f) => ({
+      ...f,
+      [name]: checked
+        ? [...(f as any)[name], value]
+        : (f as any)[name].filter((v: string) => v !== value),
     }));
   };
 
-  const resetFilters = () => {
+  const resetFilters = () =>
     setFilters({
       minBudget: 1000000,
       maxBudget: 100000000,
@@ -1246,14 +1653,16 @@ const NewProperties = () => {
       configuration: [],
       location: [],
     });
-  };
 
   return (
     <>
       <Navbar />
       <div className={styles.mainContainer}>
-        {/* Filter Sidebar */}
-        <aside className={`${styles.filterSidebar} ${isFilterVisible ? styles.visible : ''}`}>
+        <aside
+          className={`${styles.filterSidebar} ${
+            isFilterVisible ? styles.visible : ""
+          }`}
+        >
           <div className={styles.filterHeader}>
             <h3>Filters</h3>
             <button onClick={resetFilters} className={styles.resetBtn}>
@@ -1261,7 +1670,6 @@ const NewProperties = () => {
             </button>
           </div>
 
-          {/* Budget Range Filter */}
           <div className={styles.filterSection}>
             <h4>Budget Range (₹)</h4>
             <div className={styles.budgetInputs}>
@@ -1269,13 +1677,13 @@ const NewProperties = () => {
                 <label>Min:</label>
                 <select
                   value={filters.minBudget}
-                  onChange={(e) => handleBudgetChange(e, 'minBudget')}
+                  onChange={(e) => handleBudgetChange(e, "minBudget")}
                 >
                   {priceOptions
-                    .filter(opt => opt.value < filters.maxBudget)
-                    .map(opt => (
-                      <option key={`min-${opt.value}`} value={opt.value}>
-                        {opt.label}
+                    .filter((o) => o.value < filters.maxBudget)
+                    .map((o) => (
+                      <option key={o.value} value={o.value}>
+                        {o.label}
                       </option>
                     ))}
                 </select>
@@ -1284,13 +1692,13 @@ const NewProperties = () => {
                 <label>Max:</label>
                 <select
                   value={filters.maxBudget}
-                  onChange={(e) => handleBudgetChange(e, 'maxBudget')}
+                  onChange={(e) => handleBudgetChange(e, "maxBudget")}
                 >
                   {priceOptions
-                    .filter(opt => opt.value > filters.minBudget)
-                    .map(opt => (
-                      <option key={`max-${opt.value}`} value={opt.value}>
-                        {opt.label}
+                    .filter((o) => o.value > filters.minBudget)
+                    .map((o) => (
+                      <option key={o.value} value={o.value}>
+                        {o.label}
                       </option>
                     ))}
                 </select>
@@ -1298,75 +1706,71 @@ const NewProperties = () => {
             </div>
           </div>
 
-          {/* Possession Year Filter */}
           <div className={styles.filterSection}>
             <h4>Possession Year</h4>
             <div className={styles.checkboxGroup}>
-              {['2023', '2024', '2025', '2026', '2027', '2028'].map(year => (
-                <label key={year} className={styles.checkboxLabel}>
+              {["2023", "2024", "2025", "2026", "2027", "2028"].map((y) => (
+                <label key={y} className={styles.checkboxLabel}>
                   <input
                     type="checkbox"
                     name="possession"
-                    value={year}
-                    checked={filters.possession.includes(year)}
+                    value={y}
+                    checked={filters.possession.includes(y)}
                     onChange={handleCheckboxChange}
                   />
-                  {year}
+                  {y}
                 </label>
               ))}
             </div>
           </div>
 
-          {/* Configuration Filter */}
           <div className={styles.filterSection}>
             <h4>Configuration</h4>
             <div className={styles.checkboxGroup}>
-              {['1 BHK', '2 BHK', '3 BHK', '4 BHK', '5 BHK'].map(config => (
-                <label key={config} className={styles.checkboxLabel}>
+              {["1 BHK", "2 BHK", "3 BHK", "4 BHK", "5 BHK"].map((cfg) => (
+                <label key={cfg} className={styles.checkboxLabel}>
                   <input
                     type="checkbox"
                     name="configuration"
-                    value={config}
-                    checked={filters.configuration.includes(config)}
+                    value={cfg}
+                    checked={filters.configuration.includes(cfg)}
                     onChange={handleCheckboxChange}
                   />
-                  {config}
+                  {cfg}
                 </label>
               ))}
             </div>
           </div>
 
-          {/* Location Filter */}
           <div className={styles.filterSection}>
             <h4>Location</h4>
             <div className={styles.checkboxGroup}>
-              {['Mumbai', 'Navi Mumbai', 'Thane', 'Panvel', 'Pune'].map(location => (
-                <label key={location} className={styles.checkboxLabel}>
-                  <input
-                    type="checkbox"
-                    name="location"
-                    value={location}
-                    checked={filters.location.includes(location)}
-                    onChange={handleCheckboxChange}
-                  />
-                  {location}
-                </label>
-              ))}
+              {["Mumbai", "Navi Mumbai", "Thane", "Panvel", "Pune"].map(
+                (loc) => (
+                  <label key={loc} className={styles.checkboxLabel}>
+                    <input
+                      type="checkbox"
+                      name="location"
+                      value={loc}
+                      checked={filters.location.includes(loc)}
+                      onChange={handleCheckboxChange}
+                    />
+                    {loc}
+                  </label>
+                )
+              )}
             </div>
           </div>
         </aside>
 
-        {/* Main Content */}
         <main className={styles.propertyListing}>
-          {/* Toggle Filter Button */}
-          <button 
+          <button
             className={styles.filterToggle}
-            onClick={() => setIsFilterVisible(!isFilterVisible)}
+            onClick={() => setIsFilterVisible((v) => !v)}
           >
-            {isFilterVisible ? 'Hide Filters' : 'Show Filters'}
+            {isFilterVisible ? "Hide Filters" : "Show Filters"}
           </button>
 
-          {/* Property Grid */}
           {loading ? (
             <div className={styles.loading}>Loading properties...</div>
           ) : error ? (
@@ -1374,51 +1778,52 @@ const NewProperties = () => {
               <p>{error}</p>
               <button onClick={loadProperties}>Retry</button>
             </div>
-          ) : filteredProperties.length > 0 ? (
-            <>
-              <div className={styles.propertyGrid}>
-                {filteredProperties.map(property => (
-                  <div key={`${property.source}-${property.id}`} className={styles.propertyCard}>
-                    <div className={styles.cardImage}>
-                      <PropertyImage images={property.images} alt={property.title} />
+          ) : filteredProperties.length ? (
+            <div className={styles.propertyGrid}>
+              {filteredProperties.map((p) => (
+                <div key={`${p.source}-${p.id}`} className={styles.propertyCard}>
+                  <div className={styles.cardImage}>
+                    <PropertyImage images={p.images} alt={p.title} />
+                  </div>
+                  <div className={styles.cardBody}>
+                    <h3>{p.title}</h3>
+                    <div className={styles.price}>₹ {p.price}</div>
+                    <div className={styles.details}>
+                      <span>
+                        <strong>Location:</strong> {p.location}
+                      </span>
+                      <span>
+                        <strong>Size:</strong> {p.carpet_area}
+                      </span>
+                      <span>
+                        <strong>Possession:</strong> {p.possession_date}
+                      </span>
                     </div>
-                    <div className={styles.cardBody}>
-                      <h3>{property.title}</h3>
-                      <div className={styles.price}>₹ {property.price}</div>
-                      <div className={styles.details}>
-                        <span><strong>Location:</strong> {property.location}</span>
-                        <span><strong>Size:</strong> {property.carpet_area}</span>
-                        <span><strong>Possession:</strong> {property.possession_date}</span>
-                      </div>
-                      <div className={styles.cardFooter}>
-                        <a href={`/new-properties/${property.slug}`} className={styles.detailsBtn}>
-                          View Details
-                        </a>
-                        <a href={`/contact-owner/${property.slug}`} className={styles.contactBtn}>
-                          Contact
-                        </a>
-                      </div>
+                    <div className={styles.cardFooter}>
+                      <a
+                        href={`/new-properties/${p.slug}`}
+                        className={styles.detailsBtn}
+                      >
+                        View Details
+                      </a>
+                      <a
+                        href={`/contact-owner/${p.slug}`}
+                        className={styles.contactBtn}
+                      >
+                        Contact
+                      </a>
                     </div>
                   </div>
-                ))}
-              </div>
-
-              {hasMore && (
-                <div className={styles.loadMore}>
-                  <button 
-                    onClick={loadMore} 
-                    disabled={loadingMore}
-                    className={styles.loadMoreBtn}
-                  >
-                    {loadingMore ? 'Loading...' : 'Load More Properties'}
-                  </button>
                 </div>
-              )}
-            </>
+              ))}
+            </div>
           ) : (
             <div className={styles.noResults}>
               <p>No properties match your filters.</p>
-              <button onClick={resetFilters} className={styles.resetFiltersBtn}>
+              <button
+                onClick={resetFilters}
+                className={styles.resetFiltersBtn}
+              >
                 Reset Filters
               </button>
             </div>
