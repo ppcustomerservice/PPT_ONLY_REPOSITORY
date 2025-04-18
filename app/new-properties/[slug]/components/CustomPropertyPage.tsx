@@ -1,7 +1,50 @@
+// // CustomPropertyPage.tsx
+// 'use client';
+// import React from "react";
+// import propData from "../prop.json";
+// import NavBar from "@/components/Navbar";
+// import SemiHeader from "./SemiHeader";  // Changed from "./components/SemiHeader"
+// import ImageGallery from "./ImageGallery";  // Changed from "./components/ImageGallery"
+// import Amenities from "./Amenities";  // Changed from "./components/Amenities"
+// //import YouTubeVideo from "./YouTubeVideo";  // Changed from "./components/YouTubeVideo"
+// //import YouTubeVideo from "./YouTubeVideo";
+// import Location from "./Location";
+// import FloorPlan from "./FloorPlan";
+// import Form from "@/components/Form";
+
+// export default async function CustomPropertyPage({ slug }: { slug: string }) {
+//   const response = await fetch(`https://localhost:8000/properties?slug=${slug}`, {
+//     cache: "no-store",
+//   });
+
+//   const data = await response.json();
+//   if (!data || !data.title) return <div>New Property not found</div>;
+
+//   return (
+//     <div>
+//       <NavBar />
+//       <SemiHeader
+//         title={data.title}
+//         subtitle="PROPERTY Plateau"
+//         location={data.location}
+//         price={data.price}
+//         possessionDate={data.possessionDate}
+//       />
+//       <ImageGallery imageUrls={data.propertyImages} />
+//       <Amenities amenities={data.amenities} />
+     
+//       <Location />
+//       <FloorPlan plans={data.plans} />
+//       <Form propertyId={data._id} />
+//     </div>
+//   );
+// }
 
 'use client';
 
-import styles from '../../CustomPorpertyCss.module.css';
+import { log } from 'console';
+import styles from '../../NewPropertiesDetails.module.css';
+
 
 interface CustomPropertyPageProps {
   property: {
@@ -24,118 +67,91 @@ interface CustomPropertyPageProps {
 }
 
 export default function CustomPropertyPage({ property }: CustomPropertyPageProps) {
+  console.log("ninini");
+  
   return (
-    <div className={styles.container}>
-      {/* Hero Section */}
-      <div className={styles.heroSection}>
-        <div className={styles.heroContent}>
-          <h1 className={styles.heroTitle}>{property.title}</h1>
-          <div className={styles.heroDetails}>
-            <div className={styles.priceTag}>
-              ₹{property.price}
-              <div className={styles.priceSubtext}>Total Price</div>
-            </div>
-            <div className={styles.locationBadge}>
-              <span className="material-icons">pin_drop</span>
-              {property.location}
-            </div>
+    <div className={styles.mainContainer}>
+      <div className={styles.propertyListing}>
+        {/* Header Section */}
+        <div className={styles.propertyHeader}>
+          <h1 className={styles.propertyTitle}>{property.title}</h1>
+          <div className={styles.priceLocation}>
+            <span className={styles.price}>₹ {property.price}</span>
+            <span className={styles.location}>{property.location}</span>
           </div>
         </div>
-      </div>
 
-      {/* Gallery Section */}
-      <section className={styles.gallerySection}>
-        <div className={styles.galleryGrid}>
-          {property.propertyImages.map((image, index) => (
-            <div 
-              key={index} 
-              className={`${styles.galleryItem} ${index === 0 ? styles.featuredImage : ''}`}
-            >
-              <img
-                src={image.url}
-                alt={`${property.title} - Image ${index + 1}`}
-                className={styles.image}
-                loading="lazy"
-              />
-              <div className={styles.imageOverlay}></div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Details Section */}
-      <section className={styles.detailsSection}>
-        {/* Key Details Card */}
-        <div className={styles.detailsCard}>
-          <h2 className={styles.sectionTitle}>
-            <span className="material-icons">info</span>
-            Property Details
-          </h2>
-          
-          <div className={styles.detailGrid}>
-            <div className={styles.detailItem}>
-              <span className="material-icons">calendar_month</span>
-              <div>
-                <h3>Possession Date</h3>
-                <p>{property.possessionDate}</p>
+        {/* Image Gallery */}
+        <div className={styles.propertyGrid}>
+          {property.propertyImages.length > 0 ? (
+            property.propertyImages.map((image, index) => (
+              <div key={index} className={styles.propertyCard}>
+                <div className={styles.cardImage}>
+                  <img
+                    src={image.url}
+                    alt={`${property.title} - Image ${index + 1}`}
+                    className={styles.image}
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = '/placeholder.jpg';
+                    }}
+                  />
+                </div>
               </div>
-            </div>
-            
-            {property.description && (
+            ))
+          ) : (
+            <div className={styles.noImages}>No images available</div>
+          )}
+        </div>
+
+        {/* Property Details */}
+        <div className={styles.propertyDetails}>
+          <div className={styles.detailSection}>
+            <h2>Property Details</h2>
+            <div className={styles.detailGrid}>
               <div className={styles.detailItem}>
-                <span className="material-icons">description</span>
-                <div>
-                  <h3>Description</h3>
-                  <p className={styles.descriptionText}>{property.description}</p>
-                </div>
+                <span className={styles.detailLabel}>Location:</span>
+                <span>{property.location}</span>
               </div>
-            )}
+              <div className={styles.detailItem}>
+                <span className={styles.detailLabel}>Possession Date:</span>
+                <span>{property.possessionDate}</span>
+              </div>
+            </div>
           </div>
+
+          {/* Amenities */}
+          {property.amenities.length > 0 && (
+            <div className={styles.detailSection}>
+              <h2>Amenities</h2>
+              <div className={styles.amenitiesGrid}>
+                {property.amenities.map((amenity, index) => (
+                  <span key={index} className={styles.amenity}>
+                    {amenity}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Plans */}
+          {property.plans.length > 0 && (
+            <div className={styles.detailSection}>
+              <h2>Plans</h2>
+              <div className={styles.plansGrid}>
+                {property.plans.map((plan, index) => (
+                  <span key={index} className={styles.plan}>
+                    {plan}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
-        {/* Amenities Section */}
-        {property.amenities.length > 0 && (
-          <div className={styles.amenitiesCard}>
-            <h2 className={styles.sectionTitle}>
-              <span className="material-icons">apartment</span>
-              Amenities
-            </h2>
-            <div className={styles.amenitiesGrid}>
-              {property.amenities.map((amenity, index) => (
-                <div key={index} className={styles.amenityItem}>
-                  <span className="material-icons">check_circle</span>
-                  {amenity}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Floor Plans Section */}
-        {property.plans.length > 0 && (
-          <div className={styles.plansCard}>
-            <h2 className={styles.sectionTitle}>
-              <span className="material-icons">design_services</span>
-              Floor Plans
-            </h2>
-            <div className={styles.plansGrid}>
-              {property.plans.map((plan, index) => (
-                <div key={index} className={styles.planItem}>
-                  <span className="material-icons">floorplan</span>
-                  {plan}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </section>
-
-      {/* Fixed CTA */}
-      <div className={styles.fixedCTA}>
-        <button className={styles.ctaButton}>
-          <span className="material-icons">message</span>
-          Schedule a Visit
-        </button>
+        {/* Contact Section */}
+        <div className={styles.contactSection}>
+          <button className={styles.contactButton}>Contact Owner</button>
+        </div>
       </div>
     </div>
   );

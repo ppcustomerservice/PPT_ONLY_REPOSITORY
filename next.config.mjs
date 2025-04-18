@@ -17,6 +17,14 @@ const nextConfig = {
     },
     images: {
       domains: ['www.propertyplateau.com'],
+      remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: 'holidayhomesdatabase.s3.ap-south-1.amazonaws.com',
+          port: '',
+          pathname: '/images/**',
+        },
+      ],
     },
   };
   
