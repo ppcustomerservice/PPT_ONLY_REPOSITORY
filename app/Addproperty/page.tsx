@@ -17,20 +17,24 @@ export default function AddPropertyPage() {
   // File upload state
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [videoFile, setVideoFile] = useState<File | null>(null);
+  const [floorPlanFile, setFloorPlanFile] = useState<File | null>(null);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [videoPreview, setVideoPreview] = useState<string | null>(null);
+  const [floorPlanPreview, setFloorPlanPreview] = useState<string | null>(null);
   
   // Refs
   const imageInputRef = useRef<HTMLInputElement>(null);
   const videoInputRef = useRef<HTMLInputElement>(null);
+  const floorPlanInputRef = useRef<HTMLInputElement>(null);
   
   // Clean up object URLs
   useEffect(() => {
     return () => {
       imagePreviews.forEach(url => URL.revokeObjectURL(url));
       if (videoPreview) URL.revokeObjectURL(videoPreview);
+      if (floorPlanPreview) URL.revokeObjectURL(floorPlanPreview);
     };
-  }, [imagePreviews, videoPreview]);
+  }, [imagePreviews, videoPreview, floorPlanPreview]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -51,6 +55,14 @@ export default function AddPropertyPage() {
     }
   };
 
+  const handleFloorPlanChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setFloorPlanFile(file);
+      setFloorPlanPreview(URL.createObjectURL(file));
+    }
+  };
+
   const removeImage = (index: number) => {
     const newFiles = [...imageFiles];
     const newPreviews = [...imagePreviews];
@@ -66,6 +78,12 @@ export default function AddPropertyPage() {
     setVideoFile(null);
     setVideoPreview(null);
     if (videoInputRef.current) videoInputRef.current.value = '';
+  };
+
+  const removeFloorPlan = () => {
+    setFloorPlanFile(null);
+    setFloorPlanPreview(null);
+    if (floorPlanInputRef.current) floorPlanInputRef.current.value = '';
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -96,6 +114,11 @@ export default function AddPropertyPage() {
     if (videoFile) {
       formData.append('propertyVideo', videoFile);
     }
+
+    // Append floor plan file if exists
+    if (floorPlanFile) {
+      formData.append('floorPlan', floorPlanFile);
+    }
   
     try {
       const response = await axios.post('http://localhost:8000/api/properties', formData, {
@@ -114,7 +137,7 @@ export default function AddPropertyPage() {
       console.error('Error adding property:', error);
       alert(`Error: ${error.response?.data?.error || error.message || 'Something went wrong'}`);
     }
-  };;
+  };
 
   const resetForm = () => {
     setTitle('');
@@ -127,10 +150,13 @@ export default function AddPropertyPage() {
     setPropertyLabel('');
     setImageFiles([]);
     setVideoFile(null);
+    setFloorPlanFile(null);
     setImagePreviews([]);
     setVideoPreview(null);
+    setFloorPlanPreview(null);
     if (imageInputRef.current) imageInputRef.current.value = '';
     if (videoInputRef.current) videoInputRef.current.value = '';
+    if (floorPlanInputRef.current) floorPlanInputRef.current.value = '';
   };
 
   return (
@@ -237,6 +263,38 @@ export default function AddPropertyPage() {
           <div className="form-section">
             <h3 className="section-title">Media Uploads</h3>
             
+            {/* Floor Plan Upload */}
+            <div className="form-group">
+              <label htmlFor="floorPlan">Floor Plan Image</label>
+              <input
+                id="floorPlan"
+                type="file"
+                accept="image/*"
+                onChange={handleFloorPlanChange}
+                ref={floorPlanInputRef}
+              />
+              <p className="hint">Supported formats: JPEG, PNG, WEBP</p>
+              
+              {floorPlanPreview && (
+                <div className="preview-container">
+                  <div className="preview-item">
+                    <img 
+                      src={floorPlanPreview} 
+                      alt="Floor Plan Preview"
+                      className="preview-image"
+                    />
+                    <button 
+                      type="button" 
+                      className="remove-button"
+                      onClick={removeFloorPlan}
+                    >
+                      ×
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
             <div className="form-group">
               <label htmlFor="propertyImages">Property Images (Max 10)*</label>
               <input
@@ -318,20 +376,19 @@ export default function AddPropertyPage() {
           padding: 2rem;
           background-color: #f5f7fa;
           min-height: 100vh;
-            overflow-y: auto;    
+          overflow-y: auto;    
         }
 
-      .form-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
-  max-height: 90vh;       /* Add height limit */
-  overflow-y: auto;       /* Enable vertical scroll */
-}
+        .form-container {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 2rem;
+          background: #fff;
+          border-radius: 12px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          max-height: 90vh;
+          overflow-y: auto;
+        }
 
         .form-title {
           color: #2d3748;
@@ -410,7 +467,6 @@ export default function AddPropertyPage() {
           position: relative;
           border: 1px solid #e2e8f0;
           border-radius: 8px;
-       
         }
 
         .preview-image {

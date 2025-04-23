@@ -7,17 +7,18 @@ body, html {
   overflow-x: hidden;
 } 
 
-/* Navbar Styles */
 .navbar {
   background-color: #104b97;
-  padding: 20px;
+  padding: 30px 20px;
   width: 100%;
+  min-height: 100px;
   position: relative;
   z-index: 1000;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 
 /* Hamburger at the top-left corner */
 .left-section {
@@ -59,8 +60,10 @@ body, html {
 .nav-items a {
   color: white;
   text-decoration: none;
-  font-size: 16px;
+  font-size: 18px; /* or 20px if you want it even larger */
+  font-weight: 500; /* optional: adds more emphasis */
 }
+
 
 .nav-items a:hover {
   text-decoration: underline;

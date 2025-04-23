@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const Form = ({ delay = 5000, onClose }) => { // Added onClose prop
+const Form = ({ delay = 1000, onClose }) => { // Added onClose prop
   const [formData, setFormData] = useState({
     name: '',
     email: '',
