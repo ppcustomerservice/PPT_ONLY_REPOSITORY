@@ -1526,7 +1526,7 @@ const NewProperties = () => {
 
   const fetchApiProperties = async () => {
     try {
-      const { data } = await axios.get("http://localhost:8000/api/properties");
+      const { data } = await axios.get("https://backend-server-1smb.onrender.com/api/properties");
       return data.map((p: any) => ({
         id: p._id,
         title: p.title,
