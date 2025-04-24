@@ -121,7 +121,7 @@ export default function AddPropertyPage() {
     }
   
     try {
-      const response = await axios.post('http://localhost:8000/api/properties', formData, {
+      const response = await axios.post('https://backend-server-1smb.onrender.com/api/properties', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

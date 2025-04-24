@@ -207,7 +207,7 @@ async function getPropertyData(slug: string) {
   try {
     // First try to fetch from your custom API
     const apiResponse = await fetch(
-      `http://localhost:8000/api/properties/${slug}`,
+      `https://backend-server-1smb.onrender.com/api/properties/${slug}`,
       { next: { revalidate: 60 } }
     );
     console.log('API Response:', apiResponse.ok, apiResponse.status, apiResponse.statusText);
