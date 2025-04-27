@@ -1,4 +1,6 @@
+// WordPressPropertyPageClient.tsx (Client Component)
 'use client';
+
 import React, { useState } from 'react';
 import NavBar from '@/components/Navbar';
 import SemiHeader from './SemiHeader';
@@ -29,30 +31,16 @@ interface WordPressProperty {
   };
 }
 
-async function fetchAmenities(postId: number) {
-
-  const [formOpen, setFormOpen] = useState(true);
-  try {
-    const response = await fetch(
-      `https://www.propertyplateau.com/wp-json/wp/v2/property_features?post=${postId}&per_page=100`
-    );
-    return await response.json();
-  } catch (error) {
-    console.error('Failed to fetch amenities:', error);
-    return [];
-  }
+interface WordPressPropertyPageClientProps {
+  property: WordPressProperty;
+  amenities: any[];
 }
 
-export default async function WordPressPropertyPage({ 
-  property 
-}: { 
-  property: WordPressProperty 
-}) {
-  if (!property) {
-    return <div className="p-4 text-red-500">WordPress property data missing</div>;
-  }
-
-  const amenities = await fetchAmenities(property.id);
+const WordPressPropertyPageClient = ({
+  property,
+  amenities,
+}: WordPressPropertyPageClientProps) => {
+  const [formOpen, setFormOpen] = useState(true);
 
   return (
     <div className="property-detail">
@@ -88,15 +76,19 @@ export default async function WordPressPropertyPage({
         )}
 
         <div className="my-8">
-          <Form propertyId={property.id.toString()}
-          onSubmit={(success) => {
-            if (success) {
-              setFormOpen(false); // close form
-            }
-          }}
-           />
+         {formOpen && <Form
+            propertyId={property.id.toString()}
+            onSubmit={(success) => {
+                console.log('Form submitted:', success);
+              if (success) {
+                setFormOpen(false); // close form
+              }
+            }}
+          />}
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default WordPressPropertyPageClient;

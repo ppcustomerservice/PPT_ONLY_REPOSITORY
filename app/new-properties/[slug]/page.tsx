@@ -148,6 +148,7 @@ import WordPressPropertyPage from "./components/WordPressPropertyPage";
 import CustomPropertyPage from "./components/CustomPropertyPage";
 import { notFound } from 'next/navigation';
 import PropertyPageSkeleton from './components/PropertyPageSkeleton';
+import WordPressPropertyPageServer from './components/WordPressPropertyPage.server';
 
 interface CustomProperty {
   _id: string;
@@ -264,6 +265,10 @@ export default async function PropertyPage({ params }: { params: { slug: string 
     ? propertyData.property.description || `View details for ${propertyData.property.title}`
     : `View details for ${propertyData.property.title.rendered}`;
 
+    const amenities = propertyData.type === 'wordpress' && propertyData.property.acf
+    ? propertyData.property.acf.amenities || []  // If amenities is missing, default to an empty array
+    : [];
+
   return (
     <>
       <head>
@@ -277,7 +282,11 @@ export default async function PropertyPage({ params }: { params: { slug: string 
           {propertyData.type === 'custom' ? (
             <CustomPropertyPage property={propertyData.property} />
           ) : (
-            <WordPressPropertyPage property={propertyData.property} />
+            // <WordPressPropertyPage property={propertyData.property} />
+            <WordPressPropertyPageServer
+            property={propertyData.property}
+            amenities={amenities}
+          />
           )}
         </Suspense>
       </main>

@@ -181,7 +181,7 @@ export default function CustomPropertyPage({ property }: CustomPropertyPageProps
       {/* Floor Plan */}
       <div className={styles.floorPlanSection}>
         <h2>Floor Plan</h2>
-        {hasAccess.floorPlan ? (
+        {hasAccess.video ? (
           propertyData.floorPlan?.url ? (
             <img
               src={propertyData.floorPlan.url}
@@ -194,7 +194,7 @@ export default function CustomPropertyPage({ property }: CustomPropertyPageProps
         ) : propertyData.floorPlan?.url ? (
           <div
             className={styles.lockedPreviewContainer}
-            onClick={() => handleRequestAccess('floorPlan')}
+            onClick={() => handleRequestAccess('video')}
           >
             <img
               src={propertyData.floorPlan.url}

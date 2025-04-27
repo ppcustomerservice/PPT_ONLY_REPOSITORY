@@ -1,4 +1,4 @@
-'use client';
+ "use client"
 
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -62,7 +62,7 @@ const PropertyList = () => {
         <h1 className="text-3xl font-bold text-gray-800 flex items-center">
           <FiHome className="mr-2" /> Property Listings
         </h1>
-        <Link href="/add-property" legacyBehavior>
+        <Link href="/Addproperty" legacyBehavior>
           <a className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center">
             Add New Property
           </a>
