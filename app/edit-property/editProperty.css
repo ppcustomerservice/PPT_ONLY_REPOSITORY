@@ -1,3 +1,97 @@
 body{
     overflow-y: auto !important;
 }
+/* Root form container */
+form {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Inputs, textarea, select */
+  input[type="text"],
+  input[type="number"],
+  input[type="date"],
+  textarea {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    margin-top: 0.25rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+  }
+  
+  input:focus,
+  textarea:focus {
+    border-color: #3b82f6;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  }
+  
+  /* Labels */
+  label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: #374151;
+  }
+  
+  /* File inputs */
+  input[type="file"] {
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Buttons */
+  button {
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+  }
+  
+  /* Add Item buttons */
+  button[type="button"] {
+    background-color: #3b82f6;
+    color: white;
+    padding: 0.5rem 1rem;
+    margin-top: 0.5rem;
+  }
+  
+  button[type="button"]:hover {
+    background-color: #2563eb;
+  }
+  
+  /* Submit button */
+  button[type="submit"] {
+    background-color: #10b981;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    margin-top: 1.5rem;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #059669;
+  }
+  
+  /* Responsive spacing */
+  @media (max-width: 640px) {
+    form {
+      padding: 1rem;
+    }
+  
+    input,
+    textarea {
+      font-size: 0.95rem;
+    }
+  }
+  

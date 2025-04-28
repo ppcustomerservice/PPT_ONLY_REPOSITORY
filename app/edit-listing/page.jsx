@@ -34,9 +34,8 @@ const PropertyList = () => {
               <p>{property.price}</p>
               <p>{property.description}</p>
               {/* Link to edit page */}
-              <Link href={`/edit-property/${property._id}`} legacyBehavior>
-                <a>Edit</a>
-              </Link>
+              <Link href={`/edit-property/${property._id}`} className="text-blue-500 underline">Edit</Link>
+
             </div>
           </li>
         ))}

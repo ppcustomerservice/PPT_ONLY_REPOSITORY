@@ -1809,12 +1809,9 @@ const NewProperties = () => {
                       >
                         View Details
                       </a>
-                      <a
-                        href={`/contact-owner/${p.slug}`}
-                        className={styles.contactBtn}
-                      >
-                        Contact
-                      </a>
+                      <a href="/Enquiry" className={styles.contactBtn}>
+  Contact
+</a>
                     </div>
                   </div>
                 </div>
