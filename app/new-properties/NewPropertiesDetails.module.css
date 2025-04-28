@@ -507,6 +507,10 @@
 
 .cardBody {
   padding: 15px;
+  display: flex;
+    flex-direction: column;
+    min-height: 45vh;
+    justify-content: space-between;
 }
 
 .propertyMeta {
@@ -906,6 +910,10 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+
+
 
 
 
