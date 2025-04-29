@@ -111,24 +111,67 @@
   margin-bottom: 15px;
   color: #333;
 }
+/* styles.module.css */
 
-.amenitiesSection, .plansSection {
-  margin-bottom: 30px;
+.amenitiesSection {
+
+  background-color: #f9fafb; /* light background */
 }
 
-.amenitiesList, .plansList {
+.amenitiesSection h2 {
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  text-align: left;
+  color: #333;
+}
+
+.mapSection {
+  margin: 2rem 0;
+}
+
+.amenitiesGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 10px;
-  list-style-type: none;
-  padding: 0;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 24px;
+  justify-items: center;
+  align-items: center;
 }
 
-.amenitiesList li, .plansList li {
-  padding: 8px 15px;
-  background-color: #f0f0f0;
-  border-radius: 20px;
+.amenityItem {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 16px;
+  padding: 20px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.08);
 }
+
+.amenityItem:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 6px 12px rgba(0,0,0,0.15);
+}
+
+.amenityIcon {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  margin-bottom: 12px;
+}
+
+.amenityItem span {
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+  text-align: center;
+}
+.amenityItem:hover {
+  background: #e6f0ff; /* light blue background on hover */
+}
+
 
 .mapSection {
   margin-bottom: 30px;
@@ -565,6 +608,45 @@
     font-size: 1rem;
   }
 }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Global Styles */
+.mainContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  font-family: 'Inter', sans-serif;
+  color: #1a202c;
+}
+
+/* Header */
+.headerSection {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.propertyTitle {
+  font-size: 3rem;
+  font-weight: 800;
+  background: linear-gradient(to right, #0f172a, #1e3a8a, #0284c7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.propertyTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(to right, #0ea5e9, #06b6d4);
+  border-radius: 4px;
+}
+
   .imageGallery {
     grid-template-columns: 1fr;
   }

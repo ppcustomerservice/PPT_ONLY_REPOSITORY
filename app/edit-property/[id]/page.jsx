@@ -171,7 +171,7 @@ useEffect(() => {
   if (propertyId) {
     const fetchProperty = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:8000/api/properties/listing/${propertyId}`);
+        const { data } = await axios.get(`https://backend-server-1smb.onrender.com/api/properties/listing/${propertyId}`);
         setFormData({ ...data.property });
         
         // Safely handle image previews
@@ -179,7 +179,7 @@ useEffect(() => {
           const previews = data.property.propertyImages
             .filter(img => typeof img === 'string') // Ensure it's a string
             .map(img => ({
-              url: img.startsWith('http') ? img : `http://localhost:8000/${img}`,
+              url: img.startsWith('http') ? img : `https://backend-server-1smb.onrender.com/${img}`,
               name: img.split('/').pop() || 'property-image'
             }));
           setImagePreviews(previews);
@@ -256,7 +256,7 @@ useEffect(() => {
     });
 
     try {
-      await axios.put(`http://localhost:8000/api/editProperty/${propertyId}`, data, {
+      await axios.put(`https://backend-server-1smb.onrender.com/api/editProperty/${propertyId}`, data, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       alert('Property updated successfully');

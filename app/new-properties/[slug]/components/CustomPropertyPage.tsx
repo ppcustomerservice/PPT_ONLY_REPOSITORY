@@ -4,6 +4,177 @@ import { useState, useEffect, useRef } from 'react';
 import styles from '../../CustomPropertyCss.module.css';
 import Form from '@/components/Form';
 
+// --- ADD AMENITIES ICONS MAP ---
+const amenitiesIcons: Record<string, string> = {
+  "24X7": "/amenities/24x7.png",
+  "Grand Entrance Gate": "/amenities/grand-entrance-gate.png",
+  "Convenience Stores": "/amenities/convenience-stores.png",
+  "Rooftop Sky Lounge": "/amenities/rooftop-sky-lounge.png",
+  "Sky Deck": "/amenities/sky-deck.png",
+  "Reflexology Park Deck": "/amenities/reflexology-park-deck.png",
+  "Cabana Seating Park Deck": "/amenities/cabana-seating-park-deck.png",
+  "Mini Golf Seating Park Deck": "/amenities/mini-golf-seating-park-deck.png",
+  "Football": "/amenities/football.png",
+  "Steam Room": "/amenities/steam-room.png",
+  "Store": "/amenities/store.png",
+  "Amphitheater": "/amenities/amphitheater.png",
+  "Solar Water Heater": "/amenities/solar-water-heater.png",
+  "Maintainence Service": "/amenities/maintainence-service.png",
+  "Sauna": "/amenities/sauna_1.png",
+  "Open Air Gym": "/amenities/open-air-gym.png",
+  "Co Working Space": "/amenities/co-working-space.png",
+  "Conference Room": "/amenities/conference-room.png",
+  "Meditation Zone": "/amenities/meditation-zone.png",
+  "Paved Compound": "/amenities/paved-compound.png",
+  "Pool Table": "/amenities/pool-table.png",
+  "Theater": "/amenities/theater.png",
+  "Concierge Service": "/amenities/concierge-service.png",
+  "Rent Management Service": "/amenities/rent-management-service.png",
+  "House Keeping": "/amenities/house-keeping.png",
+  "Snooker Table": "/amenities/snooker-table.png",
+  "Star Gazing Telescope": "/amenities/star-gazing-telescope.png",
+  "Open Space": "/amenities/open-space.png",
+  "Waste Mgt": "/amenities/waste-mgt.png",
+  "Fire Protection System": "/amenities/fire-protection-system.png",
+  "Gated Community": "/amenities/gated-community.png",
+  "Bus Shelter": "/amenities/bus-shelter.png",
+  "Community Hall": "/amenities/community-hall.png",
+  "Squash Court": "/amenities/squash-court.png",
+  "Spa": "/amenities/spa_1.png",
+  "Restaurant": "/amenities/restaurant.png",
+  "Fire-Fighting Systems": "/amenities/fire-fighting-systems.png",
+  "Internal Street Lights": "/amenities/internal-street-lights.png",
+  "24x7 Water": "/amenities/24x7-water.png",
+  "Acupressure Park": "/amenities/acupressure-park.png",
+  "Accupressure Patchway": "/amenities/accupressure-patchway.png",
+  "Aerobics Center": "/amenities/aerobics-center.png",
+  "AC": "/amenities/ac.png",
+  "Automatic Gate": "/amenities/automatic-gate.png",
+  "Badminton": "/amenities/badminton.png",
+  "Banquet Hall": "/amenities/banquet-hall.png",
+  "BBQ": "/amenities/bbq.png",
+  "CCTV": "/amenities/cctv.png",
+  "Cricket": "/amenities/cricket.png",
+  "Elevator": "/amenities/elevator.png",
+  "Basketball": "/amenities/basketball.png",
+  "Car Parking": "/amenities/car-parking.png",
+  "Clubhouse": "/amenities/clubhouse.png",
+  "Kids Play": "/amenities/kids-play.png",
+  "Swimming Pool": "/amenities/swmimg-pool.png",
+  "Air Hockey": "/amenities/air-hockey.png",
+  "ATM": "/amenities/atm_1.png",
+  "Backyard": "/amenities/backyard.png",
+  "Balcony": "/amenities/balcony.png",
+  "Bar": "/amenities/bar.png",
+  "Beach Volleyball": "/amenities/beach-volleyball.png",
+  "Cafe": "/amenities/cafe_1.png",
+  "Campfire": "/amenities/campfire.png",
+  "Car Charger": "/amenities/car-charger.png",
+  "Central AC": "/amenities/central-ac.png",
+  "Chat Plaza": "/amenities/chat-plaza.png",
+  "Creche": "/amenities/creche.png",
+  "Curtains": "/amenities/curtains.png",
+  "Customized Furniture": "/amenities/customized-furniture.png",
+  "Cycle Track": "/amenities/cycle-track.png",
+  "Dance Room": "/amenities/dance-room.png",
+  "Dedicated Pantries": "/amenities/dedicated-pantries.png",
+  "Designer Entrance Lobby": "/amenities/designer-entrance-lobby.png",
+  "Digital Zone": "/amenities/digital-zone.png",
+  "Double Height Lobby": "/amenities/double-height-lobby.png",
+  "Earthquake Resistant": "/amenities/earthquake-resistant.png",
+  "Electricity": "/amenities/electricity.png",
+  "Energy and Water Solution": "/amenities/energy-and-water-solution.png",
+  "Entertainment Deck": "/amenities/entertainment-deck.png",
+  "Entertainment Zone": "/amenities/entertainment-zone.png",
+  "Equipped Kitchen": "/amenities/equipped-kitchen.png",
+  "External Amenities": "/amenities/external-amenities.png",
+  "False Kitchen": "/amenities/false-kitchen.png",
+  "Field View": "/amenities/field-view.png",
+  "Fire Pit": "/amenities/fire-pit.png",
+  "Fitness Center": "/amenities/fitness-center.png",
+  "Flag Hosting Zone": "/amenities/flag-hosting-zone.png",
+  "Flower Garden": "/amenities/flower-garden.png",
+  "Food Court": "/amenities/food-court.png",
+  "Football Court": "/amenities/football-court.png",
+  "Forest Walk": "/amenities/forest-walk.png",
+  "Fountain": "/amenities/fountain.png",
+  "Front Yard": "/amenities/front-yard.png",
+  "Fully Furnished": "/amenities/fully-furnished.png",
+  "Futsal Court": "/amenities/futsal-court.png",
+  "Game Area": "/amenities/game-area.png",
+  "Garage Attached": "/amenities/garage-attached.png",
+  "Garbage Disposal": "/amenities/garbage-disposal.png",
+  "Gated Complex": "/amenities/gated-complex.png",
+  "Gazebo": "/amenities/gazebo.png",
+  "Generator Backup": "/amenities/generator-backup.png",
+  "Geyser": "/amenities/geyser.png",
+  "Golf Course": "/amenities/golf-course.png",
+  "Green Area": "/amenities/green-area.png",
+  "Guest Bedroom": "/amenities/guest-bedroom.png",
+  "Helipad": "/amenities/helipad.png",
+  "Helpers Quarter": "/amenities/helpers-quarter.png",
+  "High End Interior": "/amenities/high-end-interior.png",
+  "Hot Bath": "/amenities/hot-bath.png",
+  "Housekeeping": "/amenities/housekeeping.png",
+  "Indoor Games": "/amenities/indoor-games.png",
+  "Infinity Pool": "/amenities/infinity-pool.png",
+  "Intercom": "/amenities/intercom.png",
+  "Internal Amenities": "/amenities/internal-amenities.png",
+  "Italian Furniture": "/amenities/italian-furniture.png",
+  "Jacuzzi": "/amenities/jacuzzi.png",
+  "Kids Pool": "/amenities/kids-pool.png",
+  "Laundry": "/amenities/laundry.png",
+  "Lawn Tennis": "/amenities/lawn-tennis.png",
+  "LED Lights": "/amenities/led-lights.png",
+  "Library": "/amenities/library.png",
+  "Lounge Area": "/amenities/lounge-area.png",
+  "Media Room": "/amenities/media-room.png",
+  "Outdoor Gym": "/amenities/outdoor-gym.png",
+  "Party Deck": "/amenities/party-deck.png",
+  "Party Hall": "/amenities/party-hall.png",
+  "Party Lawn": "/amenities/party-lawn.png",
+  "Pathway": "/amenities/pathway.png",
+  "Pergola": "/amenities/pergola.png",
+  "Pet Park": "/amenities/pet-park.png",
+  "Pipe Gas": "/amenities/pipe-gas.png",
+  "Private Terrace": "/amenities/private-terrace.png",
+  "Property Management": "/amenities/property-management.png",
+  "Proximity to Beach": "/amenities/proximity-to-beach.png",
+  "Rain Water Harvesting": "/amenities/rain-water-harvesting.png",
+  "School": "/amenities/school.png",
+  "Seating Area": "/amenities/seating-area.png",
+  "Seminar Hall": "/amenities/seminar-hall.png",
+  "Senior Citizen Area": "/amenities/senior-citizen-area.png",
+  "Sewage Treatment Plant": "/amenities/sewage-treatment-plant.png",
+  "Shopping Plaza": "/amenities/shopping-plaza.png",
+  "Sit Out Area": "/amenities/sit-out-area.png",
+  "Skating Ring": "/amenities/skating-ring.png",
+  "Smart Home": "/amenities/smart-home.png",
+  "Smoke Detection": "/amenities/smoke-detection.png",
+  "Wide Road 50x50": "/amenities/wide-road-50x50.png",
+  "Society": "/amenities/society.png",
+  "Society Office": "/amenities/society-office.png",
+  "Stilt Parking": "/amenities/stilt-parking.png",
+  "Sun Deck": "/amenities/sun-deck.png",
+  "Supermarket": "/amenities/supermarket.png",
+  "Table Tennis": "/amenities/table-tennis.png",
+  "Temple": "/amenities/temple.png",
+  "Theme Wall": "/amenities/theme-wall.png",
+  "Transformer": "/amenities/transformer.png",
+  "Tree House": "/amenities/tree-house.png",
+  "Utilities": "/amenities/utilities.png",
+  "Vastu Compliance": "/amenities/vastu-compliance.png",
+  "Ventilation": "/amenities/ventilation.png",
+  "Video Door": "/amenities/video-door.png",
+  "VR Game": "/amenities/vr-game.png",
+  "Work From Home": "/amenities/work-from-home.png",
+  "Yoga Room": "/amenities/yoga-room.png",
+  "Zen Garden": "/amenities/zen-garden.png",
+  "Zip Line": "/amenities/zip-line.png",
+};
+
+
+
 interface PropertyMedia {
   url: string;
   filename?: string;
@@ -58,7 +229,6 @@ export default function CustomPropertyPage({ property }: CustomPropertyPageProps
     plans: [],
   };
 
-  // Load saved access from localStorage
   useEffect(() => {
     try {
       const saved = JSON.parse(localStorage.getItem('propertyAccess') || '{}');
@@ -68,7 +238,6 @@ export default function CustomPropertyPage({ property }: CustomPropertyPageProps
     }
   }, []);
 
-  // Attempt autoplay when video unlocked
   useEffect(() => {
     if (hasAccess.video && videoRef.current) {
       setTimeout(() => {
@@ -162,9 +331,18 @@ export default function CustomPropertyPage({ property }: CustomPropertyPageProps
       {propertyData.amenities.length > 0 && (
         <div className={styles.amenitiesSection}>
           <h2>Amenities</h2>
-          <ul className={styles.amenitiesList}>
-            {propertyData.amenities.map((a, i) => <li key={i}>{a}</li>)}
-          </ul>
+          <div className={styles.amenitiesGrid}>
+            {propertyData.amenities.map((amenity, idx) => (
+              <div key={idx} className={styles.amenityItem}>
+                <img
+                  src={amenitiesIcons[amenity] || '/amenities/default.png'}
+                  alt={amenity}
+                  className={styles.amenityIcon}
+                />
+                <span>{amenity}</span>
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
@@ -262,7 +440,21 @@ export default function CustomPropertyPage({ property }: CustomPropertyPageProps
         )}
       </div>
 
-      {/* Access Request Form Modal */}
+{/* Map Section */}
+<div className={styles.mapSection}>
+  <h2>Location Map</h2>
+  <iframe
+    src={`https://www.google.com/maps?q=${encodeURIComponent(propertyData.location)}&output=embed`}
+    width="100%"
+    height="400"
+    style={{ border: 0 }}
+    allowFullScreen
+    loading="lazy"
+    referrerPolicy="no-referrer-when-downgrade"
+  ></iframe>
+</div>
+
+      {/* Form Modal */}
       {showForm && requestedSection && (
         <Form
           section={requestedSection}
@@ -273,4 +465,3 @@ export default function CustomPropertyPage({ property }: CustomPropertyPageProps
     </div>
   );
 }
-

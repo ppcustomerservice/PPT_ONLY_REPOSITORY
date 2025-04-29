@@ -14,7 +14,7 @@ const PropertyList = () => {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/getlistingProperty');
+        const response = await axios.get('https://backend-server-1smb.onrender.com/api/getlistingProperty');
         setProperties(response.data);
       } catch (error) {
         console.error("Failed to fetch properties", error);
@@ -29,7 +29,7 @@ const PropertyList = () => {
   const handleDelete = async (id) => {
     if (confirm("Are you sure you want to delete this property?")) {
       try {
-        await axios.delete(`http://localhost:8000/api/deleteProperty/${id}`);
+        await axios.delete(`https://backend-server-1smb.onrender.com/api/deleteProperty/${id}`);
         setProperties(properties.filter(property => property._id !== id));
       } catch (error) {
         console.error("Failed to delete property", error);
@@ -58,18 +58,7 @@ const PropertyList = () => {
 
   return (
 
-    <div className="property-list">
-      <h1>Property Listings</h1>
-      <ul>
-        {properties.map(property => (
-          <li key={property._id}>
-            <div>
-              <h2>{property.title}</h2>
-              <p>{property.location}</p>
-              <p>{property.price}</p>
-              <p>{property.description}</p>
-              {/* Link to edit page */}
-              <Link href={`/edit-property/${property._id}`} className="text-blue-500 underline">Edit</Link>
+
 
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="flex justify-between items-center mb-8">
