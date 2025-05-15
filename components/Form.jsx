@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const Form = ({ section, delay = 1000, onSubmit }) => {
+const Form = ({ section, delay = 1000, onSubmit, onClose }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -17,12 +17,10 @@ const Form = ({ section, delay = 1000, onSubmit }) => {
   const [formVisible, setFormVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // capture current URL on client
   useEffect(() => {
     setFormData(prev => ({ ...prev, pageUrl: window.location.href }));
   }, []);
 
-  // show form after delay
   useEffect(() => {
     const timer = setTimeout(() => setFormVisible(true), delay);
     return () => clearTimeout(timer);
@@ -82,12 +80,20 @@ const Form = ({ section, delay = 1000, onSubmit }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    if (!otpVerified) return setError('Please verify the OTP first.');
-    onSubmit(true);
+    if (!otpVerified) {
+      setError('Please verify the OTP first.');
+      return;
+    }
+
+    alert('Form submitted successfully');
+
+    if (typeof onSubmit === 'function') onSubmit(true);
+    if (typeof onClose === 'function') onClose();
   };
 
   const handleClose = () => {
-    onSubmit(false);
+    if (typeof onSubmit === 'function') onSubmit(false);
+    if (typeof onClose === 'function') onClose();
   };
 
   if (!formVisible) return null;
@@ -169,35 +175,34 @@ const styles = {
     position: 'fixed',
     top: 0,
     left: 0,
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    width: '100vw',
+    height: '100vh',
+    backgroundColor: 'rgba(0,0,0,0.6)',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 1000,
+    zIndex: 9999,
   },
   formContainer: {
-    width: '300px',
-    padding: '20px',
     backgroundColor: '#fff',
-    borderRadius: '8px',
-    boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-    transform: 'translateY(100px)',
-    animation: 'slideIn 1s forwards',
+    padding: '20px',
+    borderRadius: '10px',
     position: 'relative',
+    width: '300px',
+    boxShadow: '0 10px 20px rgba(0,0,0,0.2)',
   },
   closeButton: {
     position: 'absolute',
     top: '10px',
-    right: '10px',
-    background: 'transparent',
+    right: '15px',
+    background: 'none',
     border: 'none',
     fontSize: '20px',
     cursor: 'pointer',
   },
   title: {
     textAlign: 'center',
+    fontWeight: '500',
     marginBottom: '20px',
   },
   form: {
@@ -205,23 +210,23 @@ const styles = {
     flexDirection: 'column',
   },
   input: {
+    marginBottom: '10px',
     padding: '10px',
-    margin: '8px 0',
-    borderRadius: '4px',
+    borderRadius: '5px',
     border: '1px solid #ccc',
   },
   button: {
-    padding: '10px',
-    marginTop: '10px',
-    backgroundColor: '#104b97',
+    backgroundColor: '#0a4cb3',
     color: '#fff',
+    padding: '10px',
+    borderRadius: '5px',
     border: 'none',
-    borderRadius: '4px',
     cursor: 'pointer',
+    fontWeight: 'bold',
   },
   error: {
     color: 'red',
-    fontSize: '0.9em',
+    fontSize: '14px',
   },
 };
 

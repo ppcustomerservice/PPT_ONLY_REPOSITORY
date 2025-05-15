@@ -1002,7 +1002,71 @@
   .detailsSection {
     grid-template-columns: 1fr;
   }
+/* Navbar.module.css or add to your existing CSS */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
 
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 15px 0;
+}
+
+.navbarContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.navbarLogo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1a202c;
+}
+
+.navbarMenu {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbarItem {
+  margin-left: 30px;
+}
+
+.navbarLink {
+  color: #4a5568;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.navbarLink:hover {
+  color: #3182ce;
+}
+
+.navbarButton {
+  background-color: #3182ce;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.navbarButton:hover {
+  background-color: #2c5282;
+}
+
+/* Add this to your main content to prevent navbar overlap */
+.mainContent {
+  margin-top: 70px; /* Adjust based on your navbar height */
+}
   .descriptionSection,
   .floorPlanSection,
   .amenitiesSection,

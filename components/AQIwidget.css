@@ -89,7 +89,117 @@
   gap: 30px;
   flex-wrap: wrap;
 }
+/* Header buttons styling */
+.header-buttons {
+  display: flex;
+  gap: 10px;
+  margin-left: auto; /* Push buttons to the right */
+}
 
+.locateBtn, .searchBtn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Locate button specific styling */
+.locateBtn {
+  background-color: #4a90e2;
+  color: white;
+  box-shadow: 0 2px 5px rgba(74, 144, 226, 0.3);
+}
+
+.locateBtn:hover:not(:disabled) {
+  background-color: #3a7bc8;
+  transform: translateY(-1px);
+}
+
+/* Search button specific styling */
+.searchBtn {
+  background-color: #50c878;
+  color: white;
+  box-shadow: 0 2px 5px rgba(80, 200, 120, 0.3);
+}
+
+.searchBtn:hover:not(:disabled) {
+  background-color: #3cb371;
+  transform: translateY(-1px);
+}
+
+/* Disabled state styling */
+.locateBtn:disabled, .searchBtn:disabled {
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Active state styling */
+.locateBtn:active:not(:disabled), .searchBtn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+/* Focus state for accessibility */
+.locateBtn:focus, .searchBtn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.4);
+}
+
+/* Search container styling */
+.search-container {
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  margin: 15px 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 10;
+}
+
+.search-input {
+  flex: 1;
+  padding: 10px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 20px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+.search-input:focus {
+  border-color: #4a90e2;
+  outline: none;
+}
+
+.search-submit {
+  padding: 10px 20px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.search-submit:hover:not(:disabled) {
+  background-color: #3a7bc8;
+  transform: translateY(-1px);
+}
+
+.search-submit:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
 .aqiRight img {
   width: 150px;
   height: 150px;

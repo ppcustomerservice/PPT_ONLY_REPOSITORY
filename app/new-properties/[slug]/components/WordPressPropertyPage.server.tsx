@@ -2,7 +2,6 @@
 import React from 'react';
 import WordPressPropertyPageClient from './WordPressPropertyPageClient';
 
-// Fetch function should remain in the server component to handle async logic
 async function fetchAmenities(postId: number) {
   try {
     const response = await fetch(
@@ -20,8 +19,9 @@ export default async function WordPressPropertyPageServer({
 }: {
   property: WordPressProperty;
 }) {
-  if (!property) {
-    return <div className="p-4 text-red-500">WordPress property data missing</div>;
+  // Ensure property is defined and has slug
+  if (!property || !property.slug) {
+    return <div className="p-4 text-red-500">WordPress property data missing or incomplete</div>;
   }
 
   // Fetch amenities server-side

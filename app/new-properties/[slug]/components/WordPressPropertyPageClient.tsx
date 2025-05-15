@@ -1,4 +1,3 @@
-// WordPressPropertyPageClient.tsx (Client Component)
 'use client';
 
 import React, { useState } from 'react';
@@ -66,7 +65,13 @@ const WordPressPropertyPageClient = ({
         </div>
 
         <div className="my-8">
-          <Location propertyId={property.id.toString()} />
+       <Location
+  latitude={property.acf?.property_latitude || ''}
+  longitude={property.acf?.property_longitude || ''}
+  address={property.acf?.property_address || 'Address not specified'}
+/>
+
+
         </div>
 
         {property.acf?.plans?.length > 0 && (
@@ -76,15 +81,18 @@ const WordPressPropertyPageClient = ({
         )}
 
         <div className="my-8">
-         {formOpen && <Form
-            propertyId={property.id.toString()}
-            onSubmit={(success) => {
+          {formOpen && (
+            <Form
+              propertyId={property.id.toString()}
+              onSubmit={(success) => {
                 console.log('Form submitted:', success);
-              if (success) {
-                setFormOpen(false); // close form
-              }
-            }}
-          />}
+                if (success) {
+                  setFormOpen(false);
+                }
+              }}
+              onClose={() => setFormOpen(false)}
+            />
+          )}
         </div>
       </div>
     </div>

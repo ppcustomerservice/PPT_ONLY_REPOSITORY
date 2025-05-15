@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef } from 'react';
 import styles from '../../CustomPropertyCss.module.css';
 import Form from '@/components/Form';
+import NavBar from '@/components/Navbar';
+import SemiHeader from './SemiHeader';
 
 // --- ADD AMENITIES ICONS MAP ---
 const amenitiesIcons: Record<string, string> = {
@@ -276,8 +278,13 @@ export default function CustomPropertyPage({ property }: CustomPropertyPageProps
     setIsVideoLoading(false);
   };
 
-  return (
-    <div className={styles.mainContainer}>
+
+   return (
+
+  <>
+   <div className={styles.navBar}></div>
+    <NavBar />
+    <div className={styles.mainContent}>
       {/* Header */}
       <div className={styles.headerSection}>
         <h1 className={styles.propertyTitle}>{propertyData.title}</h1>
@@ -289,13 +296,15 @@ export default function CustomPropertyPage({ property }: CustomPropertyPageProps
       {/* Image Gallery */}
       <div className={styles.imageGallery}>
         {propertyData.propertyImages.length > 0 ? (
-          propertyData.propertyImages.map(img => (
+          propertyData.propertyImages.map((img) => (
             <img
               key={img._id || img.url}
               src={img.url}
               alt="Property"
               className={styles.galleryImage}
-              onError={e => { (e.target as HTMLImageElement).src = '/placeholder.jpg'; }}
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = '/placeholder.jpg';
+              }}
             />
           ))
         ) : (
@@ -351,7 +360,9 @@ export default function CustomPropertyPage({ property }: CustomPropertyPageProps
         <div className={styles.plansSection}>
           <h2>Plans</h2>
           <ul className={styles.plansList}>
-            {propertyData.plans.map((p, i) => <li key={i}>{p}</li>)}
+            {propertyData.plans.map((p, i) => (
+              <li key={i}>{p}</li>
+            ))}
           </ul>
         </div>
       )}
@@ -395,7 +406,8 @@ export default function CustomPropertyPage({ property }: CustomPropertyPageProps
               {isVideoLoading && <p>Loading video...</p>}
               {videoError ? (
                 <p>
-                  Video failed. <a href={propertyData.propertyVideo.url}>View video</a>
+                  Video failed.{' '}
+                  <a href={propertyData.propertyVideo.url}>View video</a>
                 </p>
               ) : (
                 <video
@@ -440,19 +452,21 @@ export default function CustomPropertyPage({ property }: CustomPropertyPageProps
         )}
       </div>
 
-{/* Map Section */}
-<div className={styles.mapSection}>
-  <h2>Location Map</h2>
-  <iframe
-    src={`https://www.google.com/maps?q=${encodeURIComponent(propertyData.location)}&output=embed`}
-    width="100%"
-    height="400"
-    style={{ border: 0 }}
-    allowFullScreen
-    loading="lazy"
-    referrerPolicy="no-referrer-when-downgrade"
-  ></iframe>
-</div>
+      {/* Map Section */}
+      <div className={styles.mapSection}>
+        <h2>Location Map</h2>
+        <iframe
+          src={`https://www.google.com/maps?q=${encodeURIComponent(
+            propertyData.location
+          )}&output=embed`}
+          width="100%"
+          height="400"
+          style={{ border: 0 }}
+          allowFullScreen
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
 
       {/* Form Modal */}
       {showForm && requestedSection && (
@@ -463,5 +477,7 @@ export default function CustomPropertyPage({ property }: CustomPropertyPageProps
         />
       )}
     </div>
-  );
+  </>
+);
+
 }

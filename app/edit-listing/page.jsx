@@ -14,7 +14,7 @@ const PropertyList = () => {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const response = await axios.get('https://backend-server-1smb.onrender.com/api/getlistingProperty');
+        const response = await axios.get('https://backend-ppt.onrender.com/api/getlistingProperty');
         setProperties(response.data);
       } catch (error) {
         console.error("Failed to fetch properties", error);
@@ -29,7 +29,7 @@ const PropertyList = () => {
   const handleDelete = async (id) => {
     if (confirm("Are you sure you want to delete this property?")) {
       try {
-        await axios.delete(`https://backend-server-1smb.onrender.com/api/deleteProperty/${id}`);
+        await axios.delete(`https://backend-ppt.onrender.com/api/deleteProperty/${id}`);
         setProperties(properties.filter(property => property._id !== id));
       } catch (error) {
         console.error("Failed to delete property", error);

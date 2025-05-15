@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NavBar from '@/components/Navbar';
 import SemiHeader from './SemiHeader';
 import ImageGallery from './ImageGallery';
@@ -9,50 +9,22 @@ import Location from './Location';
 import FloorPlan from './FloorPlan';
 import Form from '@/components/Form';
 
-interface WordPressProperty {
-  id: number;
-  title: {
-    rendered: string;
-  };
-  content: {
-    rendered: string;
-  };
-  acf?: {
-    property_address?: string;
-    property_price?: string;
-    property_label?: string;
-    property_date?: string;
-    plans?: {
-      title: string;
-      image: string;
-    }[];
-  };
-}
+export default function WordPressPropertyPage({ property }) {
+  const [formOpen, setFormOpen] = useState(false);
+  const [amenities, setAmenities] = useState([]);
 
-async function fetchAmenities(postId: number) {
+  useEffect(() => {
+    if (property?.id) {
+      fetch(`https://www.propertyplateau.com/wp-json/wp/v2/property_features?post=${property.id}&per_page=100`)
+        .then((res) => res.json())
+        .then((data) => setAmenities(data))
+        .catch((error) => console.error('Failed to fetch amenities:', error));
+    }
+  }, [property]);
 
-  const [formOpen, setFormOpen] = useState(true);
-  try {
-    const response = await fetch(
-      `https://www.propertyplateau.com/wp-json/wp/v2/property_features?post=${postId}&per_page=100`
-    );
-    return await response.json();
-  } catch (error) {
-    console.error('Failed to fetch amenities:', error);
-    return [];
-  }
-}
-
-export default async function WordPressPropertyPage({ 
-  property 
-}: { 
-  property: WordPressProperty 
-}) {
   if (!property) {
     return <div className="p-4 text-red-500">WordPress property data missing</div>;
   }
-
-  const amenities = await fetchAmenities(property.id);
 
   return (
     <div className="property-detail">
@@ -68,33 +40,27 @@ export default async function WordPressPropertyPage({
 
       <div className="container mx-auto px-4 py-8">
         <ImageGallery propertyID={property.id} />
-
-        <div className="my-8">
-          <Description content={property.content.rendered} />
-        </div>
-
-        <div className="my-8">
-          <Amenities amenities={amenities} />
-        </div>
-
-        <div className="my-8">
-          <Location propertyId={property.id.toString()} />
-        </div>
+        <div className="my-8"><Description content={property.content.rendered} /></div>
+        <div className="my-8"><Amenities amenities={amenities} /></div>
+        <div className="my-8"><Location propertyId={property.id.toString()} /></div>
 
         {property.acf?.plans?.length > 0 && (
-          <div className="my-8">
-            <FloorPlan plans={property.acf.plans} />
-          </div>
+          <div className="my-8"><FloorPlan plans={property.acf.plans} /></div>
         )}
 
         <div className="my-8">
-          <Form propertyId={property.id.toString()}
-          onSubmit={(success) => {
-            if (success) {
-              setFormOpen(false); // close form
-            }
-          }}
-           />
+        <Form
+  section="property"
+  onSubmit={(success: boolean) => {
+    if (!success) return; // don't close on failure
+    setFormOpen(false);   // close on submit
+  }}
+  onClose={() => setFormOpen(false)} // close on ✕
+  delay={0} // optional: show form immediately
+/>
+
+
+
         </div>
       </div>
     </div>
